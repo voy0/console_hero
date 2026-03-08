@@ -20,9 +20,9 @@ public class CharacterStats : IStats
 
     public CharacterStats(IProfession profession)
     {
-        Health = new ResourceAttribute(0, 0, profession.BaseHealth);
-        Mana = new ResourceAttribute(0, 0, profession.BaseMana);
-        Stamina = new ResourceAttribute(0, 0, profession.BaseStamina);
+        Health = new ResourceAttribute(profession.BaseHealth, 0, profession.BaseHealth);
+        Mana = new ResourceAttribute(profession.BaseMana, 0, profession.BaseMana);
+        Stamina = new ResourceAttribute(profession.BaseStamina, 0, profession.BaseStamina);
         
         Agility = new CoreAttribute(profession.BaseAgility);
         Strength = new CoreAttribute(profession.BaseStrength);

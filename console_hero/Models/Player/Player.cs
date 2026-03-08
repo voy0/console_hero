@@ -7,6 +7,9 @@ public class Player
         Position = (x, y);
         Stats =  new CharacterStats(profession ?? new BaseProfession());
     }
+    public Hands Hands = new Hands();
+    public Wealth Wealth = new Wealth();
+    public Inventory Inventory = new Inventory(5);
     public CharacterStats Stats {get;}
     public (int x, int y) Position { get; private set; }
 

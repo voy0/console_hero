@@ -1,3 +1,5 @@
+using console_hero.Models.Items;
+
 namespace console_hero;
 
 public class PredefinedMapGenerator : IMapGenerator
@@ -8,13 +10,13 @@ public class PredefinedMapGenerator : IMapGenerator
         string[] layout = 
         {
             "  ██████████████████████████████████████",
-            "█                                      █",
+            "█*                                     █",
             "█  █████████████████████████████████   █",
             "█  █                               █   █",
             "█  █   █████████████   █████████   █   █",
             "█  █   █           █   █       █   █   █",
             "█  █   █   █████   █   █   █   █   █   █",
-            "█  █   █   █       █   █   █   █   █   █",
+            "█  █   █   █  *    █   █   █   █   █   █",
             "█  █   █   █████████   █████   █   █   █",
             "█  █   █                       █   █   █",
             "█  █   █████████████████████████   █   █",
@@ -39,6 +41,11 @@ public class PredefinedMapGenerator : IMapGenerator
                 if (layout[y][x] == '█')
                 {
                     map.Cells[x, y].IsWall = true;
+                }
+
+                if (layout[y][x] == '*')
+                {
+                    map.Cells[x, y].Items.Push(new OneHandedWeapon('w', "Kutas", 10));
                 }
             }
         }

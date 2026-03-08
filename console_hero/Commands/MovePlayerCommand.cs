@@ -2,15 +2,13 @@ namespace console_hero;
 
 public class MovePlayerCommand : ICommand
 {
-    GameState _gameState;
     Player _player;
     Map _map;
     private int dx, dy;
-    public MovePlayerCommand(GameState gameState, int dx, int dy)
+    public MovePlayerCommand(Player player, Map map, int dx, int dy)
     {
-        _gameState = gameState;
-        _player = _gameState.Player;
-        _map = _gameState.Map;
+        _player = player;
+        _map = map;
         this.dx = dx;
         this.dy = dy;
     }
