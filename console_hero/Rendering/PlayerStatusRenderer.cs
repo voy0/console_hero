@@ -4,10 +4,9 @@ namespace console_hero;
 
 public class PlayerStatusRenderer(Player player)
 {
-    // Zamieniamy StringBuilder na listę linijek
     private readonly List<string> _statusLines = new();
     
-    public int Height => _statusLines.Count; // Przydatne, by wiedzieć jak wysoki jest panel
+    public int Height => _statusLines.Count; 
     
     public void Render()
     {
@@ -29,12 +28,21 @@ public class PlayerStatusRenderer(Player player)
         _statusLines.Add($"Intelligence:\t{player.Stats.Intelligence.Value}");
         _statusLines.Add($"Luck:\t\t{player.Stats.Luck.Value}");
         _statusLines.Add($"Magic:\t\t{player.Stats.Magic.Value}");
+
+        string leftHand = player.Hands.LeftHand?.Name ?? "(Empty)";
+        string rightHand = player.Hands.RightHand?.Name ?? "(Empty)";
         
         _statusLines.Add("====== E Q U I P P E D ======");
-        _statusLines.Add($"Left Hand:\t{player.Hands.LeftHand}");
-        _statusLines.Add($"Right Hand:\t{player.Hands.RightHand}");
+        _statusLines.Add($"Left Hand:\t{leftHand}");
+        _statusLines.Add($"Right Hand:\t{rightHand}");
                     
-        _statusLines.Add("===== I N V E N T O R Y =====");
+        var inventory  = player.Inventory;
+        _statusLines.Add($"== ({inventory.Items.Count}/{inventory.Capacity}) I N V E N T O R Y ==");
+        for (int i = 0; i < inventory.Items.Count; i++)
+        {
+            _statusLines.Add($"{i + 1}. {inventory.Items[i].Name}");
+        }
+        
     }
 
     public string GetLine(int y)
