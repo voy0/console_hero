@@ -1,7 +1,12 @@
 namespace console_hero;
 
+public enum EquipSlot
+{
+    MainHand,
+    OffHand,
+    TwoHand
+}
 public interface IEquippable : IItem
 {
-    bool Equip(Player player);
-    bool UnEquip(Player player);
+    EquipSlot Slot { get; }
 }

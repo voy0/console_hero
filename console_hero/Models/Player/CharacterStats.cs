@@ -8,11 +8,12 @@ public class CharacterStats : IStats
     public IResourceAttribute Mana { get; }
     public IResourceAttribute Stamina { get; }
     
-    public IAttribute Agility { get; } 
+    public IAttribute Armor { get; }
     public IAttribute Strength { get; } 
+    public IAttribute Agility { get; } 
     public IAttribute Dexterity { get; } 
     
-    public IAttribute Intelligence { get; } 
+    public IAttribute Intellect { get; } 
     public IAttribute Luck { get; } 
     public IAttribute Magic { get; } 
 
@@ -23,11 +24,13 @@ public class CharacterStats : IStats
         Health = new ResourceAttribute(profession.BaseHealth, 0, profession.BaseHealth);
         Mana = new ResourceAttribute(profession.BaseMana, 0, profession.BaseMana);
         Stamina = new ResourceAttribute(profession.BaseStamina, 0, profession.BaseStamina);
-        
-        Agility = new CoreAttribute(profession.BaseAgility);
+
+        Armor = new CoreAttribute(profession.BaseArmor);
         Strength = new CoreAttribute(profession.BaseStrength);
+        Agility = new CoreAttribute(profession.BaseAgility);
         Dexterity = new CoreAttribute(profession.BaseDexterity);
-        Intelligence = new CoreAttribute(profession.BaseIntelligence);
+        
+        Intellect = new CoreAttribute(profession.BaseIntellect);
         Luck = new CoreAttribute(profession.BaseLuck);
         Magic = new CoreAttribute(profession.BaseMagic);
 
@@ -39,7 +42,7 @@ public class CharacterStats : IStats
             { "Agility", Agility },
             { "Strength", Strength },
             { "Dexterity", Dexterity },
-            { "Intelligence", Intelligence },
+            { "Intellect", Intellect },
             { "Luck", Luck },
             { "Magic", Magic }
         };

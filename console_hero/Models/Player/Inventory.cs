@@ -3,6 +3,8 @@ namespace console_hero;
 public class Inventory
 {
     public bool IsFull => Items.Count == Capacity;
+    public bool IsEmpty => Items.Count == 0;
+    public int Count => Items.Count;
     public int Capacity { get; private set; }
     public List<IItem> Items { get; private set; }
     public Inventory(int capacity = 10)

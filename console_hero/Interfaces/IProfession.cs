@@ -8,11 +8,12 @@ public interface IProfession
     int BaseMana { get; }
     int BaseStamina { get; }
     
+    int BaseArmor { get; }
+    int BaseStrength { get; }
     int BaseAgility { get; }
     int BaseDexterity { get; }
-    int BaseStrength { get; }
     
-    int BaseIntelligence { get; }
+    int BaseIntellect { get; }
     int BaseLuck{ get; }
     int BaseMagic { get; }
 }

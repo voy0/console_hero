@@ -1,24 +1,14 @@
 namespace console_hero;
 
-public class EquipItemCommand : ICommand
+public class EquipItemCommand(Player player, Map map, InventoryMenu inventoryMenu) : ICommand
 {
-    Player  _player;
-    Map  _map;
-
-    public EquipItemCommand(Player player, Map map)
-    {
-        _player = player;
-        _map = map;
-    }
-
     public void Execute()
     {
-        (int x, int y) = _player.Position;
-        var items = _map.Cells[x, y].Items;
+        if (player.Inventory.IsEmpty) return;
         
-        if (items.Count == 0) return;
-
-        var item = items.Pop();
-        item.Pickup(_player);
+        var invItem = player.Inventory.Items[inventoryMenu.CurrentIndex];
+        invItem.Equip(player);
+        
+        inventoryMenu.ValidateIndex();
     }
 }

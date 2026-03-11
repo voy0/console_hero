@@ -17,9 +17,9 @@ public class PickupItemCommand : ICommand
         var items = _map.Cells[x, y].Items;
         
         if (items.Count == 0) return;
-
-        var item = items.Pop();
-        item.Pickup(_player);
         
+        var item = items.Peek();
+        if (item.Pickup(_player))
+            items.Pop();
     }
 }

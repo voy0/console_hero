@@ -6,13 +6,15 @@ public class Coins : ICurrency
     public string Name => "Coins";
     public int Value { get; private set; }
 
+    
+    public Coins(int amount)
+    {
+        Value = amount;
+    }
     public bool Pickup(Player p)
     {
         p.Wealth.AddCoins(Value);
         return true;
     }
-    public Coins(int amount)
-    {
-        Value = amount;
-    }
+    
 }

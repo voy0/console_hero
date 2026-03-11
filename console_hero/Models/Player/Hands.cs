@@ -2,34 +2,34 @@ namespace console_hero;
 
 public class Hands
 {
-    public IEquippable? LeftHand { get; private set; }
-    public IEquippable? RightHand  { get; private set; }
+    public IEquippable? Left { get; private set; }
+    public IEquippable? Right  { get; private set; }
 
     public IEquippable? EquipRight(IEquippable item)
     {
-        IEquippable? rightHandItem = RightHand;
-        RightHand = item;
+        IEquippable? rightHandItem = Right;
+        Right = item;
         return rightHandItem;
     }
 
     public IEquippable? EquipLeft(IEquippable item)
     {
-        IEquippable? leftHandItem = LeftHand;
-        LeftHand = item;
+        IEquippable? leftHandItem = Left;
+        Left = item;
         return leftHandItem;
     }
 
-    public IEquippable? ReleaseFromLeftHand()
+    public IEquippable? ReleaseFromLeft()
     {
-        IEquippable? item = RightHand;
-        RightHand = null;
+        IEquippable? item = Left;
+        Left = null;
         return item;
     }
 
-    public IEquippable? ReleaseFromRightHand()
+    public IEquippable? ReleaseFromRight()
     {
-        IEquippable? item = LeftHand;
-        LeftHand = null;
+        IEquippable? item = Right;
+        Right = null;
         return item;
     }
 }

@@ -2,47 +2,55 @@ using System.Collections.Generic;
 
 namespace console_hero;
 
-public class PlayerStatusRenderer(Player player)
+public class PlayerStatusRenderer(Player player) : IRenderer
 {
     private readonly List<string> _statusLines = new();
+    
+    private const int Lbl = -14; 
+    private const int Val = 3;   
     
     public int Height => _statusLines.Count; 
     
     public void Render()
     {
         _statusLines.Clear();
-        _statusLines.Add("========== H E R O ==========");
         
-        _statusLines.Add($"Health:\t{player.Stats.Health.Value} / {player.Stats.Health.MaxValue}");
-        _statusLines.Add($"Mana:\t{player.Stats.Mana.Value} / {player.Stats.Mana.MaxValue}");
-        _statusLines.Add($"Stamina:\t{player.Stats.Stamina.Value} / {player.Stats.Stamina.MaxValue}");
-
-        _statusLines.Add("====== P H Y S I C A L ======");
-
-        _statusLines.Add($"Agility:\t{player.Stats.Agility.Value}");
-        _statusLines.Add($"Dexterity:\t{player.Stats.Dexterity.Value}");
-        _statusLines.Add($"Strength:\t{player.Stats.Strength.Value}");
+        _statusLines.Add("============ H E R O ============");
+        _statusLines.Add($" Gold: {player.Wealth.Gold,-6}  Coins: {player.Wealth.Coins}");
+        _statusLines.Add("=================================");
         
-        _statusLines.Add("======== M E N T A L ========");
+        _statusLines.Add($" {"Health:", Lbl} {player.Stats.Health.Value, Val} / {player.Stats.Health.MaxValue, Val}");
+        _statusLines.Add($" {"Mana:", Lbl} {player.Stats.Mana.Value, Val} / {player.Stats.Mana.MaxValue, Val}");
+        _statusLines.Add($" {"Stamina:", Lbl} {player.Stats.Stamina.Value, Val} / {player.Stats.Stamina.MaxValue, Val}");
 
-        _statusLines.Add($"Intelligence:\t{player.Stats.Intelligence.Value}");
-        _statusLines.Add($"Luck:\t\t{player.Stats.Luck.Value}");
-        _statusLines.Add($"Magic:\t\t{player.Stats.Magic.Value}");
+        _statusLines.Add("-------- P H Y S I C A L --------");
 
-        string leftHand = player.Hands.LeftHand?.Name ?? "(Empty)";
-        string rightHand = player.Hands.RightHand?.Name ?? "(Empty)";
+        _statusLines.Add($" {"Armor:", Lbl} {player.Stats.Armor.Value, Val}");
+        _statusLines.Add($" {"Strength:", Lbl} {player.Stats.Strength.Value, Val}");
+        _statusLines.Add($" {"Agility:", Lbl} {player.Stats.Agility.Value, Val}");
+        _statusLines.Add($" {"Dexterity:", Lbl} {player.Stats.Dexterity.Value, Val}");
         
-        _statusLines.Add("====== E Q U I P P E D ======");
-        _statusLines.Add($"Left Hand:\t{leftHand}");
-        _statusLines.Add($"Right Hand:\t{rightHand}");
-                    
-        var inventory  = player.Inventory;
-        _statusLines.Add($"== ({inventory.Items.Count}/{inventory.Capacity}) I N V E N T O R Y ==");
-        for (int i = 0; i < inventory.Items.Count; i++)
+        
+        _statusLines.Add("---------- M E N T A L ----------");
+
+        _statusLines.Add($" {"Intellect:", Lbl} {player.Stats.Intellect.Value, Val}");
+        _statusLines.Add($" {"Luck:", Lbl} {player.Stats.Luck.Value, Val}");
+        _statusLines.Add($" {"Magic:", Lbl} {player.Stats.Magic.Value, Val}");
+
+        _statusLines.Add("======== E Q U I P P E D ========");
+        
+        if (player.Hands.Right == player.Hands.Left && player.Hands.Left != null)
         {
-            _statusLines.Add($"{i + 1}. {inventory.Items[i].Name}");
+            _statusLines.Add($" {"Both Hands:", Lbl} {player.Hands.Left.Name}");
         }
-        
+        else
+        {
+            string leftHand = player.Hands.Left?.Name ?? "(Empty)";
+            string rightHand = player.Hands.Right?.Name ?? "(Empty)";
+            
+            _statusLines.Add($" {"Left Hand:", Lbl} {leftHand}");
+            _statusLines.Add($" {"Right Hand:", Lbl} {rightHand}");
+        }
     }
 
     public string GetLine(int y)

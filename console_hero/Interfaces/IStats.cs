@@ -10,7 +10,7 @@ public interface IStats
     IAttribute Strength { get; }
     IAttribute Dexterity { get; }
     
-    IAttribute Intelligence { get; }
+    IAttribute Intellect { get; }
     IAttribute Luck { get; }
     IAttribute Magic { get; }
 

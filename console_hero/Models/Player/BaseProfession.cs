@@ -5,14 +5,15 @@ public class BaseProfession : IProfession
     public string Name { get; } = "Hero";
 
     public int BaseHealth { get; } = 100;
-    public int BaseMana { get; } = 101;
-    public int BaseStamina { get; } = 102;
+    public int BaseMana { get; } = 20;
+    public int BaseStamina { get; } = 50;
 
+    public int BaseArmor { get; } = 0;
+    public int BaseStrength { get; } = 10;
     public int BaseAgility { get; } = 10;
-    public int BaseDexterity { get; } = 11;
-    public int BaseStrength { get; } = 12;
+    public int BaseDexterity { get; } = 5;
 
-    public int BaseIntelligence { get; } = 13;
-    public int BaseLuck { get; } = 14;
-    public int BaseMagic { get; } = 15;
+    public int BaseIntellect { get; } = 10;
+    public int BaseLuck { get; } = 5;
+    public int BaseMagic { get; } = 5;
 }
