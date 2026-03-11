@@ -14,6 +14,10 @@ public abstract class Item : IItem
 
     public virtual bool UseFromInventory(Player player)
     {
-        throw new NotImplementedException();
+        return false;
     }
 }
+
+public class Sand(char symbol, string name) : Item(symbol, name);
+public class Bones(char symbol, string name) : Item(symbol, name);
+public class DeadRat(char symbol, string name) : Item(symbol, name);
