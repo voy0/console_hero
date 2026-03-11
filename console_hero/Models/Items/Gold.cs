@@ -1,18 +1,12 @@
 namespace console_hero.Models.Items;
 
-public class Gold : ICurrency
+public class Gold(int amount) : Item('g', "Gold"), ICurrency
 {
-    public char Symbol => 'g';
-    public string Name => "Gold";
-    public int Value { get; private set; }
+    public int Value { get; } = amount;
 
-    public bool Pickup(Player p)
+    public override bool Pickup(Player p)
     {
         p.Wealth.AddGold(Value);
         return true;
-    }
-    public Gold(int amount)
-    {
-        Value = amount;
     }
 }

@@ -1,16 +1,12 @@
 namespace console_hero.Models.Items;
 
-public class OneHandedWeapon(char symbol, string name, int damage) : IEquippable, IWeapon
+public abstract class OneHandedWeapon(char symbol, string name, int damage): Item(symbol, name), IEquippable,  IWeapon
 {
-    public char Symbol { get; } = symbol;
-    public string Name { get; } = name;
     public int BaseDamage { get; } = damage;
-    public EquipSlot Slot { get; } = EquipSlot.MainHand;
 
-    
-    public bool Pickup(Player player)
+    public override bool UseFromInventory(Player player)
     {
-        return player.Inventory.AddItem(this);
+        return Equip(player); 
     }
     public bool Equip(Player player)
     {
@@ -31,11 +27,7 @@ public class OneHandedWeapon(char symbol, string name, int damage) : IEquippable
         player.Inventory.AddItem(item);
         return true;
     }
-    public bool UnEquip(Player player)
-    {
-        if (player.Inventory.IsFull) return false;
-        if (player.Hands.Right == null) return false;
-        
-        return player.Inventory.AddItem(player.Hands.ReleaseFromRight());
-    }
+    public void Attack(){}
 }
+
+public class KnightsSword(char symbol, string name, int damage) : OneHandedWeapon(symbol, name, damage);

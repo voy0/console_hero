@@ -45,17 +45,17 @@ public class PredefinedMapGenerator : IMapGenerator
 
                 if (layout[y][x] == '*')
                 {
-                    map.Cells[x, y].Items.Push(new OneHandedWeapon('w', $"{Ansi.FgBlue}Knife {x}{Ansi.Reset}", 10));
+                    map.Cells[x, y].Items.Push(new KnightsSword('S', $"{Ansi.FgBlue}Knight's Sword {x}{Ansi.Reset}", 10));
                 }
 
                 if (layout[y][x] == '2')
                 {
-                    map.Cells[x, y].Items.Push(new TwoHandedWeapon('2', $"{Ansi.FgRed}Axe {x}{Ansi.Reset}", 10));
+                    map.Cells[x, y].Items.Push(new GreatSword('2', $"{Ansi.FgRed}The Great Sword {x}{Ansi.Reset}", 10));
                 }
 
                 if (layout[y][x] == 's')
                 {
-                    map.Cells[x, y].Items.Push(new OffHandItem('s', $"{Ansi.FgGreen}Shield {x}{Ansi.Reset}", 10));
+                    map.Cells[x, y].Items.Push(new TargeShield('s', $"{Ansi.FgGreen}Targe Shield {x}{Ansi.Reset}"));
                 }
                 if (layout[y][x] == 'c')
                 {

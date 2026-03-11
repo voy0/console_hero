@@ -1,17 +1,11 @@
 namespace console_hero.Models.Items;
 
-public class OffHandItem(char symbol, string name, int value) : IEquippable
+public abstract class OffHandItem(char symbol, string name): Item(symbol, name), IEquippable
 {
-    public char Symbol { get; } = symbol;
-    public string Name { get; } = name;
-    public int Value { get; } = value;
-    public EquipSlot Slot { get; } = EquipSlot.OffHand;
-
-    public bool Pickup(Player player)
+    public override bool UseFromInventory(Player player)
     {
-        return player.Inventory.AddItem(this);
+        return Equip(player); 
     }
-
     public bool Equip(Player player)
     {
         IEquippable? item = null;
@@ -32,3 +26,5 @@ public class OffHandItem(char symbol, string name, int value) : IEquippable
         return true;
     }
 }
+
+public class TargeShield(char symbol, string name) : OffHandItem(symbol, name);

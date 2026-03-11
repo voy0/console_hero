@@ -1,17 +1,10 @@
 namespace console_hero.Models.Items;
 
-public class Coins : ICurrency
+public class Coins(int amount) : Item('c', "Coins"), ICurrency
 {
-    public char Symbol => 'c';
-    public string Name => "Coins";
-    public int Value { get; private set; }
+    public int Value { get; } = amount;
 
-    
-    public Coins(int amount)
-    {
-        Value = amount;
-    }
-    public bool Pickup(Player p)
+    public override bool Pickup(Player p)
     {
         p.Wealth.AddCoins(Value);
         return true;

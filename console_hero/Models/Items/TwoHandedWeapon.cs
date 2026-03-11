@@ -1,24 +1,12 @@
 namespace console_hero.Models.Items;
 
-public class TwoHandedWeapon : IEquippable, IWeapon
+public abstract class TwoHandedWeapon(char symbol, string name, int damage): Item(symbol, name), IEquippable,  IWeapon
 {
-    public char Symbol { get; }
-    public string Name { get; }
-    public int BaseDamage { get; }
-    public EquipSlot Slot { get; } = EquipSlot.TwoHand;
-
-    public TwoHandedWeapon(char symbol, string name, int damage)
+    public int BaseDamage { get; } = damage;
+    public override bool UseFromInventory(Player player)
     {
-        Symbol = symbol;
-        Name = name;
-        BaseDamage = damage;
+        return Equip(player); 
     }
-    
-    public bool Pickup(Player player)
-    {
-        return player.Inventory.AddItem(this);
-    }
-    
     public bool Equip(Player player)
     {
         int itemsToDrop = 0;
@@ -43,4 +31,7 @@ public class TwoHandedWeapon : IEquippable, IWeapon
 
         return true;
     }
+    public void Attack(){}
 }
+
+public class GreatSword(char symbol, string name, int damage) : TwoHandedWeapon(symbol, name, damage);

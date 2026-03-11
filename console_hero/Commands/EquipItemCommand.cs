@@ -7,7 +7,7 @@ public class EquipItemCommand(Player player, Map map, InventoryMenu inventoryMen
         if (player.Inventory.IsEmpty) return;
         
         var invItem = player.Inventory.Items[inventoryMenu.CurrentIndex];
-        invItem.Equip(player);
+        invItem.UseFromInventory(player);
         
         inventoryMenu.ValidateIndex();
     }

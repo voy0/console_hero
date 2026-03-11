@@ -2,7 +2,7 @@
 
 var mapGenerator = new PredefinedMapGenerator();
 Map map = mapGenerator.GenerateMap();
-var gameState =  new GameState(null, map); // optional to initialize custom player
+var gameState =  new GameState(null, map); 
 var gameRenderer = new ConsoleRenderer(gameState);
 var inputHandler = new ConsoleInputHandler(gameState);
 
