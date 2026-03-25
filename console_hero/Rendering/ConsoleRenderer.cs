@@ -2,44 +2,70 @@ using System.Text;
 
 namespace console_hero;
 
-public class ConsoleRenderer(GameState gameState) : IRenderer
+public class ConsoleRenderer: IRenderer
 {
-    private readonly Map _map = gameState.Map;
-    private readonly Player _player = gameState.Player;
-    private readonly InventoryMenu _inventoryMenu = gameState.InventoryMenu;
+    private readonly Map _map;
+    private readonly Player _player;
+    private readonly InventoryMenu _inventoryMenu;
+
+    private readonly PlayerStatusRenderer _playerStatusRenderer;
+    private readonly MapRenderer _mapRenderer;
+    private readonly InventoryRenderer _inventoryRenderer;
+    private readonly PromptRenderer _promptRenderer;
+    private readonly InstructionsRenderer _instructionRenderer;
     
-    private readonly PlayerStatusRenderer _playerStatusRenderer = new PlayerStatusRenderer(gameState.Player);
-    private readonly MapRenderer _mapRenderer = new MapRenderer(gameState.Map,  gameState.Player);
-    private readonly InventoryRenderer _inventoryRenderer = new InventoryRenderer(gameState.Player, gameState.InventoryMenu);
-    private readonly PickupPromptRenderer _pickupPromptRenderer = new PickupPromptRenderer(gameState.Player, gameState.Map);
-    
-    private readonly StringBuilder _frame  = new StringBuilder();
-    
+    private readonly ScreenBuffer _screenBuffer;
+    private readonly string[] _currentFrame;
+    private readonly int _totalScreenHeight;
+
+    public ConsoleRenderer(GameState gameState)
+    {
+        _map = gameState.Level.Map;
+        _player = gameState.Player;
+        _inventoryMenu = gameState.InventoryMenu;
+        _playerStatusRenderer = new PlayerStatusRenderer(gameState.Player);
+        _mapRenderer = new MapRenderer(gameState.Level.Map,  gameState.Player);
+        _inventoryRenderer = new InventoryRenderer(gameState.Player, gameState.InventoryMenu);
+        _promptRenderer = new PromptRenderer(gameState.Player, gameState.Level.Map, gameState);
+        _instructionRenderer = new InstructionsRenderer(gameState.Level.Instructions);
+        
+        _totalScreenHeight = _map.Height + _inventoryRenderer.Height + _instructionRenderer.Height;
+        _screenBuffer = new ScreenBuffer(_totalScreenHeight);
+        _currentFrame = new string[_totalScreenHeight];
+    }
     public void Render()
     {
         Console.CursorVisible = false;
         Console.SetCursorPosition(0, 0);
-        Console.Clear();
-        
-        _frame.Clear();
+
         _playerStatusRenderer.Render();
         _inventoryRenderer.Render();
         _mapRenderer.Render();
-        _pickupPromptRenderer.Render();
+        _promptRenderer.Render();
+        _instructionRenderer.Render();
 
+        int currentLineIndex = 0;
         for (int y = 0; y < _map.Height; y++)
         {
-            _frame.AppendLine(_mapRenderer.GetLine(y) + _playerStatusRenderer.GetLine(y));
+            _currentFrame[currentLineIndex] = _mapRenderer.GetLine(y) + _playerStatusRenderer.GetLine(y);
+            currentLineIndex++;
         }
         
         for (int y = 0; y < _inventoryRenderer.Height; y++)
         {
-            string leftColumn = _pickupPromptRenderer.GetLine(y).PadRightVisible(gameState.Map.Width);
+            string leftColumn = _promptRenderer.GetLine(y).PadRightVisible(_map.Width + 2);
             string rightColumn = _inventoryRenderer.GetLine(y);
-    
-            _frame.AppendLine(leftColumn + rightColumn);
+            
+            _currentFrame[currentLineIndex] = leftColumn + rightColumn;
+            currentLineIndex++;
         }
         
-        Console.Write(_frame);
+        for (int y = 0; y < _instructionRenderer.Height; y++)
+        {
+            _currentFrame[currentLineIndex] = _instructionRenderer.GetLine(y);
+            currentLineIndex++;
+        }
+        _screenBuffer.Draw(_currentFrame);
+        
     }
 }

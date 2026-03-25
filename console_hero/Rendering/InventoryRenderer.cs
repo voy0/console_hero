@@ -1,8 +1,8 @@
 namespace console_hero;
 
-public class InventoryRenderer(Player player, InventoryMenu inventoryMenu) : IRenderable
+public class InventoryRenderer(Player player, InventoryMenu inventoryMenu) : IModuleRenderer
 {
-    public int Height = player.Inventory.Capacity+1;
+    public int Height { get; set; } = player.Inventory.Capacity+1;
     private List<string> _inventoryLines = new List<string>();
     public void Render()
     {

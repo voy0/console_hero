@@ -1,6 +1,6 @@
 namespace console_hero.Models.Items;
 
-public class Coins(int amount) : Item('c', "Coins"), ICurrency
+public class Coins(int amount) : Item('©', "Coins"), ICurrency
 {
     public int Value { get; } = amount;
 

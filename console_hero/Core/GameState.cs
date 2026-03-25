@@ -3,14 +3,16 @@
     public class GameState
     {
         public readonly Player Player;
-        public readonly Map Map;
+        public readonly Level Level;
         public readonly InventoryMenu InventoryMenu;
+        public List<string> Prompts;
 
-        public GameState(Player? player = null, Map? map = null)
+        public GameState(Player? player = null, Level? level = null)
         {
             Player = player ?? new Player();
-            Map = map ?? new Map();
+            Level = level ?? new Level();
             InventoryMenu = new InventoryMenu(Player.Inventory);
+            Prompts = new List<string>();
         }
         public bool IsRunning { get; private set; } = false;
 

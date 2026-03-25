@@ -2,16 +2,17 @@ using System.Text;
 
 namespace console_hero;
 
-public class MapRenderer : IRenderable
+public class MapRenderer : IModuleRenderer
 {
     private Map _map;
     private Player _player;
     
     private List<string> _mapLines = new List<string>();
     
-    public int Height => _map.Height;
+    public int Height { get; set; }
     public MapRenderer(Map map,  Player player)
     {
+        Height = map.Height;
         _map = map;
         _player = player;
     }
@@ -31,7 +32,9 @@ public class MapRenderer : IRenderable
                 }
                 else if (_map.Cells[x, y].IsWall)
                 {
+                    Console.BackgroundColor = ConsoleColor.White; // Kolor ściany
                     line.Append(MapSymbols.Wall);
+                    Console.ResetColor();
                 }
                 else if (_map.Cells[x, y].Items.Count != 0)
                 {

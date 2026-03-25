@@ -5,4 +5,4 @@ public abstract class MagicalItem(char symbol, string name, int magic) : Item(sy
     public int Magic => magic;
 }
 
-public class JesusFigner(char symbol, string name, int magic) : MagicalItem(symbol, name, magic);
+public class JesusFigner() : MagicalItem('ļ', "The Jesus Finger", 67);

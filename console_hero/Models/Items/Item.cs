@@ -4,6 +4,7 @@ public abstract class Item : IItem
 {
     public char Symbol { get; }
     public string Name { get; }
+    public virtual List<KeyActions> AvailableActions => new List<KeyActions>() { KeyActions.DropItem };
     public virtual bool Pickup(Player player) => player.Inventory.AddItem(this);
 
     public Item(char symbol, string name)
@@ -18,6 +19,6 @@ public abstract class Item : IItem
     }
 }
 
-public class Sand(char symbol, string name) : Item(symbol, name);
-public class Bones(char symbol, string name) : Item(symbol, name);
-public class DeadRat(char symbol, string name) : Item(symbol, name);
+public class Sand() : Item('≅', "Sand");
+public class Bones() : Item('%', "Bones");
+public class DeadRat() : Item('ò', "Dead Rat");

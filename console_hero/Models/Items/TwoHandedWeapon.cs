@@ -3,6 +3,8 @@ namespace console_hero.Models.Items;
 public abstract class TwoHandedWeapon(char symbol, string name, int damage): Item(symbol, name), IEquippable,  IWeapon
 {
     public int BaseDamage { get; } = damage;
+    public override List<KeyActions> AvailableActions => new List<KeyActions>() { KeyActions.DropItem, KeyActions.EquipItem };
+    
     public override bool UseFromInventory(Player player)
     {
         return Equip(player); 
@@ -34,4 +36,4 @@ public abstract class TwoHandedWeapon(char symbol, string name, int damage): Ite
     public void Attack(){}
 }
 
-public class GreatSword(char symbol, string name, int damage) : TwoHandedWeapon(symbol, name, damage);
+public class GreatSword() : TwoHandedWeapon('†', "The Great Sword", 12);

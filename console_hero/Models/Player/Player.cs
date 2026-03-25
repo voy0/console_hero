@@ -2,7 +2,7 @@ namespace console_hero;
 
 public class Player
 {
-    public Player(int x = 0, int y = 0, IProfession profession = null)
+    public Player(int x = 1, int y = 1, IProfession profession = null)
     {
         Position = (x, y);
         Stats =  new CharacterStats(profession ?? new BaseProfession());

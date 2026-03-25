@@ -6,4 +6,4 @@ public abstract class MagicalOneHandedWeapon(char symbol, string name, int damag
     public int Magic { get; } = magic;
 }
 
-public class Wand(char symbol, string name, int damage, int magic) : MagicalOneHandedWeapon(symbol, name, damage, magic);
+public class Wand() : MagicalOneHandedWeapon('¡', "Magical Wand", 1, 6);

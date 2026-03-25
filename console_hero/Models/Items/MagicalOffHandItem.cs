@@ -5,4 +5,4 @@ public abstract class MagicalOffHandItem(char symbol, string name, int magic): O
     public int Magic { get; } = magic;
 }
 
-public class Grimoire(char symbol, string name, int magic) : MagicalOffHandItem(symbol, name, magic);
+public class Grimoire() : MagicalOffHandItem('§', "The Grimore", 10);

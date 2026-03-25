@@ -5,4 +5,4 @@ public abstract class MagicalTwoHandedWeapon(char symbol, string name, int damag
 {
     public int Magic { get; } = magic;
 }
-public class GrandStaff(char symbol, string name, int damage, int magic) : MagicalTwoHandedWeapon(symbol, name, damage, magic);
+public class GrandStaff() : MagicalTwoHandedWeapon('ƒ', "The Grand Staff", 3, 8);
