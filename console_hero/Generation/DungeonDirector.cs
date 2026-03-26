@@ -1,8 +1,8 @@
 namespace console_hero.Generation;
 
-public static class DungeonDirector
+public class DungeonDirector(GameState gameState)
 {
-    public static Level ConnectorDungeon()
+    public Level ConnectorDungeon()
     {
         IDungeonStarter starter = new DungeonBuilder();
         return starter.FullDungeon()
@@ -11,10 +11,10 @@ public static class DungeonDirector
             .AddGold(5)
             .AddWeapons(10)
             .AddItems(20)
-            .Build();
+            .Build(gameState);
     }
 
-    public static Level ArmoryDungeon()
+    public Level ArmoryDungeon()
     {
         IDungeonStarter starter = new DungeonBuilder();
         return starter.FullDungeon()
@@ -24,10 +24,10 @@ public static class DungeonDirector
             .AddGold(5)
             .AddWeapons(25)
             .AddItems(10)
-            .Build();
+            .Build(gameState);
     }
 
-    public static Level TreasureDungeon()
+    public Level TreasureDungeon()
     {
         IDungeonStarter starter = new DungeonBuilder();
         return starter.FullDungeon()
@@ -37,10 +37,10 @@ public static class DungeonDirector
             .AddGold(25)
             .AddWeapons(3)
             .AddItems(10)
-            .Build();
+            .Build(gameState);
     }
 
-    public static Level HallDungeon()
+    public Level HallDungeon()
     {
         IDungeonStarter starter = new DungeonBuilder();
         return starter.EmptyDungeon()
@@ -49,10 +49,10 @@ public static class DungeonDirector
             .AddGold(20)
             .AddItems(10)
             .AddWeapons(2)
-            .Build();
+            .Build(gameState);
     }
 
-    public static Level TestItems()
+    public Level TestItems()
     {
         IDungeonStarter starter = new DungeonBuilder();
         return starter.EmptyDungeon()
@@ -60,13 +60,13 @@ public static class DungeonDirector
             .AddCoins(10)
             .AddItems(20)
             .AddWeapons(50)
-            .Build();
+            .Build(gameState);
     }
 
-    public static Level EmptyDungeon()
+    public Level EmptyDungeon()
     {
         IDungeonStarter starter = new DungeonBuilder();
         return starter.EmptyDungeon()
-            .Build();
+            .Build(gameState);
     }
 }

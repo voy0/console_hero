@@ -10,5 +10,5 @@ public interface IDungeonBuilder
     IDungeonBuilder AddWeapons(int weapons);
     IDungeonBuilder AddCoins(int coins, int denomination = 100);
     IDungeonBuilder AddGold(int gold, int denomination = 5);
-    Level Build();
+    Level Build(GameState gameState);
 }

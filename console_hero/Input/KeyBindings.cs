@@ -12,21 +12,33 @@ public enum KeyActions
     SelectInventoryUp,
     SelectInventoryDown,
 }
-public static class KeyBindings
+public class KeyBindings //TODO dodaj do mapowania od razu komende, bo czemu nie
 {
-    public static readonly Dictionary<KeyActions, (ConsoleKey Key, string Description)> Actions = new()
+    private Player _player;
+    private Map _map;
+    private InventoryMenu _inventoryMenu;
+    public readonly Dictionary<KeyActions, (ConsoleKey Key, ICommand Command, string Description)> Actions;
+    public readonly Dictionary<ConsoleKey, KeyActions> KeyToAction;
+    public KeyBindings(GameState gameState)
     {
-        { KeyActions.MoveUp,     (ConsoleKey.W, "move up") },
-        { KeyActions.MoveDown,   (ConsoleKey.S, "move down") },
-        { KeyActions.MoveLeft,   (ConsoleKey.A, "move left") },
-        { KeyActions.MoveRight,  (ConsoleKey.D, "move right") },
-        { KeyActions.PickupItem, (ConsoleKey.E, "pick up item") },
-        { KeyActions.DropItem,   (ConsoleKey.Q, "drop item") },
-        { KeyActions.EquipItem,  (ConsoleKey.F, "equip item") },
-        { KeyActions.SelectInventoryDown, (ConsoleKey.DownArrow, "select inventory down")},
-        { KeyActions.SelectInventoryUp, (ConsoleKey.UpArrow, "select inventory up")},
-    };
+        _player = gameState.Player;
+        _map = gameState.Level.Map;
+        _inventoryMenu = gameState.InventoryMenu;
+        
+        Actions = new()
+        {
+            { KeyActions.MoveUp,     (ConsoleKey.W, new MovePlayerCommand(_player, _map,-1, 0), "move up") },
+            { KeyActions.MoveDown,   (ConsoleKey.S, new MovePlayerCommand(_player, _map, 1, 0), "move down") },
+            { KeyActions.MoveLeft,   (ConsoleKey.A, new MovePlayerCommand(_player, _map, 0, -1), "move left") },
+            { KeyActions.MoveRight,  (ConsoleKey.D, new MovePlayerCommand(_player, _map, 0, 1), "move right") },
+            { KeyActions.PickupItem, (ConsoleKey.E, new PickupItemCommand(_player, _map), "pick up item") },
+            { KeyActions.DropItem,   (ConsoleKey.Q, new EquipItemCommand(_player, _map, _inventoryMenu), "drop item") },
+            { KeyActions.EquipItem,  (ConsoleKey.F, new DropItemCommand(_player, _map, _inventoryMenu), "equip item") },
+            { KeyActions.SelectInventoryDown, (ConsoleKey.DownArrow, new MoveSelectorInventoryMenuCommand(_inventoryMenu, true), "select inventory down")},
+            { KeyActions.SelectInventoryUp, (ConsoleKey.UpArrow, new MoveSelectorInventoryMenuCommand(_inventoryMenu, false), "select inventory up")},
+        };
+        KeyToAction = Actions.ToDictionary(kvp => kvp.Value.Key, kvp => kvp.Key);
+    }
     
-    public static readonly Dictionary<ConsoleKey, KeyActions> KeyToAction = 
-        Actions.ToDictionary(kvp => kvp.Value.Key, kvp => kvp.Key);
+    
 }

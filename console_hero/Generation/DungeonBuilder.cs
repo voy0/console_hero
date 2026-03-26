@@ -343,24 +343,24 @@ public class DungeonBuilder : IDungeonStarter, IDungeonBuilder
             PlaceItemWherever(new Coins(value));
         }
     }
-    private List<string> GenerateInstructions()
+    private List<string> GenerateInstructions(KeyBindings keyBindings)
     {
         var instructionsList = new List<string>();
-
-        instructionsList.Add(Instructions.GetInstruction(KeyActions.MoveUp));
-        instructionsList.Add(Instructions.GetInstruction(KeyActions.MoveDown));
-        instructionsList.Add(Instructions.GetInstruction(KeyActions.MoveLeft));
-        instructionsList.Add(Instructions.GetInstruction(KeyActions.MoveRight));
+        
+        instructionsList.Add(Instructions.GetInstruction(KeyActions.MoveUp, keyBindings));
+        instructionsList.Add(Instructions.GetInstruction(KeyActions.MoveDown, keyBindings));
+        instructionsList.Add(Instructions.GetInstruction(KeyActions.MoveLeft, keyBindings));
+        instructionsList.Add(Instructions.GetInstruction(KeyActions.MoveRight, keyBindings));
 
         if (_itemsToAdd > 0)
         {
-            instructionsList.Add(Instructions.GetInstruction(KeyActions.PickupItem));
-            instructionsList.Add(Instructions.GetInstruction(KeyActions.DropItem));
+            instructionsList.Add(Instructions.GetInstruction(KeyActions.PickupItem, keyBindings));
+            instructionsList.Add(Instructions.GetInstruction(KeyActions.DropItem, keyBindings));
         }
 
         if (_weaponsToAdd > 0)
         {
-            instructionsList.Add(Instructions.GetInstruction(KeyActions.EquipItem));
+            instructionsList.Add(Instructions.GetInstruction(KeyActions.EquipItem, keyBindings));
         }
 
         return instructionsList;
@@ -451,7 +451,7 @@ public class DungeonBuilder : IDungeonStarter, IDungeonBuilder
         return this;
     }
 
-    public Level Build()
+    public Level Build(GameState gameState)
     {
         ValidateMap();
         
@@ -468,8 +468,9 @@ public class DungeonBuilder : IDungeonStarter, IDungeonBuilder
         if(_itemsToAdd > 0) PlaceItems(_itemsToAdd);
         if(_goldToAdd > 0) PlaceGold(_goldToAdd, _goldDenomination);
         if (_coinsToAdd > 0) PlaceCoins(_coinsToAdd, _coinsDenomination);
-
-        Level level =  new Level(_map, GenerateInstructions());
+        
+        var keyBindings = gameState.Level.KeyBindings;
+        Level level =  new Level(keyBindings, _map, GenerateInstructions(keyBindings));
         
         _buildCenterRoom = false;
         _roomsToBuild = 0;

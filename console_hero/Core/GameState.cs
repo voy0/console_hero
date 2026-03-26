@@ -3,21 +3,25 @@
     public class GameState
     {
         public readonly Player Player;
-        public readonly Level Level;
+        public Level Level;
         public readonly InventoryMenu InventoryMenu;
         public List<string> Prompts;
 
         public GameState(Player? player = null, Level? level = null)
         {
+            
             Player = player ?? new Player();
-            Level = level ?? new Level();
             InventoryMenu = new InventoryMenu(Player.Inventory);
+            KeyBindings keyBindings = new KeyBindings(this);
+            Level = level ?? new Level(keyBindings);
             Prompts = new List<string>();
         }
         public bool IsRunning { get; private set; } = false;
 
         public void Run()
         {
+            var levelGenerator = new LevelGenerator(this);
+            levelGenerator.Generate();
             IsRunning = true;
         }
 
