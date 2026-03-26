@@ -51,4 +51,22 @@ public static class DungeonDirector
             .AddWeapons(2)
             .Build();
     }
+
+    public static Level TestItems()
+    {
+        IDungeonStarter starter = new DungeonBuilder();
+        return starter.EmptyDungeon()
+            .AddGold(10)
+            .AddCoins(10)
+            .AddItems(20)
+            .AddWeapons(50)
+            .Build();
+    }
+
+    public static Level EmptyDungeon()
+    {
+        IDungeonStarter starter = new DungeonBuilder();
+        return starter.EmptyDungeon()
+            .Build();
+    }
 }

@@ -1,5 +1,5 @@
 ﻿using console_hero;
-
+using console_hero.Rendering;
 Console.Clear();
 var levelGenerator = new LevelGenerator();
 Level level = levelGenerator.Generate();

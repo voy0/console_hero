@@ -1,6 +1,6 @@
 namespace console_hero.Models.Items;
 
-public abstract class OffHandItem(char symbol, string name): Item(symbol, name), IEquippable
+public abstract class OffHandItem(char symbol, string name, string color): Item(symbol, name, color), IEquippable
 {
     public override List<KeyActions> AvailableActions => new List<KeyActions>() { KeyActions.DropItem, KeyActions.EquipItem };
     
@@ -29,4 +29,4 @@ public abstract class OffHandItem(char symbol, string name): Item(symbol, name),
     }
 }
 
-public class TargeShield() : OffHandItem('O', "The Targe Shield");
+public class TargeShield() : OffHandItem('O', "The Targe Shield", Ansi.FgRgb(50, 150, 100));

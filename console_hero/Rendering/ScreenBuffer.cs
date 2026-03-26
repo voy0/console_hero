@@ -19,16 +19,19 @@ public class ScreenBuffer
             if (_previousFrame[y] != newFrame[y])
             {
                 Console.SetCursorPosition(0, y);
-                
+            
                 string lineToDraw = newFrame[y];
-                
-                if (lineToDraw.Length < _previousFrame[y].Length)
+            
+                int currentVisibleLen = lineToDraw.GetVisibleLength();
+                int previousVisibleLen = _previousFrame[y].GetVisibleLength();
+            
+                if (currentVisibleLen < previousVisibleLen)
                 {
-                    lineToDraw = lineToDraw.PadRight(_previousFrame[y].Length);
+                    lineToDraw = lineToDraw.PadRightVisible(previousVisibleLen + 2); 
                 }
-                
+            
                 Console.Write(lineToDraw);
-                
+            
                 _previousFrame[y] = newFrame[y]; 
             }
         }

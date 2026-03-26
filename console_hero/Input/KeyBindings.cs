@@ -26,4 +26,7 @@ public static class KeyBindings
         { KeyActions.SelectInventoryDown, (ConsoleKey.DownArrow, "select inventory down")},
         { KeyActions.SelectInventoryUp, (ConsoleKey.UpArrow, "select inventory up")},
     };
+    
+    public static readonly Dictionary<ConsoleKey, KeyActions> KeyToAction = 
+        Actions.ToDictionary(kvp => kvp.Value.Key, kvp => kvp.Key);
 }

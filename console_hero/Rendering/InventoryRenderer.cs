@@ -16,7 +16,8 @@ public class InventoryRenderer(Player player, InventoryMenu inventoryMenu) : IMo
             {
                 arrow = '>';
             }
-            _inventoryLines.Add($"{arrow} {i + 1}. {inventory.Items[i].Name}");
+            var item = inventory.Items[i];
+            _inventoryLines.Add($"{arrow} {i + 1}. {item.ColoredSymbol} {item.ColoredName}");
         }
     }
     public string GetLine(int y)

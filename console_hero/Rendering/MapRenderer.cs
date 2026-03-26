@@ -38,7 +38,8 @@ public class MapRenderer : IModuleRenderer
                 }
                 else if (_map.Cells[x, y].Items.Count != 0)
                 {
-                    line.Append(_map.Cells[x, y].Items.Peek().Symbol);
+                    var item = _map.Cells[x, y].Items.Peek();
+                    line.Append(item.ColoredSymbol);
                 }
                 else
                 {

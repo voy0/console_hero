@@ -1,6 +1,6 @@
 using System.Text;
 
-namespace console_hero;
+namespace console_hero.Rendering;
 
 public class ConsoleRenderer: IRenderer
 {
@@ -53,7 +53,7 @@ public class ConsoleRenderer: IRenderer
         
         for (int y = 0; y < _inventoryRenderer.Height; y++)
         {
-            string leftColumn = _promptRenderer.GetLine(y).PadRightVisible(_map.Width + 2);
+            string leftColumn = _promptRenderer.GetLine(y).PadRightVisible(_map.Width + 4);
             string rightColumn = _inventoryRenderer.GetLine(y);
             
             _currentFrame[currentLineIndex] = leftColumn + rightColumn;

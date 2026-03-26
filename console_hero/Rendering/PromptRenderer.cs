@@ -1,4 +1,4 @@
-namespace console_hero;
+namespace console_hero.Rendering;
 
 public class PromptRenderer(Player player, Map map, GameState gameState) : IModuleRenderer
 {
@@ -16,16 +16,19 @@ public class PromptRenderer(Player player, Map map, GameState gameState) : IModu
         gameState.Prompts.Clear();
         if (map.Cells[x, y].Items.Count != 0)
         {
-            _prompt.Add($"Standing on: {map.Cells[x, y].Items.Peek().Name}");
-            var keyaction = KeyBindings.Actions[KeyActions.PickupItem];
-            _prompt.Add($"Press {keyaction.Key} to {keyaction.Description}");
+            _prompt.Add($"Standing on: {map.Cells[x, y].Items.Peek().ColoredName}");
+            if(!player.Inventory.IsFull)
+            {
+                var keyaction = KeyBindings.Actions[KeyActions.PickupItem];
+                _prompt.Add($"Press {keyaction.Key} to {keyaction.Description}");
+            }
         }
 
         var i = gameState.InventoryMenu.CurrentIndex;
         if (!player.Inventory.IsEmpty)
         {
             var item = player.Inventory.Items[i];
-            foreach (var action in item.AvailableActions)
+            foreach (var action in item.AvailableActions) //TODO
             {
                 var keyaction = KeyBindings.Actions[action];
                 _prompt.Add($"Press {keyaction.Key} to {keyaction.Description}");

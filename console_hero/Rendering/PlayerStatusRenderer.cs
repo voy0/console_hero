@@ -44,9 +44,9 @@ public class PlayerStatusRenderer(Player player) : IRenderer
             _statusLines.Add($" {"Both Hands:", Lbl} {player.Hands.Left.Name}");
         }
         else
-        {
-            string leftHand = player.Hands.Left?.Name ?? "(Empty)";
-            string rightHand = player.Hands.Right?.Name ?? "(Empty)";
+        { 
+            string leftHand = player.Hands.Left?.ColoredName ?? "(Empty)";
+            string rightHand = player.Hands.Right?.ColoredName ?? "(Empty)";
             
             _statusLines.Add($" {"Left Hand:", Lbl} {leftHand}");
             _statusLines.Add($" {"Right Hand:", Lbl} {rightHand}");

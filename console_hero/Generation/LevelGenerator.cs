@@ -6,6 +6,6 @@ public class LevelGenerator : ILevelGenerator
 {
     public Level Generate()
     {
-        return DungeonDirector.ArmoryDungeon();
+        return DungeonDirector.EmptyDungeon();
     }
 }

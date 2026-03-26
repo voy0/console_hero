@@ -1,6 +1,6 @@
 using console_hero.Models.Items;
 
-namespace console_hero;
+namespace console_hero.Generation;
 
 public record Room(int X, int Y, int Width, int Height)
 {
@@ -22,19 +22,19 @@ public record Room(int X, int Y, int Width, int Height)
 public class DungeonBuilder : IDungeonStarter, IDungeonBuilder
 {
     private Map? _map;
-    private int _roomsToBuild = 0;
-    private int _weaponsToAdd = 0;
-    private int _itemsToAdd = 0;
-    private int _goldToAdd = 0;
-    private int _coinsToAdd = 0;
-    private int _coinsDenomination = 0;
-    private int _goldDenomination = 0;
-    private int _centerRoomSize = 0;
+    private int _roomsToBuild;
+    private int _weaponsToAdd;
+    private int _itemsToAdd;
+    private int _goldToAdd;
+    private int _coinsToAdd;
+    private int _coinsDenomination;
+    private int _goldDenomination;
+    private int _centerRoomSize;
 
     private static (int w, int h) _defaultMapSize = (41, 21);
 
-    private bool _buildCorridors = false;
-    private bool _buildCenterRoom = false;
+    private bool _buildCorridors;
+    private bool _buildCenterRoom;
     
     private readonly List<Room> _builtRooms = new List<Room>();
 
