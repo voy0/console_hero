@@ -1,6 +1,5 @@
 namespace console_hero.Models.Items;
-
-public static class ItemGenerator
+public static class EntityGenerator
 {
     public static IItem GenerateRandomWeapon()
     {
@@ -20,5 +19,12 @@ public static class ItemGenerator
         if (r < 80) return new DeadRat();
         if (r < 98) return new Bones();
         return new JesusFigner();
+    }
+
+    public static Enemy GenerateRandomEnemy()
+    {
+        int r = Random.Shared.Next(100);
+
+        return new MutantRat();
     }
 }

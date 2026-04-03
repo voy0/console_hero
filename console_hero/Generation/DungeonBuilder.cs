@@ -30,6 +30,7 @@ public class DungeonBuilder : IDungeonStarter, IDungeonBuilder
     private int _coinsDenomination;
     private int _goldDenomination;
     private int _centerRoomSize;
+    private int _enemiesToAdd;
 
     private static (int w, int h) _defaultMapSize = (41, 21);
 
@@ -265,9 +266,9 @@ public class DungeonBuilder : IDungeonStarter, IDungeonBuilder
         {
             x = random.Next(_map.Width);
             y = random.Next(_map.Height);
-        } while (_map.Cells[x, y].IsWall);
+        } while (_map.Cells[x, y].IsWall || _map.Cells[x, y].IsOccupied);
 
-        _map.Cells[x, y].Items.Push(item);
+        _map.Cells[x, y].PushItem(item);
     }
     private void PlaceItemInARoom(IItem item, Room? room = null)
     {
@@ -281,9 +282,15 @@ public class DungeonBuilder : IDungeonStarter, IDungeonBuilder
         {
             room = _builtRooms[random.Next(_builtRooms.Count)];
         }
-        int x = 1 + room.X + random.Next(room.Width-1);
-        int y = 1 + room.Y + random.Next(room.Height-1);
-        _map.Cells[x, y].Items.Push(item);
+        
+        int x, y;
+        do
+        {
+            x = 1 + room.X + random.Next(room.Width - 1);
+            y = 1 + room.Y + random.Next(room.Height - 1);
+        } while (_map.Cells[x, y].IsWall || _map.Cells[x, y].IsOccupied);
+
+        _map.Cells[x, y].PushItem(item);
     }
     
     private void PlaceWeapons(int weaponsToAdd)
@@ -293,14 +300,14 @@ public class DungeonBuilder : IDungeonStarter, IDungeonBuilder
         {
             for(int i = 0; i < weaponsToAdd; i++)
             {
-                PlaceItemWherever(ItemGenerator.GenerateRandomWeapon());
+                PlaceItemWherever(EntityGenerator.GenerateRandomWeapon());
             }
         }
         else
         {
             for (int i = 0; i < weaponsToAdd; i++)
             {
-                PlaceItemInARoom(ItemGenerator.GenerateRandomWeapon());
+                PlaceItemInARoom(EntityGenerator.GenerateRandomWeapon());
             }
         }
     }
@@ -308,7 +315,28 @@ public class DungeonBuilder : IDungeonStarter, IDungeonBuilder
     {
         for (int i = 0; i < itemsToAdd; i++)
         {
-            PlaceItemWherever(ItemGenerator.GenerateRandomItem());
+            PlaceItemWherever(EntityGenerator.GenerateRandomItem());
+        }
+    }
+
+    private void PlaceEnemyWherever(Enemy enemy)
+    {
+        Random random = new Random();
+
+        int x, y;
+        do
+        {
+            x = random.Next(_map.Width);
+            y = random.Next(_map.Height);
+        } while (_map.Cells[x, y].IsWall || _map.Cells[x, y].IsOccupied);
+
+        _map.Cells[x, y].Occupant = enemy;
+    }
+    private void PlaceEnemies(int enemiesToGenerate)
+    {
+        for (int i = 0; i < enemiesToGenerate; i++)
+        {
+            PlaceEnemyWherever(EntityGenerator.GenerateRandomEnemy());
         }
     }
     private void PlaceGold(int goldToAdd, int abundance)
@@ -343,6 +371,7 @@ public class DungeonBuilder : IDungeonStarter, IDungeonBuilder
             PlaceItemWherever(new Coins(value));
         }
     }
+
     private List<KeyActions> GenerateKeyActions(KeyBindings keyBindings)
     {
         var instructionsList = new List<KeyActions>();
@@ -452,6 +481,12 @@ public class DungeonBuilder : IDungeonStarter, IDungeonBuilder
         return this;
     }
 
+    public IDungeonBuilder AddEnemies(int enemies)
+    {
+        _enemiesToAdd += enemies;
+        return this;
+    }
+
     public Level Build(GameState gameState)
     {
         ValidateMap();
@@ -469,6 +504,7 @@ public class DungeonBuilder : IDungeonStarter, IDungeonBuilder
         if(_itemsToAdd > 0) PlaceItems(_itemsToAdd);
         if(_goldToAdd > 0) PlaceGold(_goldToAdd, _goldDenomination);
         if (_coinsToAdd > 0) PlaceCoins(_coinsToAdd, _coinsDenomination);
+        if(_enemiesToAdd > 0) PlaceEnemies(_enemiesToAdd);
         
         var keyBindings = gameState.KeyBindings;
         Level level =  new Level(_map, GenerateKeyActions(keyBindings));
@@ -480,6 +516,7 @@ public class DungeonBuilder : IDungeonStarter, IDungeonBuilder
         _itemsToAdd = 0;
         _goldToAdd = 0;
         _coinsToAdd = 0;
+        _enemiesToAdd = 0;
 
         return level;
     }

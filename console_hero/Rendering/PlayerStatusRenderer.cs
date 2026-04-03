@@ -1,8 +1,9 @@
 using System.Collections.Generic;
+// Pamiętaj o usingu do Twojego Enuma, np. using console_hero.Models;
 
 namespace console_hero;
 
-public class PlayerStatusRenderer(Player player) : IRenderer
+public class PlayerStatusRenderer(Player player) : IRenderer // (Albo IModuleRenderer, zależy jak to masz wpięte)
 {
     private readonly List<string> _statusLines = new();
     
@@ -25,23 +26,22 @@ public class PlayerStatusRenderer(Player player) : IRenderer
 
         _statusLines.Add("-------- P H Y S I C A L --------");
 
-        _statusLines.Add($" {"Armor:", Lbl} {player.Stats.Armor.Value, Val}");
-        _statusLines.Add($" {"Strength:", Lbl} {player.Stats.Strength.Value, Val}");
-        _statusLines.Add($" {"Agility:", Lbl} {player.Stats.Agility.Value, Val}");
-        _statusLines.Add($" {"Dexterity:", Lbl} {player.Stats.Dexterity.Value, Val}");
-        
+        _statusLines.Add($" {"Armor:", Lbl} {player.Stats[StatType.Armor].Value, Val}");
+        _statusLines.Add($" {"Strength:", Lbl} {player.Stats[StatType.Strength].Value, Val}");
+        _statusLines.Add($" {"Agility:", Lbl} {player.Stats[StatType.Agility].Value, Val}");
+        _statusLines.Add($" {"Dexterity:", Lbl} {player.Stats[StatType.Dexterity].Value, Val}");
         
         _statusLines.Add("---------- M E N T A L ----------");
 
-        _statusLines.Add($" {"Intellect:", Lbl} {player.Stats.Intellect.Value, Val}");
-        _statusLines.Add($" {"Luck:", Lbl} {player.Stats.Luck.Value, Val}");
-        _statusLines.Add($" {"Magic:", Lbl} {player.Stats.Magic.Value, Val}");
+        _statusLines.Add($" {"Intellect:", Lbl} {player.Stats[StatType.Intellect].Value, Val}");
+        _statusLines.Add($" {"Luck:", Lbl} {player.Stats[StatType.Luck].Value, Val}");
+        _statusLines.Add($" {"Magic:", Lbl} {player.Stats[StatType.Magic].Value, Val}");
 
         _statusLines.Add("======== E Q U I P P E D ========");
         
         if (player.Hands.Right == player.Hands.Left && player.Hands.Left != null)
         {
-            _statusLines.Add($" {"Both Hands:", Lbl} {player.Hands.Left.Name}");
+            _statusLines.Add($" {"Both Hands:", Lbl} {player.Hands.Left.ColoredName}"); 
         }
         else
         { 

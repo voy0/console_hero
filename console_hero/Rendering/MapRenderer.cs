@@ -36,10 +36,15 @@ public class MapRenderer : IModuleRenderer
                     line.Append(MapSymbols.Wall);
                     Console.ResetColor();
                 }
-                else if (_map.Cells[x, y].Items.Count != 0)
+                else if (_map.Cells[x, y].ItemsCount != 0)
                 {
-                    var item = _map.Cells[x, y].Items.Peek();
+                    var item = _map.Cells[x, y].PeekItem();
                     line.Append(item.ColoredSymbol);
+                }
+                else if (_map.Cells[x, y].IsOccupied)
+                {
+                    var occupant = _map.Cells[x, y].Occupant;
+                    line.Append(occupant.ColoredSymbol);
                 }
                 else
                 {

@@ -2,49 +2,45 @@ using System.Collections.Generic;
 
 namespace console_hero;
 
-public class CharacterStats : IStats
+public enum StatType
 {
-    public IResourceAttribute Health { get; }
-    public IResourceAttribute Mana { get; }
-    public IResourceAttribute Stamina { get; }
-    
-    public IAttribute Armor { get; }
-    public IAttribute Strength { get; } 
-    public IAttribute Agility { get; } 
-    public IAttribute Dexterity { get; } 
-    
-    public IAttribute Intellect { get; } 
-    public IAttribute Luck { get; } 
-    public IAttribute Magic { get; } 
+    Health,
+    Mana,
+    Stamina,
+    Armor,
+    Strength,
+    Agility,
+    Dexterity,
+    Intellect,
+    Luck,
+    Magic
+}
+public class CharacterStats 
+{
+    public IReadOnlyDictionary<StatType, IAttribute> AttributesMap { get; }
 
-    public IReadOnlyDictionary<string, IAttribute> AttributesMap { get; }
+    public IAttribute this[StatType stat] => AttributesMap[stat];
+
+    public IResourceAttribute Health => (IResourceAttribute)AttributesMap[StatType.Health];
+    public IResourceAttribute Mana => (IResourceAttribute)AttributesMap[StatType.Mana];
+    public IResourceAttribute Stamina => (IResourceAttribute)AttributesMap[StatType.Stamina];
 
     public CharacterStats(IProfession profession)
     {
-        Health = new ResourceAttribute(profession.BaseHealth, 0, profession.BaseHealth);
-        Mana = new ResourceAttribute(profession.BaseMana, 0, profession.BaseMana);
-        Stamina = new ResourceAttribute(profession.BaseStamina, 0, profession.BaseStamina);
+        var map = new Dictionary<StatType, IAttribute>();
 
-        Armor = new CoreAttribute(profession.BaseArmor);
-        Strength = new CoreAttribute(profession.BaseStrength);
-        Agility = new CoreAttribute(profession.BaseAgility);
-        Dexterity = new CoreAttribute(profession.BaseDexterity);
-        
-        Intellect = new CoreAttribute(profession.BaseIntellect);
-        Luck = new CoreAttribute(profession.BaseLuck);
-        Magic = new CoreAttribute(profession.BaseMagic);
-
-        AttributesMap = new Dictionary<string, IAttribute>
+        foreach (var kvp in profession.InitialStats)
         {
-            { "Health", Health },
-            { "Mana", Mana },
-            { "Stamina", Stamina },
-            { "Agility", Agility },
-            { "Strength", Strength },
-            { "Dexterity", Dexterity },
-            { "Intellect", Intellect },
-            { "Luck", Luck },
-            { "Magic", Magic }
-        };
+            if (kvp.Key is StatType.Health or StatType.Mana or StatType.Stamina)
+            {
+                map[kvp.Key] = new ResourceAttribute(kvp.Value);
+            }
+            else
+            {
+                map[kvp.Key] = new CoreAttribute(kvp.Value);
+            }
+        }
+
+        AttributesMap = map;
     }
 }

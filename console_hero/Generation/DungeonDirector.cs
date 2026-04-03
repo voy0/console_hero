@@ -69,4 +69,12 @@ public class DungeonDirector(GameState gameState)
         return starter.EmptyDungeon()
             .Build(gameState);
     }
+
+    public Level TestEnemies()
+    {
+        IDungeonStarter starter = new DungeonBuilder();
+        return starter.EmptyDungeon()
+            .AddEnemies(10)
+            .Build(gameState);
+    }
 }

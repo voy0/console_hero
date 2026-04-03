@@ -9,7 +9,7 @@ public class DropItemCommand(Player player, Map map, InventoryMenu inventoryMenu
         var itemToDrop = player.Inventory.Items[inventoryMenu.CurrentIndex];
         
         player.Inventory.Items.Remove(itemToDrop);
-        map.Cells[player.Position.x, player.Position.y].Items.Push(itemToDrop);
+        map.Cells[player.Position.x, player.Position.y].PushItem(itemToDrop);
         inventoryMenu.ValidateIndex();
     }
 }

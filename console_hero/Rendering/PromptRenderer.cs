@@ -14,9 +14,9 @@ public class PromptRenderer(Player player, Map map, GameState gameState) : IModu
             _prompt.Add(prompt);
         }
         gameState.Prompts.Clear();
-        if (map.Cells[x, y].Items.Count != 0)
+        if (map.Cells[x, y].ItemsCount != 0)
         {
-            _prompt.Add($"Standing on: {map.Cells[x, y].Items.Peek().ColoredName}");
+            _prompt.Add($"Standing on: {map.Cells[x, y].PeekItem().ColoredName}");
             if(!player.Inventory.IsFull)
             {
                 var keyaction = gameState.KeyBindings.Actions[KeyActions.PickupItem];

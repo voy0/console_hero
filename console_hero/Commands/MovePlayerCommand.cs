@@ -20,7 +20,8 @@ public class MovePlayerCommand : ICommand
             newPos.x >= 0 &&
             newPos.y < _map.Height &&
             newPos.y >= 0 &&
-            !_map.Cells[newPos.x, newPos.y].IsWall)
+            !_map.Cells[newPos.x, newPos.y].IsWall &&
+            !_map.Cells[newPos.x, newPos.y].IsOccupied)
         {
             _player.Move(dx, dy);
         }

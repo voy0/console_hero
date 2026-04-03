@@ -18,19 +18,19 @@ public class ResourceAttribute : IResourceAttribute
     {
         if (dValue < 0) 
             throw new ArgumentOutOfRangeException(nameof(dValue), "Increase must be greater than or equal to zero!");;
-        Value += dValue;
+        Value = Math.Min(Value + dValue, MaxValue);
     }
     public void Decrease(int dValue)
     {
         if (dValue < 0) 
             throw new ArgumentOutOfRangeException(nameof(dValue), "Decrease must be greater than or equal to zero!");
-        Value -= dValue;
+        Value = Math.Max(Value -  dValue, MinValue);
     }
 
-    public ResourceAttribute(int value, int minValue = 0, int maxValue = 100)
+    public ResourceAttribute(int value, int? maxValue = null, int? minValue = null)
     {
-        MinValue = minValue;
-        MaxValue = maxValue;
+        MinValue = minValue ?? 0;
+        MaxValue = maxValue ?? value;
         Value = value;
     }
 }

@@ -14,12 +14,12 @@ public class PickupItemCommand : ICommand
     public void Execute()
     {
         (int x, int y) = _player.Position;
-        var items = _map.Cells[x, y].Items;
+        var cell = _map.Cells[x, y];
         
-        if (items.Count == 0) return;
+        if (cell.ItemsCount == 0) return;
         
-        var item = items.Peek();
+        var item = cell.PeekItem();
         if (item.Pickup(_player))
-            items.Pop();
+            cell.PopItem();
     }
 }
