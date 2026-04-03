@@ -6,22 +6,22 @@
         public Level Level;
         public readonly InventoryMenu InventoryMenu;
         public List<string> Prompts;
-
-        public GameState(Player? player = null, Level? level = null)
-        {
-            
-            Player = player ?? new Player();
-            InventoryMenu = new InventoryMenu(Player.Inventory);
-            KeyBindings keyBindings = new KeyBindings(this);
-            Level = level ?? new Level(keyBindings);
-            Prompts = new List<string>();
-        }
+        public KeyBindings KeyBindings{get; private set;}
         public bool IsRunning { get; private set; } = false;
 
+        public GameState(Player? player = null)
+        {
+            Player = player ?? new Player();
+            InventoryMenu = new InventoryMenu(Player.Inventory);
+            Prompts = new List<string>();
+            
+            var levelGenerator = new LevelGenerator(this);
+            Level = levelGenerator.Generate();
+            KeyBindings = new KeyBindings(this);
+        }
+        
         public void Run()
         {
-            var levelGenerator = new LevelGenerator(this);
-            levelGenerator.Generate();
             IsRunning = true;
         }
 

@@ -3,13 +3,11 @@ namespace console_hero;
 public class Level
 {
     public Map Map { get; set; }
-    public KeyBindings KeyBindings { get; set; }
-    public List<string> Instructions { get; set; }
+    public List<KeyActions> KeyActionsList { get; set; }
 
-    public Level(KeyBindings keyBindings, Map map = null, List<string> instructions = null)
+    public Level(Map map, List<KeyActions> keyActionsList)
     {
-        KeyBindings = keyBindings;
-        Map = map ?? new Map();
-        Instructions = instructions;
+        Map = map;
+        KeyActionsList = keyActionsList;
     }
 }

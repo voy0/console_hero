@@ -27,13 +27,13 @@ public class KeyBindings //TODO dodaj do mapowania od razu komende, bo czemu nie
         
         Actions = new()
         {
-            { KeyActions.MoveUp,     (ConsoleKey.W, new MovePlayerCommand(_player, _map,-1, 0), "move up") },
-            { KeyActions.MoveDown,   (ConsoleKey.S, new MovePlayerCommand(_player, _map, 1, 0), "move down") },
-            { KeyActions.MoveLeft,   (ConsoleKey.A, new MovePlayerCommand(_player, _map, 0, -1), "move left") },
-            { KeyActions.MoveRight,  (ConsoleKey.D, new MovePlayerCommand(_player, _map, 0, 1), "move right") },
+            { KeyActions.MoveUp,     (ConsoleKey.W, new MovePlayerCommand(_player, _map,0, -1), "move up") },
+            { KeyActions.MoveDown,   (ConsoleKey.S, new MovePlayerCommand(_player, _map, 0, 1), "move down") },
+            { KeyActions.MoveLeft,   (ConsoleKey.A, new MovePlayerCommand(_player, _map, -1, 0), "move left") },
+            { KeyActions.MoveRight,  (ConsoleKey.D, new MovePlayerCommand(_player, _map, 1, 0), "move right") },
             { KeyActions.PickupItem, (ConsoleKey.E, new PickupItemCommand(_player, _map), "pick up item") },
-            { KeyActions.DropItem,   (ConsoleKey.Q, new EquipItemCommand(_player, _map, _inventoryMenu), "drop item") },
-            { KeyActions.EquipItem,  (ConsoleKey.F, new DropItemCommand(_player, _map, _inventoryMenu), "equip item") },
+            { KeyActions.DropItem,   (ConsoleKey.Q, new DropItemCommand(_player, _map, _inventoryMenu), "drop item") },
+            { KeyActions.EquipItem,  (ConsoleKey.F, new EquipItemCommand(_player, _map, _inventoryMenu), "equip item") },
             { KeyActions.SelectInventoryDown, (ConsoleKey.DownArrow, new MoveSelectorInventoryMenuCommand(_inventoryMenu, true), "select inventory down")},
             { KeyActions.SelectInventoryUp, (ConsoleKey.UpArrow, new MoveSelectorInventoryMenuCommand(_inventoryMenu, false), "select inventory up")},
         };

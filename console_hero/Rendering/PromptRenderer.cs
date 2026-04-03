@@ -19,7 +19,7 @@ public class PromptRenderer(Player player, Map map, GameState gameState) : IModu
             _prompt.Add($"Standing on: {map.Cells[x, y].Items.Peek().ColoredName}");
             if(!player.Inventory.IsFull)
             {
-                var keyaction = gameState.Level.KeyBindings.Actions[KeyActions.PickupItem];
+                var keyaction = gameState.KeyBindings.Actions[KeyActions.PickupItem];
                 _prompt.Add($"Press {keyaction.Key} to {keyaction.Description}");
             }
         }
@@ -30,15 +30,15 @@ public class PromptRenderer(Player player, Map map, GameState gameState) : IModu
             var item = player.Inventory.Items[i];
             foreach (var action in item.AvailableActions) //TODO
             {
-                var keyaction = gameState.Level.KeyBindings.Actions[action];
+                var keyaction = gameState.KeyBindings.Actions[action];
                 _prompt.Add($"Press {keyaction.Key} to {keyaction.Description}");
             }
         }
 
         if (player.Inventory.Items.Count >= 2)
         {
-            var keyactionup = gameState.Level.KeyBindings.Actions[KeyActions.SelectInventoryDown];
-            var keyactiondown = gameState.Level.KeyBindings.Actions[KeyActions.SelectInventoryUp];
+            var keyactionup = gameState.KeyBindings.Actions[KeyActions.SelectInventoryDown];
+            var keyactiondown = gameState.KeyBindings.Actions[KeyActions.SelectInventoryUp];
             _prompt.Add($"Press {keyactionup.Key} to {keyactionup.Description}");
             _prompt.Add($"Press {keyactiondown.Key} to {keyactiondown.Description}");
             

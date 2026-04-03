@@ -12,7 +12,7 @@ public class ConsoleRenderer: IRenderer
     private readonly MapRenderer _mapRenderer;
     private readonly InventoryRenderer _inventoryRenderer;
     private readonly PromptRenderer _promptRenderer;
-    private readonly InstructionsRenderer _instructionRenderer;
+    private readonly LevelInstructionsRenderer _levelInstructionRenderer;
     
     private readonly ScreenBuffer _screenBuffer;
     private readonly string[] _currentFrame;
@@ -27,9 +27,9 @@ public class ConsoleRenderer: IRenderer
         _mapRenderer = new MapRenderer(gameState.Level.Map,  gameState.Player);
         _inventoryRenderer = new InventoryRenderer(gameState.Player, gameState.InventoryMenu);
         _promptRenderer = new PromptRenderer(gameState.Player, gameState.Level.Map, gameState);
-        _instructionRenderer = new InstructionsRenderer(gameState.Level.Instructions);
+        _levelInstructionRenderer = new LevelInstructionsRenderer(gameState.Level, gameState.KeyBindings);
         
-        _totalScreenHeight = _map.Height + _inventoryRenderer.Height + _instructionRenderer.Height;
+        _totalScreenHeight = _map.Height + _inventoryRenderer.Height + _levelInstructionRenderer.Height;
         _screenBuffer = new ScreenBuffer(_totalScreenHeight);
         _currentFrame = new string[_totalScreenHeight];
     }
@@ -42,7 +42,7 @@ public class ConsoleRenderer: IRenderer
         _inventoryRenderer.Render();
         _mapRenderer.Render();
         _promptRenderer.Render();
-        _instructionRenderer.Render();
+        _levelInstructionRenderer.Render();
 
         int currentLineIndex = 0;
         for (int y = 0; y < _map.Height; y++)
@@ -60,9 +60,9 @@ public class ConsoleRenderer: IRenderer
             currentLineIndex++;
         }
         
-        for (int y = 0; y < _instructionRenderer.Height; y++)
+        for (int y = 0; y < _levelInstructionRenderer.Height; y++)
         {
-            _currentFrame[currentLineIndex] = _instructionRenderer.GetLine(y);
+            _currentFrame[currentLineIndex] = _levelInstructionRenderer.GetLine(y);
             currentLineIndex++;
         }
         _screenBuffer.Draw(_currentFrame);

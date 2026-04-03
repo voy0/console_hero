@@ -343,26 +343,27 @@ public class DungeonBuilder : IDungeonStarter, IDungeonBuilder
             PlaceItemWherever(new Coins(value));
         }
     }
-    private List<string> GenerateInstructions(KeyBindings keyBindings)
+    private List<KeyActions> GenerateKeyActions(KeyBindings keyBindings)
     {
-        var instructionsList = new List<string>();
+        var instructionsList = new List<KeyActions>();
         
-        instructionsList.Add(Instructions.GetInstruction(KeyActions.MoveUp, keyBindings));
-        instructionsList.Add(Instructions.GetInstruction(KeyActions.MoveDown, keyBindings));
-        instructionsList.Add(Instructions.GetInstruction(KeyActions.MoveLeft, keyBindings));
-        instructionsList.Add(Instructions.GetInstruction(KeyActions.MoveRight, keyBindings));
+        instructionsList.Add(KeyActions.MoveUp);
+        instructionsList.Add(KeyActions.MoveDown);
+        instructionsList.Add(KeyActions.MoveLeft);
+        instructionsList.Add(KeyActions.MoveRight);
 
         if (_itemsToAdd > 0)
         {
-            instructionsList.Add(Instructions.GetInstruction(KeyActions.PickupItem, keyBindings));
-            instructionsList.Add(Instructions.GetInstruction(KeyActions.DropItem, keyBindings));
+            instructionsList.Add(KeyActions.PickupItem);
+            instructionsList.Add(KeyActions.DropItem);
         }
 
         if (_weaponsToAdd > 0)
         {
-            instructionsList.Add(Instructions.GetInstruction(KeyActions.EquipItem, keyBindings));
+            instructionsList.Add(KeyActions.EquipItem);
         }
-
+        instructionsList.Add(KeyActions.SelectInventoryUp);
+        instructionsList.Add(KeyActions.SelectInventoryDown);
         return instructionsList;
     }
     
@@ -469,8 +470,8 @@ public class DungeonBuilder : IDungeonStarter, IDungeonBuilder
         if(_goldToAdd > 0) PlaceGold(_goldToAdd, _goldDenomination);
         if (_coinsToAdd > 0) PlaceCoins(_coinsToAdd, _coinsDenomination);
         
-        var keyBindings = gameState.Level.KeyBindings;
-        Level level =  new Level(keyBindings, _map, GenerateInstructions(keyBindings));
+        var keyBindings = gameState.KeyBindings;
+        Level level =  new Level(_map, GenerateKeyActions(keyBindings));
         
         _buildCenterRoom = false;
         _roomsToBuild = 0;

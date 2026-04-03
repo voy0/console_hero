@@ -7,6 +7,6 @@ public class LevelGenerator(GameState gameState) : ILevelGenerator
     public Level Generate()
     {
         DungeonDirector director = new DungeonDirector(gameState);
-        return director.TreasureDungeon();
+        return director.TestItems();
     }
 }
