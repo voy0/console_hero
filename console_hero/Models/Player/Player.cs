@@ -18,5 +18,18 @@ public class Player
         Position = (Position.x + dx, Position.y + dy);
     }
     
-    
+    public int GetTotalStat(StatType stat)
+    {
+        int baseValue = Stats[stat].Value;
+
+        int leftBonus = Hands.Left?.GetStatBonus(stat) ?? 0;
+        int rightBonus = Hands.Right?.GetStatBonus(stat) ?? 0;
+
+        if (Hands.Left != null && Hands.Left == Hands.Right)
+        {
+            return baseValue + leftBonus; 
+        }
+
+        return baseValue + leftBonus + rightBonus;
+    }
 }

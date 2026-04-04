@@ -8,6 +8,9 @@ public abstract class OffHandItem(char symbol, string name, string color): Item(
     {
         return Equip(player, this); 
     }
+
+    public int GetStatBonus(StatType statType) => 0;
+    
     public bool Equip(Player player, IEquippable itemToEquip)
     {
         IEquippable? item = null;

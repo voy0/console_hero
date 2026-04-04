@@ -33,13 +33,13 @@ public abstract class WeaponDecorator : IWeapon
     }
 }
 
-public class StrongWeaponDecorator : WeaponDecorator
+public class SharpnessWeaponDecorator : WeaponDecorator
 {
-    public StrongWeaponDecorator(IWeapon weapon) : base(weapon) { }
+    public SharpnessWeaponDecorator(IWeapon weapon) : base(weapon) { }
 
-    public override string Name => $"{_weapon.Name} (Powerful)";
+    public override string Name => $"{_weapon.Name} (Sharp)";
     public override string Color => $"{Ansi.FgRgb(255,0,0)}";
-    public override string ColoredName => $"{_weapon.ColoredName} {Color}(Powerful){Ansi.Reset}";
+    public override string ColoredName => $"{_weapon.ColoredName} {Color}(Sharp){Ansi.Reset}";
     public override string ColoredSymbol => $"{Color}{_weapon.Symbol}{Ansi.Reset}";
     public override int BaseDamage => _weapon.BaseDamage + 5; 
 }

@@ -22,7 +22,7 @@ public static class EntityGenerator
         else weapon = new GrandStaff();
                 
         r =  Random.Shared.Next(100);
-        if (r < 20)  weapon = new StrongWeaponDecorator(weapon);
+        if (r < 20)  weapon = new SharpnessWeaponDecorator(weapon);
         r =  Random.Shared.Next(100);
         if (r < 20) weapon = new LuckyWeaponDecorator(weapon);
         return weapon;

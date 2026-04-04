@@ -26,16 +26,16 @@ public class PlayerStatusRenderer(Player player) : IRenderer // (Albo IModuleRen
 
         _statusLines.Add("-------- P H Y S I C A L --------");
 
-        _statusLines.Add($" {"Armor:", Lbl} {player.Stats[StatType.Armor].Value, Val}");
-        _statusLines.Add($" {"Strength:", Lbl} {player.Stats[StatType.Strength].Value, Val}");
-        _statusLines.Add($" {"Agility:", Lbl} {player.Stats[StatType.Agility].Value, Val}");
-        _statusLines.Add($" {"Dexterity:", Lbl} {player.Stats[StatType.Dexterity].Value, Val}");
-        
+        _statusLines.Add($" {"Armor:", Lbl} {player.GetTotalStat(StatType.Armor), Val}");
+        _statusLines.Add($" {"Strength:", Lbl} {player.GetTotalStat(StatType.Strength), Val}");
+        _statusLines.Add($" {"Agility:", Lbl} {player.GetTotalStat(StatType.Agility), Val}");
+        _statusLines.Add($" {"Dexterity:", Lbl} {player.GetTotalStat(StatType.Dexterity), Val}");
+
         _statusLines.Add("---------- M E N T A L ----------");
 
-        _statusLines.Add($" {"Intellect:", Lbl} {player.Stats[StatType.Intellect].Value, Val}");
-        _statusLines.Add($" {"Luck:", Lbl} {player.Stats[StatType.Luck].Value, Val}");
-        _statusLines.Add($" {"Magic:", Lbl} {player.Stats[StatType.Magic].Value, Val}");
+        _statusLines.Add($" {"Intellect:", Lbl} {player.GetTotalStat(StatType.Intellect), Val}");
+        _statusLines.Add($" {"Luck:", Lbl} {player.GetTotalStat(StatType.Luck), Val}");
+        _statusLines.Add($" {"Magic:", Lbl} {player.GetTotalStat(StatType.Magic), Val}");
 
         _statusLines.Add("======== E Q U I P P E D ========");
         
