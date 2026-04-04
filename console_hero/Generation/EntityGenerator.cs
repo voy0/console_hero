@@ -12,7 +12,7 @@ public static class EntityGenerator
         return new Grimoire();
     }
 
-    public static IWeapon GenrateRandomDecoratedWeapon() // 
+    public static IWeapon GenrateRandomDecoratedWeapon()  
     {
         int r = Random.Shared.Next(100);
         IWeapon weapon;
@@ -20,20 +20,26 @@ public static class EntityGenerator
         else if (r < 60) weapon = new GreatSword();
         else if (r < 90) weapon = new Wand();
         else weapon = new GrandStaff();
-                
+        if (Random.Shared.Next(100) < 50)
+        {
+            if (Random.Shared.Next(100) < 80) weapon = new GradeWeaponDecorator(weapon, WeaponGrade.I);
+            else if (Random.Shared.Next(100) < 40) weapon = new GradeWeaponDecorator(weapon, WeaponGrade.II);
+            else if (Random.Shared.Next(100) < 15) weapon = new GradeWeaponDecorator(weapon, WeaponGrade.III);
+            else if (Random.Shared.Next(100) < 7) weapon = new GradeWeaponDecorator(weapon, WeaponGrade.IV);
+            else if (Random.Shared.Next(100) < 2) weapon = new GradeWeaponDecorator(weapon, WeaponGrade.V);
+        }
+
         r =  Random.Shared.Next(100);
-        if (r < 20)  weapon = new SharpnessWeaponDecorator(weapon);
-        r =  Random.Shared.Next(100);
-        if (r < 20) weapon = new LuckyWeaponDecorator(weapon);
+        if (r < 7) weapon = new LuckyWeaponDecorator(weapon);
         return weapon;
     }
 
     public static IItem GenerateRandomItem()
     {
-        int r = Random.Shared.Next(100);
-        if (r < 40) return new Sand();
-        if (r < 80) return new DeadRat();
-        if (r < 98) return new Bones();
+        int r = Random.Shared.Next(1000);
+        if (r < 400) return new Sand();
+        if (r < 800) return new DeadRat();
+        if (r < 999) return new Bones();
         return new JesusFigner();
     }
 

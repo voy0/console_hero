@@ -2,7 +2,7 @@ namespace console_hero.Models.Items;
 
 public abstract class WeaponDecorator : IWeapon
 {
-    public IWeapon _weapon;
+    protected readonly IWeapon _weapon;
 
     public WeaponDecorator(IWeapon weapon)
     {
@@ -33,15 +33,39 @@ public abstract class WeaponDecorator : IWeapon
     }
 }
 
-public class SharpnessWeaponDecorator : WeaponDecorator
+public enum WeaponGrade
 {
-    public SharpnessWeaponDecorator(IWeapon weapon) : base(weapon) { }
+    I,
+    II,
+    III,
+    IV,
+    V,
+}
 
-    public override string Name => $"{_weapon.Name} (Sharp)";
-    public override string Color => $"{Ansi.FgRgb(255,0,0)}";
-    public override string ColoredName => $"{_weapon.ColoredName} {Color}(Sharp){Ansi.Reset}";
-    public override string ColoredSymbol => $"{Color}{_weapon.Symbol}{Ansi.Reset}";
-    public override int BaseDamage => _weapon.BaseDamage + 5; 
+public class GradeWeaponDecorator : WeaponDecorator
+{
+    private WeaponGrade _grade;
+    private (string color, int damageBonus) _gradeValues;
+    private static readonly Dictionary<WeaponGrade, (string color, int damageBonus)> GradeColors = new()
+    {
+        { WeaponGrade.I, (Ansi.FgRgb(0, 25, 225), 2) },
+        { WeaponGrade.II, (Ansi.FgRgb(150, 25, 225), 4) },
+        { WeaponGrade.III, (Ansi.FgRgb(200, 25, 200), 7) },
+        { WeaponGrade.IV, (Ansi.FgRgb(230, 25, 125), 9) },
+        { WeaponGrade.V, (Ansi.FgRgb(255, 25, 0), 12) },
+    };
+
+    public GradeWeaponDecorator(IWeapon weapon, WeaponGrade grade) : base(weapon)
+    {
+        _grade = grade;
+        _gradeValues = GradeColors[_grade]; 
+    }
+    
+    public override string Name => $"{_weapon.Name} ({_grade.ToString()})";
+    public override string Color => $"{_gradeValues.color}";
+    public override string ColoredName => $"{_weapon.ColoredName} {_gradeValues.color}({_grade.ToString()}){Ansi.Reset}";
+    public override string ColoredSymbol => $"{_gradeValues.color}{_weapon.Symbol}{Ansi.Reset}";
+    public override int BaseDamage => _weapon.BaseDamage + _gradeValues.damageBonus; 
 }
 
 public class LuckyWeaponDecorator : WeaponDecorator

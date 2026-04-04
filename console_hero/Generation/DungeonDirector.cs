@@ -18,12 +18,12 @@ public class DungeonDirector(GameState gameState)
     {
         IDungeonStarter starter = new DungeonBuilder();
         return starter.FullDungeon()
-            .AddCenterRoom(10)
+            .AddCenterRoom(20)
             .AddCorridors()
             .AddCoins(10)
             .AddGold(5)
-            .AddWeapons(25)
             .AddItems(10)
+            .AddWeapons(25)
             .Build(gameState);
     }
 
@@ -56,10 +56,7 @@ public class DungeonDirector(GameState gameState)
     {
         IDungeonStarter starter = new DungeonBuilder();
         return starter.EmptyDungeon()
-            .AddGold(10)
-            .AddCoins(10)
-            .AddItems(20)
-            .AddWeapons(50)
+            .AddWeapons(100)
             .Build(gameState);
     }
 

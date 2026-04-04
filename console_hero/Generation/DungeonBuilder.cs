@@ -296,23 +296,14 @@ public class DungeonBuilder : IDungeonStarter, IDungeonBuilder
     private void PlaceWeapons(int weaponsToAdd)
     {
         Random random = new Random();
-        if (_builtRooms.Count == 0)
+        for (int i = 0; i < weaponsToAdd; i++)
         {
-            for(int i = 0; i < weaponsToAdd; i++)
-            {
-                int r = Random.Shared.Next(100);
-                if(r < 40)
-                    PlaceItemWherever(EntityGenerator.GenrateRandomDecoratedWeapon());
-                else
-                    PlaceItemWherever(EntityGenerator.GenerateRandomWeapon());
-            }
-        }
-        else
-        {
-            for (int i = 0; i < weaponsToAdd; i++)
-            {
-                PlaceItemInARoom(EntityGenerator.GenerateRandomWeapon());
-            }
+            int r = Random.Shared.Next(100);
+            
+            if (r < 70)
+                PlaceItemInARoom(EntityGenerator.GenrateRandomDecoratedWeapon());
+            else
+                PlaceItemWherever(EntityGenerator.GenerateRandomWeapon());
         }
     }
     private void PlaceItems(int itemsToAdd)
