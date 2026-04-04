@@ -300,7 +300,11 @@ public class DungeonBuilder : IDungeonStarter, IDungeonBuilder
         {
             for(int i = 0; i < weaponsToAdd; i++)
             {
-                PlaceItemWherever(EntityGenerator.GenerateRandomWeapon());
+                int r = Random.Shared.Next(100);
+                if(r < 40)
+                    PlaceItemWherever(EntityGenerator.GenrateRandomDecoratedWeapon());
+                else
+                    PlaceItemWherever(EntityGenerator.GenerateRandomWeapon());
             }
         }
         else

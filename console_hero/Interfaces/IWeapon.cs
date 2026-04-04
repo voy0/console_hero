@@ -1,7 +1,8 @@
 namespace console_hero;
 
-public interface IWeapon
+public interface IWeapon : IItem, IEquippable
 {
     int BaseDamage{get;}
-    void Attack();
+    int GetStatBonus(StatType statType);
+    //void Attack();
 }

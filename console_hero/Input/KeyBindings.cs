@@ -34,8 +34,8 @@ public class KeyBindings //TODO dodaj do mapowania od razu komende, bo czemu nie
             { KeyActions.PickupItem, (ConsoleKey.E, new PickupItemCommand(_player, _map), "pick up item") },
             { KeyActions.DropItem,   (ConsoleKey.Q, new DropItemCommand(_player, _map, _inventoryMenu), "drop item") },
             { KeyActions.EquipItem,  (ConsoleKey.F, new EquipItemCommand(_player, _map, _inventoryMenu), "equip item") },
-            { KeyActions.SelectInventoryDown, (ConsoleKey.DownArrow, new MoveSelectorInventoryMenuCommand(_inventoryMenu, true), "select inventory down")},
-            { KeyActions.SelectInventoryUp, (ConsoleKey.UpArrow, new MoveSelectorInventoryMenuCommand(_inventoryMenu, false), "select inventory up")},
+            { KeyActions.SelectInventoryDown, (ConsoleKey.DownArrow, new MoveSelectorInventoryMenuCommand(_inventoryMenu, false), "select inventory down")},
+            { KeyActions.SelectInventoryUp, (ConsoleKey.UpArrow, new MoveSelectorInventoryMenuCommand(_inventoryMenu, true), "select inventory up")},
         };
         KeyToAction = Actions.ToDictionary(kvp => kvp.Value.Key, kvp => kvp.Key);
     }

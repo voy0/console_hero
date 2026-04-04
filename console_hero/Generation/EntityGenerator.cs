@@ -12,6 +12,22 @@ public static class EntityGenerator
         return new Grimoire();
     }
 
+    public static IWeapon GenrateRandomDecoratedWeapon() // 
+    {
+        int r = Random.Shared.Next(100);
+        IWeapon weapon;
+        if (r < 40) weapon = new KnightsSword();
+        else if (r < 60) weapon = new GreatSword();
+        else if (r < 90) weapon = new Wand();
+        else weapon = new GrandStaff();
+                
+        r =  Random.Shared.Next(100);
+        if (r < 20)  weapon = new StrongWeaponDecorator(weapon);
+        r =  Random.Shared.Next(100);
+        if (r < 20) weapon = new LuckyWeaponDecorator(weapon);
+        return weapon;
+    }
+
     public static IItem GenerateRandomItem()
     {
         int r = Random.Shared.Next(100);

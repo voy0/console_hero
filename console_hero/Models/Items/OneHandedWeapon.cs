@@ -4,13 +4,13 @@ public abstract class OneHandedWeapon(char symbol, string name, string color, in
 {
     public int BaseDamage { get; } = damage;
     public override List<KeyActions> AvailableActions => new List<KeyActions>() { KeyActions.DropItem, KeyActions.EquipItem };
-    
+    public int GetStatBonus(StatType statType) => 0;
 
     public override bool UseFromInventory(Player player)
     {
-        return Equip(player); 
+        return Equip(player, this); 
     }
-    public bool Equip(Player player)
+    public bool Equip(Player player, IEquippable itemToEquip)
     {
         IEquippable? item = null;
         if (player.Hands.Left == player.Hands.Right)
@@ -23,8 +23,8 @@ public abstract class OneHandedWeapon(char symbol, string name, string color, in
             item = player.Hands.ReleaseFromRight();
         }
 
-        player.Hands.EquipRight(this);
-        player.Inventory.RemoveItem(this);
+        player.Hands.EquipRight(itemToEquip);
+        player.Inventory.RemoveItem(itemToEquip);
         
         player.Inventory.AddItem(item);
         return true;

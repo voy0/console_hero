@@ -17,4 +17,6 @@ public class Player
     {
         Position = (Position.x + dx, Position.y + dy);
     }
+    
+    
 }

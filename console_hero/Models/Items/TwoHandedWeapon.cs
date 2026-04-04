@@ -4,12 +4,13 @@ public abstract class TwoHandedWeapon(char symbol, string name, string color, in
 {
     public int BaseDamage { get; } = damage;
     public override List<KeyActions> AvailableActions => new List<KeyActions>() { KeyActions.DropItem, KeyActions.EquipItem };
+    public int GetStatBonus(StatType statType) => 0;
     
     public override bool UseFromInventory(Player player)
     {
-        return Equip(player); 
+        return Equip(player, this); 
     }
-    public bool Equip(Player player)
+    public bool Equip(Player player, IEquippable itemToEquip)
     {
         int itemsToDrop = 0;
         if (player.Hands.Left != null) itemsToDrop++;
@@ -19,9 +20,9 @@ public abstract class TwoHandedWeapon(char symbol, string name, string color, in
         {
             return false;
         }
-        IEquippable? itemFromRight = player.Hands.EquipRight(this);
-        IEquippable? itemFromLeft = player.Hands.EquipLeft(this);
-        player.Inventory.RemoveItem(this);
+        IEquippable? itemFromRight = player.Hands.EquipRight(itemToEquip);
+        IEquippable? itemFromLeft = player.Hands.EquipLeft(itemToEquip);
+        player.Inventory.RemoveItem(itemToEquip);
 
         if (itemFromRight == itemFromLeft)
         {

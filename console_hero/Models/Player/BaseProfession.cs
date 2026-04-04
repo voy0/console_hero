@@ -7,8 +7,8 @@ public class BaseProfession : IProfession
     public IReadOnlyDictionary<StatType, int> InitialStats { get; } = new Dictionary<StatType, int>
     {
         { StatType.Health, 100 },
-        { StatType.Mana, 20 },
-        { StatType.Stamina, 50 },
+        { StatType.Mana, 100 },
+        { StatType.Stamina, 100 },
         
         { StatType.Armor, 0 },
         { StatType.Strength, 10 },
@@ -20,3 +20,9 @@ public class BaseProfession : IProfession
         { StatType.Magic, 5 }
     };
 }
+// TODO: make enemy and player derive from entity and profession so combat is more realistic
+// public class EnemyMutantRat : IProfession
+// {
+//     public string Name { get; } = "Rat";
+//     
+// }

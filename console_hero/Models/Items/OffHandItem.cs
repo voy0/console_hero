@@ -6,9 +6,9 @@ public abstract class OffHandItem(char symbol, string name, string color): Item(
     
     public override bool UseFromInventory(Player player)
     {
-        return Equip(player); 
+        return Equip(player, this); 
     }
-    public bool Equip(Player player)
+    public bool Equip(Player player, IEquippable itemToEquip)
     {
         IEquippable? item = null;
         if (player.Hands.Left == player.Hands.Right)
@@ -21,8 +21,8 @@ public abstract class OffHandItem(char symbol, string name, string color): Item(
             item = player.Hands.ReleaseFromLeft();
         }
 
-        player.Hands.EquipLeft(this);
-        player.Inventory.RemoveItem(this);
+        player.Hands.EquipLeft(itemToEquip);
+        player.Inventory.RemoveItem(itemToEquip);
         
         player.Inventory.AddItem(item);
         return true;

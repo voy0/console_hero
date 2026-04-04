@@ -7,7 +7,7 @@ public abstract class Item : IItem
     public string Color { get; }
     public string ColoredSymbol { get; }
     public string ColoredName { get; }
-    public virtual List<KeyActions> AvailableActions => new List<KeyActions>() { KeyActions.DropItem };
+    public virtual List<KeyActions> AvailableActions => new List<KeyActions>() { KeyActions.PickupItem, KeyActions.DropItem };
     public virtual bool Pickup(Player player) => player.Inventory.AddItem(this);
 
     public Item(char symbol, string name, string color)
