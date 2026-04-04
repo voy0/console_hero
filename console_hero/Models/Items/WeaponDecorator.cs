@@ -48,10 +48,10 @@ public class GradeWeaponDecorator : WeaponDecorator
     private (string color, int damageBonus) _gradeValues;
     private static readonly Dictionary<WeaponGrade, (string color, int damageBonus)> GradeColors = new()
     {
-        { WeaponGrade.I, (Ansi.FgRgb(0, 25, 225), 2) },
-        { WeaponGrade.II, (Ansi.FgRgb(150, 25, 225), 4) },
-        { WeaponGrade.III, (Ansi.FgRgb(200, 25, 200), 7) },
-        { WeaponGrade.IV, (Ansi.FgRgb(230, 25, 125), 9) },
+        { WeaponGrade.I, (Ansi.FgRgb(0, 225, 225), 2) },
+        { WeaponGrade.II, (Ansi.FgRgb(50, 150, 255), 4) },
+        { WeaponGrade.III, (Ansi.FgRgb(255, 150, 50), 7) },
+        { WeaponGrade.IV, (Ansi.FgRgb(255, 25, 125), 9) },
         { WeaponGrade.V, (Ansi.FgRgb(255, 25, 0), 12) },
     };
 

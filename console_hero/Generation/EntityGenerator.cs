@@ -22,11 +22,23 @@ public static class EntityGenerator
         else weapon = new GrandStaff();
         if (Random.Shared.Next(100) < 50)
         {
-            if (Random.Shared.Next(100) < 80) weapon = new GradeWeaponDecorator(weapon, WeaponGrade.I);
-            else if (Random.Shared.Next(100) < 40) weapon = new GradeWeaponDecorator(weapon, WeaponGrade.II);
-            else if (Random.Shared.Next(100) < 15) weapon = new GradeWeaponDecorator(weapon, WeaponGrade.III);
-            else if (Random.Shared.Next(100) < 7) weapon = new GradeWeaponDecorator(weapon, WeaponGrade.IV);
-            else if (Random.Shared.Next(100) < 2) weapon = new GradeWeaponDecorator(weapon, WeaponGrade.V);
+            // if (Random.Shared.Next(100) < 80) weapon = new GradeWeaponDecorator(weapon, WeaponGrade.I);
+            // else if (Random.Shared.Next(100) < 40) weapon = new GradeWeaponDecorator(weapon, WeaponGrade.II);
+            // else if (Random.Shared.Next(100) < 15) weapon = new GradeWeaponDecorator(weapon, WeaponGrade.III);
+            // else if (Random.Shared.Next(100) < 7) weapon = new GradeWeaponDecorator(weapon, WeaponGrade.IV);
+            // else if (Random.Shared.Next(100) < 2) weapon = new GradeWeaponDecorator(weapon, WeaponGrade.V);
+            
+            // if (Random.Shared.Next(100) < 50) weapon = new GradeWeaponDecorator(weapon, WeaponGrade.I);
+            // else if (Random.Shared.Next(100) < 50) weapon = new GradeWeaponDecorator(weapon, WeaponGrade.II);
+            // else if (Random.Shared.Next(100) < 50) weapon = new GradeWeaponDecorator(weapon, WeaponGrade.III);
+            // else if (Random.Shared.Next(100) < 50) weapon = new GradeWeaponDecorator(weapon, WeaponGrade.IV);
+            // else if (Random.Shared.Next(100) < 50) weapon = new GradeWeaponDecorator(weapon, WeaponGrade.V);
+            
+            if (Random.Shared.Next(100) < 90) weapon = new GradeWeaponDecorator(weapon, WeaponGrade.I);
+            else if (Random.Shared.Next(100) < 60) weapon = new GradeWeaponDecorator(weapon, WeaponGrade.II);
+            else if (Random.Shared.Next(100) < 30) weapon = new GradeWeaponDecorator(weapon, WeaponGrade.III);
+            else if (Random.Shared.Next(100) < 15) weapon = new GradeWeaponDecorator(weapon, WeaponGrade.IV);
+            else if (Random.Shared.Next(100) < 5) weapon = new GradeWeaponDecorator(weapon, WeaponGrade.V);
         }
 
         r =  Random.Shared.Next(100);
