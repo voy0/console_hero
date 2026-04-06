@@ -39,12 +39,19 @@ public class MapRenderer : IModuleRenderer
                 else if (_map.Cells[x, y].ItemsCount != 0)
                 {
                     var item = _map.Cells[x, y].PeekItem();
-                    line.Append(item.ColoredSymbol);
+                    if(item != null)
+                        line.Append(item.ColoredSymbol);
+                    else
+                        line.Append(MapSymbols.Empty);
                 }
                 else if (_map.Cells[x, y].IsOccupied)
                 {
                     var occupant = _map.Cells[x, y].Occupant;
-                    line.Append(occupant.ColoredSymbol);
+                    if(occupant != null)
+                        line.Append(occupant.ColoredSymbol);
+                    else
+                        line.Append(MapSymbols.Empty);
+                    
                 }
                 else
                 {

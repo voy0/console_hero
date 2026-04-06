@@ -388,6 +388,12 @@ public class DungeonBuilder : IDungeonStarter, IDungeonBuilder
         }
         instructionsList.Add(KeyActions.SelectInventoryUp);
         instructionsList.Add(KeyActions.SelectInventoryDown);
+
+        if (_enemiesToAdd > 0)
+        {
+            instructionsList.Add(KeyActions.EnterFight);
+            instructionsList.Add(KeyActions.EscapeFight);
+        }
         return instructionsList;
     }
     

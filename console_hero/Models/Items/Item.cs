@@ -9,6 +9,7 @@ public abstract class Item : IItem
     public string ColoredName { get; }
     public virtual List<KeyActions> AvailableActions => new List<KeyActions>() { KeyActions.PickupItem, KeyActions.DropItem };
     public virtual bool Pickup(Player player) => player.Inventory.AddItem(this);
+    public virtual int GetStatBonus(StatType statType) => 0;
 
     public Item(char symbol, string name, string color)
     {

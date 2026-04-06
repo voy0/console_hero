@@ -2,7 +2,6 @@ namespace console_hero;
 
 public interface IWeapon : IEquippable
 {
-    int BaseDamage{get;}
     //void Attack();
 }
 

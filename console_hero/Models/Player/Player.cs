@@ -24,6 +24,7 @@ public class Player
 
         int leftBonus = Hands.Left?.GetStatBonus(stat) ?? 0;
         int rightBonus = Hands.Right?.GetStatBonus(stat) ?? 0;
+         
 
         if (Hands.Left != null && Hands.Left == Hands.Right)
         {

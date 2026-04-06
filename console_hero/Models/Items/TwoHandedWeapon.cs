@@ -4,8 +4,6 @@ public abstract class TwoHandedWeapon(char symbol, string name, string color, in
 {
     public int BaseDamage { get; } = damage;
     public override List<KeyActions> AvailableActions => new List<KeyActions>() { KeyActions.DropItem, KeyActions.EquipItem };
-    public int GetStatBonus(StatType statType) => 0;
-    
     public override bool UseFromInventory(Player player)
     {
         return Equip(player, this); 
@@ -37,4 +35,5 @@ public abstract class TwoHandedWeapon(char symbol, string name, string color, in
     public void Attack(){}
 }
 
-public class GreatSword() : TwoHandedWeapon('†', "The Great Sword", Ansi.FgRgb(200, 170, 170), 12);
+public class GreatSword() : TwoHandedWeapon('†', "The Great Sword", Ansi.FgRgb(200, 170, 170), 12), IHeavyWeapon;
+public class TwinDaggers(): TwoHandedWeapon('‡', "Twin Daggers", Ansi.FgRgb(230, 200, 200), 4), ILightWeapon;

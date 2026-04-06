@@ -1,9 +1,17 @@
 namespace console_hero.Models.Items;
 
 public abstract class MagicalOneHandedWeapon(char symbol, string name, string color, int damage, int magic)
-    : OneHandedWeapon(symbol, name, color, damage), IMagical
+    : OneHandedWeapon(symbol, name, color, damage)
 {
-    public int Magic { get; } = magic;
+    public override int GetStatBonus(StatType statType)
+    {
+        if (statType == StatType.Magic)
+        {
+            return magic;
+        }
+
+        return 0;
+    }
 }
 
-public class Wand() : MagicalOneHandedWeapon('¡', "Magical Wand", Ansi.FgRgb(170, 20, 240),1, 6);
+public class Wand() : MagicalOneHandedWeapon('¡', "Magical Wand", Ansi.FgRgb(170, 20, 240),1, 3), IMagicalWeapon;

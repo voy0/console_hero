@@ -7,8 +7,9 @@ public static class EntityGenerator
         if (r < 25) return new KnightsSword();
         if (r < 50) return new TargeShield();
         if (r < 55) return new GreatSword();
-        if (r < 80) return new Wand();
-        if (r < 90) return new GrandStaff();
+        if (r < 80) return new TwinDaggers();
+        if (r < 90) return new Wand();
+        if (r < 95) return new GrandStaff();
         return new Grimoire();
     }
 
@@ -18,7 +19,8 @@ public static class EntityGenerator
         IWeapon weapon;
         if (r < 40) weapon = new KnightsSword();
         else if (r < 60) weapon = new GreatSword();
-        else if (r < 90) weapon = new Wand();
+        else if (r < 80) weapon = new TwinDaggers();
+        else if (r < 95) weapon = new Wand();
         else weapon = new GrandStaff();
         if (Random.Shared.Next(100) < 50)
         {

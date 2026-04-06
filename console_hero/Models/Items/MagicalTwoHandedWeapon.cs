@@ -1,8 +1,18 @@
 namespace console_hero.Models.Items;
 
 public abstract class MagicalTwoHandedWeapon(char symbol, string name, string color, int damage, int magic)
-    : TwoHandedWeapon(symbol, name, color, damage), IMagical
+    : TwoHandedWeapon(symbol, name, color, damage)
 {
-    public int Magic { get; } = magic;
+    public override int GetStatBonus(StatType statType)
+    {
+        if (statType == StatType.Magic)
+        {
+            return 5;
+        }
+
+        return 0;
+    }
 }
-public class GrandStaff() : MagicalTwoHandedWeapon('ƒ', "The Grand Staff", Ansi.FgRgb(255, 50, 255),3, 8);
+
+public class GrandStaff()
+    : MagicalTwoHandedWeapon('ƒ', "The Grand Staff", Ansi.FgRgb(255, 50, 255), 3, 8), IMagicalWeapon;

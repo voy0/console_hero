@@ -4,8 +4,6 @@ public abstract class OneHandedWeapon(char symbol, string name, string color, in
 {
     public int BaseDamage { get; } = damage;
     public override List<KeyActions> AvailableActions => new List<KeyActions>() { KeyActions.DropItem, KeyActions.EquipItem };
-    public int GetStatBonus(StatType statType) => 0;
-
     public override bool UseFromInventory(Player player)
     {
         return Equip(player, this); 
@@ -32,4 +30,6 @@ public abstract class OneHandedWeapon(char symbol, string name, string color, in
     public void Attack(){}
 }
 
-public class KnightsSword() : OneHandedWeapon('!', "Knight's Sword", Ansi.FgRgb(150, 150, 170), 6);
+public class KnightsSword() : OneHandedWeapon('⸸', "Knight's Sword", Ansi.FgRgb(150, 150, 170), 7), IHeavyWeapon;
+
+public class ShortSword() : OneHandedWeapon('☨', "Gladius", Ansi.FgRgb(150, 150, 170), 5), ILightWeapon;

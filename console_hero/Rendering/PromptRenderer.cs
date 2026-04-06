@@ -14,7 +14,7 @@ public class PromptRenderer(Player player, Map map, GameState gameState) : IModu
             _prompt.Add(prompt);
         }
         gameState.Prompts.Clear();
-        if (map.Cells[x, y].ItemsCount != 0)
+        if (map.Cells[x, y].ItemsCount != 0) // TODO move detection responsiblity to detect
         {
             _prompt.Add($"Standing on: {map.Cells[x, y].PeekItem().ColoredName}");
             if(!player.Inventory.IsFull)
@@ -28,7 +28,7 @@ public class PromptRenderer(Player player, Map map, GameState gameState) : IModu
         if (!player.Inventory.IsEmpty)
         {
             var item = player.Inventory.Items[i];
-            foreach (var action in item.AvailableActions) //TODO
+            foreach (var action in item.AvailableActions)
             {
                 var keyaction = gameState.KeyBindings.Actions[action];
                 _prompt.Add($"Press {keyaction.Key} to {keyaction.Description}");

@@ -56,6 +56,7 @@ public class DungeonDirector(GameState gameState)
     {
         IDungeonStarter starter = new DungeonBuilder();
         return starter.EmptyDungeon()
+            .AddEnemies(10)
             .AddWeapons(200)
             .Build(gameState);
     }

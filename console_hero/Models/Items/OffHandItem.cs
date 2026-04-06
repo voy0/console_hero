@@ -1,6 +1,6 @@
 namespace console_hero.Models.Items;
 
-public abstract class OffHandItem(char symbol, string name, string color): Item(symbol, name, color), IEquippable
+public abstract class OffHandItem(char symbol, string name, string color, int damage, int statModifier, StatType stat): Item(symbol, name, color), IEquippable
 {
     public override List<KeyActions> AvailableActions => new List<KeyActions>() { KeyActions.DropItem, KeyActions.EquipItem };
     
@@ -9,8 +9,8 @@ public abstract class OffHandItem(char symbol, string name, string color): Item(
         return Equip(player, this); 
     }
 
-    public int GetStatBonus(StatType statType) => 0;
-    
+    public int BaseDamage { get; } = damage;
+
     public bool Equip(Player player, IEquippable itemToEquip)
     {
         IEquippable? item = null;
@@ -30,6 +30,15 @@ public abstract class OffHandItem(char symbol, string name, string color): Item(
         player.Inventory.AddItem(item);
         return true;
     }
+    public override int GetStatBonus(StatType statType)
+    {
+        if (statType == stat)
+        {
+            return statModifier;
+        }
+
+        return 0;
+    }
 }
 
-public class TargeShield() : OffHandItem('O', "The Targe Shield", Ansi.FgRgb(50, 150, 100));
+public class TargeShield() : OffHandItem('O', "The Targe Shield", Ansi.FgRgb(50, 150, 100),1, 8, StatType.Armor);

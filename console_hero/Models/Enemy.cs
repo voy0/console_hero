@@ -26,4 +26,4 @@ public abstract class Enemy
     }
 }
 
-public class MutantRat() : Enemy('s', "MutantRat", Ansi.FgRgb(170,120,200), 20, 0, 5);
+public class MutantRat() : Enemy('☙', "Mutant Rat", Ansi.FgRgb(255,255,255), 20, 0, 5);
