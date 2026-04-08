@@ -4,4 +4,10 @@ public abstract class MagicalOffHandItem(char symbol, string name, string color,
 {
 }
 
-public class Grimoire() : MagicalOffHandItem('§', "The Grimore", Ansi.FgRgb(200, 30, 200), 0, 15, StatType.Magic);
+public class Grimoire() : MagicalOffHandItem('§', "The Grimore", Ansi.FgRgb(200, 30, 200), 0, 15, StatType.Magic)
+{
+    public override (int damage, int defense) Accept(ICombatVisitor visitor, Player player, IEquippable outerItem)
+    {
+        return visitor.VisitNonWeapon(outerItem, player);
+    }
+}

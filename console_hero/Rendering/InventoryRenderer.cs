@@ -11,13 +11,13 @@ public class InventoryRenderer(Player player, InventoryMenu inventoryMenu) : IMo
         _inventoryLines.Add($"== ({inventory.Count}/{inventory.Capacity}) == I N V E N T O R Y ===");
         for (int i = 0; i < inventory.Count; i++)
         {
-            char? arrow = null;
-            if (inventoryMenu.CurrentIndex == i)
+            string? arrow = null;
+            if (inventoryMenu.CurrentIndex == i && inventoryMenu.InFocus)
             {
-                arrow = '>';
+                arrow = $"{Ansi.BgWhite}{Ansi.FgBlack}>";
             }
             var item = inventory.Items[i];
-            _inventoryLines.Add($"{arrow} {i + 1}. {item.ColoredSymbol} {item.ColoredName}");
+            _inventoryLines.Add($"{arrow} {i + 1}.{Ansi.Reset} {item.ColoredSymbol} {item.ColoredName}");
         }
     }
     public string GetLine(int y)

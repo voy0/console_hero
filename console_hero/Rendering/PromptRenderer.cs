@@ -1,3 +1,5 @@
+using console_hero.Actions;
+
 namespace console_hero.Rendering;
 
 public class PromptRenderer(Player player, Map map, GameState gameState) : IModuleRenderer
@@ -24,8 +26,16 @@ public class PromptRenderer(Player player, Map map, GameState gameState) : IModu
             }
         }
 
+        Enemy? enemy = Detect.Enemy(player, map);
+        if (enemy != null)
+        {
+            _prompt.Add($"Standing next to: {enemy.Name}");
+            var keyaction = gameState.KeyBindings.Actions[KeyActions.EnterFight];
+            _prompt.Add($"Press {keyaction.Key} to {keyaction.Description}");
+        }
+
         var i = gameState.InventoryMenu.CurrentIndex;
-        if (!player.Inventory.IsEmpty)
+        if (!player.Inventory.IsEmpty && gameState.InventoryMenu.InFocus)
         {
             var item = player.Inventory.Items[i];
             foreach (var action in item.AvailableActions)

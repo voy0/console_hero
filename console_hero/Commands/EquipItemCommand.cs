@@ -4,7 +4,7 @@ public class EquipItemCommand(Player player, Map map, InventoryMenu inventoryMen
 {
     public void Execute()
     {
-        if (player.Inventory.IsEmpty) return;
+        if (player.Inventory.IsEmpty || !inventoryMenu.InFocus) return; // @TODO 
         
         var invItem = player.Inventory.Items[inventoryMenu.CurrentIndex];
         invItem.UseFromInventory(player);

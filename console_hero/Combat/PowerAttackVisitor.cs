@@ -1,25 +1,25 @@
 namespace console_hero.Actions;
 
-public class NormalAttackVisitor: ICombatVisitor
+public class PowerAttackVisitor: ICombatVisitor
 {
     public (int damage, int defense) VisitLightWeapon(IEquippable weapon, Player player)
     {
         double damage = weapon.BaseDamage;
         
         double agility = player.GetTotalStat(StatType.Agility);
-        double luck = player.GetTotalStat(StatType.Luck);
+        double luck = Random.Shared.Next()%player.GetTotalStat(StatType.Luck);
         double strength = player.GetTotalStat(StatType.Strength);
         double dexterity = player.GetTotalStat(StatType.Dexterity);
         double intellect = player.GetTotalStat(StatType.Intellect);
             
         if (player.Hands.Left == player.Hands.Right)
-            dexterity *= 2;
+            dexterity *= 1.5;
 
-        damage = damage * (agility + luck + strength / 3 + dexterity + intellect / 3) / 10;
+        damage = damage * (agility + luck + strength / 2 + dexterity + intellect / 3) / 12;
         
         int armor =  player.GetTotalStat(StatType.Armor);
 
-        int defense = (int)(dexterity * 0.5 + agility * 1.5) + armor + (int)luck;
+        int defense = (int)((dexterity * 0.5 + agility * 0.5) + armor) + (int)luck;
         
         return ((int)Math.Max(1, damage), defense);
     }
@@ -29,20 +29,20 @@ public class NormalAttackVisitor: ICombatVisitor
         double damage = weapon.BaseDamage;
         
         double agility = player.GetTotalStat(StatType.Agility);
-        double luck = player.GetTotalStat(StatType.Luck);
+        double luck = Random.Shared.Next()%player.GetTotalStat(StatType.Luck);
         double strength = player.GetTotalStat(StatType.Strength);
         double dexterity = player.GetTotalStat(StatType.Dexterity);
         double intellect = player.GetTotalStat(StatType.Intellect);
 
 
         if (player.Hands.Left == player.Hands.Right)
-            dexterity *= 1.5;
+            dexterity *= 2;
 
-        damage = damage * (agility / 2 + luck / 2 + 2 * strength + dexterity + intellect / 3) / 10;
+        damage = damage * (agility / 2 + luck / 2 + 2 * strength + dexterity + intellect / 3) / 8 + luck;
         
         int armor =  player.GetTotalStat(StatType.Armor);
         
-        int defense = (int)(strength*1.5 + dexterity*0.5) + armor + (int)luck;
+        int defense = (int)(strength*0.5 + dexterity*0.5) + armor + (int)luck;
 
         return ((int)Math.Max(1, damage), defense);
     }
@@ -50,9 +50,10 @@ public class NormalAttackVisitor: ICombatVisitor
     public (int damage, int defense) VisitMagicWeapon(IEquippable weapon, Player player)
     {
         int damage = 1;
-        
+        int magic = player.GetTotalStat(StatType.Magic);
         int armor = player.GetTotalStat(StatType.Armor);
-        int defense = armor; 
+        int luck = Random.Shared.Next()%player.GetTotalStat(StatType.Luck);
+        int defense = magic + armor + luck; 
         
         return (damage, defense);
     }
@@ -60,7 +61,11 @@ public class NormalAttackVisitor: ICombatVisitor
     public (int damage, int defense) VisitNonWeapon(IEquippable weapon, Player player)
     {
         int damage = 0;
-        int defense = player.GetTotalStat(StatType.Dexterity);
+        double agility = player.GetTotalStat(StatType.Agility);
+        double luck = Random.Shared.Next()%player.GetTotalStat(StatType.Luck);
+        int armor = player.GetTotalStat(StatType.Armor);
+
+        int defense = (int)(0.8*(armor * 0.5 + agility * 0.5 + luck));
         return (damage, defense);
     }
 }
@@ -72,7 +77,7 @@ public class StealthAttackVisitor : ICombatVisitor
         double damage = weapon.BaseDamage;
         
         double agility = player.GetTotalStat(StatType.Agility);
-        double luck = player.GetTotalStat(StatType.Luck);
+        double luck = Random.Shared.Next()%player.GetTotalStat(StatType.Luck);
         double strength = player.GetTotalStat(StatType.Strength);
         double dexterity = player.GetTotalStat(StatType.Dexterity);
         double intellect = player.GetTotalStat(StatType.Intellect);
@@ -80,11 +85,11 @@ public class StealthAttackVisitor : ICombatVisitor
         if (player.Hands.Left == player.Hands.Right && player.Hands.Left != null)
             dexterity *= 2;
 
-        damage = (damage * (agility + luck + strength / 3 + dexterity + intellect / 3) / 10) * 2.0;
+        damage = damage * (agility*2 + luck + strength*0.5 + dexterity*1.5 + intellect / 2) / 8 + luck;
         
         int armor = player.GetTotalStat(StatType.Armor);
 
-        int defense = (int)(dexterity * 1.5 + agility * 1.5) + armor;
+        int defense = (int)(dexterity * 0.5 + agility * 0.5) + armor + (int)luck;
         
         return ((int)Math.Max(1, damage), defense);
     }
@@ -94,7 +99,7 @@ public class StealthAttackVisitor : ICombatVisitor
         double damage = weapon.BaseDamage;
         
         double agility = player.GetTotalStat(StatType.Agility);
-        double luck = player.GetTotalStat(StatType.Luck);
+        double luck = Random.Shared.Next()%player.GetTotalStat(StatType.Luck);
         double strength = player.GetTotalStat(StatType.Strength);
         double dexterity = player.GetTotalStat(StatType.Dexterity);
         double intellect = player.GetTotalStat(StatType.Intellect);
@@ -102,11 +107,11 @@ public class StealthAttackVisitor : ICombatVisitor
         if (player.Hands.Left == player.Hands.Right && player.Hands.Left != null)
             dexterity *= 1.5;
 
-        damage = (damage * (agility / 2 + luck / 2 + 2 * strength + dexterity + intellect / 3) / 10) * 0.5;
+        damage = damage * (agility / 2 + luck / 2 + 2 * strength + dexterity + intellect / 3) / 12;
         
         int armor = player.GetTotalStat(StatType.Armor);
         
-        int defense = (int)strength + armor;
+        int defense = (int)(strength*0.5 + dexterity*0.5) + armor + (int)luck;
 
         return ((int)Math.Max(1, damage), defense);
     }
@@ -115,16 +120,23 @@ public class StealthAttackVisitor : ICombatVisitor
     {
         int damage = 1;
         
+        int magic = player.GetTotalStat(StatType.Magic);
         int armor = player.GetTotalStat(StatType.Armor);
-        int defense = armor; 
+        int luck = Random.Shared.Next()%player.GetTotalStat(StatType.Luck);
+        int defense = magic + armor + luck; 
         
         return (damage, defense);
     }
 
     public (int damage, int defense) VisitNonWeapon(IEquippable weapon, Player player)
     {
+        int damage = 0;
+        double agility = player.GetTotalStat(StatType.Agility);
+        double luck = Random.Shared.Next()%player.GetTotalStat(StatType.Luck);
         int armor = player.GetTotalStat(StatType.Armor);
-        return (0, armor); 
+
+        int defense = (int)(0.8*(armor * 0.5 + agility * 0.5 + luck));
+        return (damage, defense);
     }
 }
 
@@ -134,10 +146,12 @@ public class MagicAttackVisitor : ICombatVisitor
     {
         int damage = 1;
         
+        double agility = player.GetTotalStat(StatType.Agility);
+        double luck = Random.Shared.Next()%player.GetTotalStat(StatType.Luck);
+        double dexterity = player.GetTotalStat(StatType.Dexterity);
         int armor = player.GetTotalStat(StatType.Armor);
-        double luck = player.GetTotalStat(StatType.Luck);
         
-        int defense = armor + (int)luck; 
+        int defense = (int)(dexterity * 0.5 + agility * 0.5) + armor + (int)luck;
         
         return (damage, defense);
     }
@@ -147,9 +161,11 @@ public class MagicAttackVisitor : ICombatVisitor
         int damage = 1; 
         
         int armor = player.GetTotalStat(StatType.Armor);
-        double luck = player.GetTotalStat(StatType.Luck);
+        double luck = Random.Shared.Next()%player.GetTotalStat(StatType.Luck);
+        double strength = player.GetTotalStat(StatType.Strength);
+        double dexterity = player.GetTotalStat(StatType.Dexterity);
         
-        int defense = armor + (int)luck; 
+        int defense = (int)(strength*0.5 + dexterity*0.5) + armor + (int)luck;
         
         return (damage, defense);
     }
@@ -159,26 +175,30 @@ public class MagicAttackVisitor : ICombatVisitor
         double damage = weapon.BaseDamage;
         
         double magic = player.GetTotalStat(StatType.Magic);
-        double luck = player.GetTotalStat(StatType.Luck);
+        double luck = Random.Shared.Next()%player.GetTotalStat(StatType.Luck);
         double intellect = player.GetTotalStat(StatType.Intellect);
         double dexterity = player.GetTotalStat(StatType.Dexterity);
         
         if (player.Hands.Left == player.Hands.Right && player.Hands.Left != null)
             dexterity *= 1.2;
 
-        damage = damage * (magic + luck + dexterity + intellect) / 10;
+        damage = damage * (magic + luck + dexterity + intellect) / 7 + 2*luck;
         
         int armor = player.GetTotalStat(StatType.Armor);
         
-        int defense = armor + (int)(intellect * 2 + magic);
+        int defense = armor + (int)(intellect + magic + luck);
         
         return ((int)Math.Max(1, damage), defense);
     }
 
     public (int damage, int defense) VisitNonWeapon(IEquippable weapon, Player player)
     {
+        int damage = 0;
+        double agility = player.GetTotalStat(StatType.Agility);
+        double luck = Random.Shared.Next()%player.GetTotalStat(StatType.Luck);
         int armor = player.GetTotalStat(StatType.Armor);
-        double luck = player.GetTotalStat(StatType.Luck);
-        return (0, armor + (int)luck);
+
+        int defense = (int)(0.8*(armor * 0.5 + agility * 0.5 + luck));
+        return (damage, defense);
     }
 }

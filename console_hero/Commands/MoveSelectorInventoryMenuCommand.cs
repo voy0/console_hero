@@ -1,16 +1,19 @@
 namespace console_hero;
 
-public class MoveSelectorInventoryMenuCommand(InventoryMenu inventoryMenu, bool moveUp) : ICommand
+public class MoveSelectorInventoryMenuCommand(GameState gameState, bool moveUp) : ICommand
 {
     public void Execute()
     {
+        IMenu? menu = gameState.Menus.GetFocusedMenu();
+        if (menu == null) return;
+        menu.ValidateIndex();
         if (moveUp)
         {
-            inventoryMenu.GoUp();
+            menu.GoUp();
         }
         else
         {
-            inventoryMenu.GoDown();
+            menu.GoDown();
         }
     }
 }

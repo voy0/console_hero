@@ -31,6 +31,10 @@ public abstract class WeaponDecorator : IWeapon
     {
         return _weapon.Equip(p, weapon);
     }
+    public virtual (int damage, int defense) Accept(ICombatVisitor visitor, Player player, IEquippable outerItem)
+    {
+        return _weapon.Accept(visitor, player, outerItem);
+    }
 }
 
 public enum WeaponGrade
@@ -48,11 +52,11 @@ public class GradeWeaponDecorator : WeaponDecorator
     private (string color, int damageBonus) _gradeValues;
     private static readonly Dictionary<WeaponGrade, (string color, int damageBonus)> GradeColors = new()
     {
-        { WeaponGrade.I, (Ansi.FgRgb(0, 225, 225), 2) },
-        { WeaponGrade.II, (Ansi.FgRgb(50, 150, 255), 4) },
-        { WeaponGrade.III, (Ansi.FgRgb(255, 150, 50), 7) },
-        { WeaponGrade.IV, (Ansi.FgRgb(255, 25, 125), 9) },
-        { WeaponGrade.V, (Ansi.FgRgb(255, 25, 0), 12) },
+        { WeaponGrade.I, (Ansi.FgRgb(50, 150, 255), 2) },
+        { WeaponGrade.II, (Ansi.FgRgb(0, 255, 225), 4) },
+        { WeaponGrade.III, (Ansi.FgRgb(255, 220, 50), 7) },
+        { WeaponGrade.IV, (Ansi.FgRgb(255, 150, 50), 9) },
+        { WeaponGrade.V, (Ansi.FgRgb(255, 25, 125), 12) },
     };
 
     public GradeWeaponDecorator(IWeapon weapon, WeaponGrade grade) : base(weapon)

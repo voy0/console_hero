@@ -39,6 +39,13 @@ public abstract class OffHandItem(char symbol, string name, string color, int da
 
         return 0;
     }
+    public abstract (int damage, int defense) Accept(ICombatVisitor visitor, Player player, IEquippable outerItem);
 }
 
-public class TargeShield() : OffHandItem('O', "The Targe Shield", Ansi.FgRgb(50, 150, 100),1, 8, StatType.Armor);
+public class TargeShield() : OffHandItem('O', "The Targe Shield", Ansi.FgRgb(50, 150, 100), 1, 8, StatType.Armor)
+{
+    public override (int damage, int defense) Accept(ICombatVisitor visitor, Player player, IEquippable outerItem)
+    {
+        return visitor.VisitNonWeapon(outerItem, player);
+    }
+}

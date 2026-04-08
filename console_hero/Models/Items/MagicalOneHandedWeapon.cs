@@ -14,4 +14,10 @@ public abstract class MagicalOneHandedWeapon(char symbol, string name, string co
     }
 }
 
-public class Wand() : MagicalOneHandedWeapon('¡', "Magical Wand", Ansi.FgRgb(170, 20, 240),1, 3), IMagicalWeapon;
+public class Wand() : MagicalOneHandedWeapon('¡', "Magical Wand", Ansi.FgRgb(170, 20, 240), 1, 6), IMagicalWeapon
+{
+    public override (int damage, int defense) Accept(ICombatVisitor visitor, Player player, IEquippable outerItem)
+    {
+        return visitor.VisitMagicWeapon(outerItem, player);
+    }
+}

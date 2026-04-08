@@ -15,4 +15,10 @@ public abstract class MagicalTwoHandedWeapon(char symbol, string name, string co
 }
 
 public class GrandStaff()
-    : MagicalTwoHandedWeapon('ƒ', "The Grand Staff", Ansi.FgRgb(255, 50, 255), 3, 8), IMagicalWeapon;
+    : MagicalTwoHandedWeapon('ƒ', "The Grand Staff", Ansi.FgRgb(255, 50, 255), 3, 13), IMagicalWeapon
+{
+    public override (int damage, int defense) Accept(ICombatVisitor visitor, Player player, IEquippable outerItem)
+    {
+        return visitor.VisitMagicWeapon(outerItem, player);
+    }
+}

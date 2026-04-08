@@ -11,6 +11,7 @@ public enum KeyActions
     EquipItem,
     SelectInventoryUp,
     SelectInventoryDown,
+    ChangeFocus,
     EnterFight,
     EscapeFight,
 }
@@ -20,6 +21,7 @@ public class KeyBindings //TODO dodaj do mapowania od razu komende, bo czemu nie
     private Map _map;
     private InventoryMenu _inventoryMenu;
     private GameStatus _gameStatus;
+    private MenusManager _menus; 
     public readonly Dictionary<KeyActions, (ConsoleKey Key, ICommand Command, string Description)> Actions;
     public readonly Dictionary<ConsoleKey, KeyActions> KeyToAction;
     public KeyBindings(GameState gameState)
@@ -28,7 +30,7 @@ public class KeyBindings //TODO dodaj do mapowania od razu komende, bo czemu nie
         _map = gameState.Level.Map;
         _inventoryMenu = gameState.InventoryMenu;
         _gameStatus =  gameState.Status;
-        
+        _menus = gameState.Menus;
         Actions = new()
         {
             { KeyActions.MoveUp,     (ConsoleKey.W, new MovePlayerCommand(gameState, 0, -1), "move up") },
@@ -38,11 +40,11 @@ public class KeyBindings //TODO dodaj do mapowania od razu komende, bo czemu nie
             { KeyActions.PickupItem, (ConsoleKey.E, new PickupItemCommand(_player, _map), "pick up item") },
             { KeyActions.DropItem,   (ConsoleKey.Q, new DropItemCommand(_player, _map, _inventoryMenu), "drop item") },
             { KeyActions.EquipItem,  (ConsoleKey.F, new EquipItemCommand(_player, _map, _inventoryMenu), "equip item") },
-            { KeyActions.SelectInventoryDown, (ConsoleKey.DownArrow, new MoveSelectorInventoryMenuCommand(_inventoryMenu, false), "select inventory down")},
-            { KeyActions.SelectInventoryUp, (ConsoleKey.UpArrow, new MoveSelectorInventoryMenuCommand(_inventoryMenu, true), "select inventory up")},
-            { KeyActions.EnterFight, (ConsoleKey.Enter, new EnterFightCommand(gameState), "enter fight")},
+            { KeyActions.SelectInventoryDown, (ConsoleKey.DownArrow, new MoveSelectorInventoryMenuCommand(gameState, false), "select inventory down")},
+            { KeyActions.SelectInventoryUp, (ConsoleKey.UpArrow, new MoveSelectorInventoryMenuCommand(gameState, true), "select inventory up")},
+            { KeyActions.EnterFight, (ConsoleKey.Enter, new GenericInteractCommand(gameState), "enter fight / attack")},
             { KeyActions.EscapeFight, (ConsoleKey.Escape, new BailFightCommand(gameState), "bail fight")},
-            
+            { KeyActions.ChangeFocus, (ConsoleKey.Tab, new ChangeMenuFocusCommand(gameState), "change focus")},
         };
         KeyToAction = Actions.ToDictionary(kvp => kvp.Value.Key, kvp => kvp.Key);
     }

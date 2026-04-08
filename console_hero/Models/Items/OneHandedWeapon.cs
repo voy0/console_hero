@@ -27,9 +27,21 @@ public abstract class OneHandedWeapon(char symbol, string name, string color, in
         player.Inventory.AddItem(item);
         return true;
     }
-    public void Attack(){}
+    public abstract (int damage, int defense) Accept(ICombatVisitor visitor, Player player, IEquippable outerItem);
 }
 
-public class KnightsSword() : OneHandedWeapon('⸸', "Knight's Sword", Ansi.FgRgb(150, 150, 170), 7), IHeavyWeapon;
+public class KnightsSword() : OneHandedWeapon('⸸', "Knight's Sword", Ansi.FgRgb(150, 150, 170), 9), IHeavyWeapon
+{
+    public override (int damage, int defense) Accept(ICombatVisitor visitor, Player player, IEquippable outerItem)
+    {
+        return visitor.VisitHeavyWeapon(outerItem, player);
+    }
+}
 
-public class ShortSword() : OneHandedWeapon('☨', "Gladius", Ansi.FgRgb(150, 150, 170), 5), ILightWeapon;
+public class ShortSword() : OneHandedWeapon('☨', "Gladius", Ansi.FgRgb(150, 150, 170), 7), ILightWeapon
+{
+    public override (int damage, int defense) Accept(ICombatVisitor visitor, Player player, IEquippable outerItem)
+    {
+        return visitor.VisitLightWeapon(outerItem, player);
+    }
+}

@@ -18,13 +18,22 @@
         public bool IsRunning { get; private set; } = false;
         public GameStatus Status;
         public CombatManager Combat;
+        public MenusManager Menus;
 
         public GameState(Player? player = null)
         {
             Player = player ?? new Player();
-            InventoryMenu = new InventoryMenu(Player.Inventory);
             Prompts = new List<string>();
-            Combat = new CombatManager(this);
+            Menus = new MenusManager();
+            
+            InventoryMenu = new InventoryMenu(Player.Inventory);
+            Menus.RegisterMenu(InventoryMenu);
+            InventoryMenu.InFocus = true;
+            
+            
+            Combat = new CombatManager(this, new CombatAttackMenu(this));
+            Menus.RegisterMenu(Combat.Menu);
+            
             
             var levelGenerator = new LevelGenerator(this);
             Level = levelGenerator.Generate();

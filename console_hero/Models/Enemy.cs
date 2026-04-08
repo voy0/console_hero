@@ -11,7 +11,7 @@ public abstract class Enemy
     public IAttribute Armor { get; }
     public IAttribute Damage { get; }
     public bool IsDead => Health.IsEmpty;
-    
+    public (int x, int y) Position;
     public Enemy(char symbol, string name, string color, int health, int armor, int damage)
     {
         Symbol = symbol;
@@ -26,4 +26,8 @@ public abstract class Enemy
     }
 }
 
-public class MutantRat() : Enemy('☙', "Mutant Rat", Ansi.FgRgb(255,255,255), 20, 0, 5);
+public class MutantRat() : Enemy('Q', "Mutant Rat", Ansi.FgRgb(230,230,255), 35, 0, 8);
+public class Ghoul() : Enemy('Ó', "Ghoul", Ansi.FgRgb(230,230,255), 75, 0, 27);
+public class Golem() : Enemy('8', "Golem", Ansi.FgRgb(255,255,230), 225, 5, 10);
+public class Orc() : Enemy('B', "Orc", Ansi.FgRgb(255,230,230), 180, 12, 12);
+

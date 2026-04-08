@@ -22,6 +22,7 @@ public record Room(int X, int Y, int Width, int Height)
 public class DungeonBuilder : IDungeonStarter, IDungeonBuilder
 {
     private Map? _map;
+    private List<Enemy> enemies = new List<Enemy>();
     private int _roomsToBuild;
     private int _weaponsToAdd;
     private int _itemsToAdd;
@@ -326,6 +327,8 @@ public class DungeonBuilder : IDungeonStarter, IDungeonBuilder
         } while (_map.Cells[x, y].IsWall || _map.Cells[x, y].IsOccupied);
 
         _map.Cells[x, y].Occupant = enemy;
+        enemy.Position = (x, y);
+        enemies.Add(enemy);
     }
     private void PlaceEnemies(int enemiesToGenerate)
     {
@@ -393,6 +396,7 @@ public class DungeonBuilder : IDungeonStarter, IDungeonBuilder
         {
             instructionsList.Add(KeyActions.EnterFight);
             instructionsList.Add(KeyActions.EscapeFight);
+            instructionsList.Add(KeyActions.ChangeFocus);
         }
         return instructionsList;
     }
@@ -509,7 +513,7 @@ public class DungeonBuilder : IDungeonStarter, IDungeonBuilder
         
         var keyBindings = gameState.KeyBindings;
         Level level =  new Level(_map, GenerateKeyActions(keyBindings));
-        
+        level.Enemies = enemies;
         _buildCenterRoom = false;
         _roomsToBuild = 0;
         _buildCorridors = false;
