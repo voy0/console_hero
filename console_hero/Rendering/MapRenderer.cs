@@ -36,14 +36,6 @@ public class MapRenderer : IModuleRenderer
                     line.Append(MapSymbols.Wall);
                     Console.ResetColor();
                 }
-                else if (_map.Cells[x, y].ItemsCount != 0)
-                {
-                    var item = _map.Cells[x, y].PeekItem();
-                    if(item != null)
-                        line.Append(item.ColoredSymbol);
-                    else
-                        line.Append(MapSymbols.Empty);
-                }
                 else if (_map.Cells[x, y].IsOccupied)
                 {
                     var occupant = _map.Cells[x, y].Occupant;
@@ -53,6 +45,15 @@ public class MapRenderer : IModuleRenderer
                         line.Append(MapSymbols.Empty);
                     
                 }
+                else if (_map.Cells[x, y].ItemsCount != 0)
+                {
+                    var item = _map.Cells[x, y].PeekItem();
+                    if(item != null)
+                        line.Append(item.ColoredSymbol);
+                    else
+                        line.Append(MapSymbols.Empty);
+                }
+                
                 else
                 {
                     line.Append(MapSymbols.Empty);

@@ -38,7 +38,7 @@ public class KnightsSword() : OneHandedWeapon('⸸', "Knight's Sword", Ansi.FgRg
     }
 }
 
-public class ShortSword() : OneHandedWeapon('☨', "Gladius", Ansi.FgRgb(150, 150, 170), 7), ILightWeapon
+public class ShortSword() : OneHandedWeapon('☨', "Gladius", Ansi.FgRgb(150, 180, 170), 7), ILightWeapon
 {
     public override (int damage, int defense) Accept(ICombatVisitor visitor, Player player, IEquippable outerItem)
     {
