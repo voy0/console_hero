@@ -45,3 +45,10 @@ public class ShortSword() : OneHandedWeapon('☨', "Gladius", Ansi.FgRgb(150, 18
         return visitor.VisitLightWeapon(outerItem, player);
     }
 }
+public class PocketKnife() : OneHandedWeapon('^', "Pocket Knife", Ansi.FgRgb(150, 180, 170), 2), ILightWeapon
+{
+    public override (int damage, int defense) Accept(ICombatVisitor visitor, Player player, IEquippable outerItem)
+    {
+        return visitor.VisitLightWeapon(outerItem, player);
+    }
+}

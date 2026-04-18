@@ -1,9 +1,16 @@
+using console_hero.Models.Items;
+
 namespace console_hero;
 
 public class Player
 {
-    public Player(int x = 1, int y = 1, IProfession profession = null)
+    public Player(int x = 1, int y = 1, IProfession profession = null, IWeapon starterWeapon = null)
     {
+        if (starterWeapon == null)
+        {
+            starterWeapon = new PocketKnife();
+            starterWeapon.Equip(this, starterWeapon);
+        }
         Position = (x, y);
         Stats =  new CharacterStats(profession ?? new Hero());
     }
