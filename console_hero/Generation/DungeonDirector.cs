@@ -2,81 +2,62 @@ namespace console_hero.Generation;
 
 public class DungeonDirector(GameState gameState)
 {
-    public Level ConnectorDungeon()
+    public Level LibraryDungeon(IAbstractDungeonThemeFactory theme)
     {
         IDungeonStarter starter = new DungeonBuilder();
-        return starter.FullDungeon()
+        return starter.FullDungeon(81, 31)
             .AddCorridors()
-            .AddCoins(20)
-            .AddGold(5)
-            .AddWeapons(10)
-            .AddItems(20)
-            .AddEnemies(5)
+            .AddCenterRoom(13)
+            .AddCoins(60, 20)
+            .AddGold(10, 1)
+            .AddWeapons(theme.GetWeaponsList(), 30)
+            .AddItems(theme.GetItemsList(), 30)
+            .AddEnemies(theme.GetEnemiesList(), 25)
+            .AddArtifact(theme.GetArtifact())
+            .AddPrompt(theme.GetWelcomeMessage())
             .Build(gameState);
     }
-
-    public Level ArmoryDungeon()
+    public Level CatacombsDungeon(IAbstractDungeonThemeFactory theme)
     {
         IDungeonStarter starter = new DungeonBuilder();
-        return starter.FullDungeon()
-            .AddCenterRoom(15)
+        return starter.FullDungeon(81, 31)
             .AddCorridors()
-            .AddCoins(10)
-            .AddGold(5)
-            .AddItems(10)
-            .AddWeapons(25)
-            .AddEnemies(10)
-            .Build(gameState);
-    }
-
-    public Level TreasureDungeon()
-    {
-        IDungeonStarter starter = new DungeonBuilder();
-        return starter.FullDungeon()
             .AddRooms(10)
+            .AddCoins(20, 50)
+            .AddGold(5, 1)
+            .AddWeapons(theme.GetWeaponsList(), 20)
+            .AddItems(theme.GetItemsList(), 30)
+            .AddEnemies(theme.GetEnemiesList(), 45)
+            .AddArtifact(theme.GetArtifact())
+            .AddPrompt(theme.GetWelcomeMessage())
+            .Build(gameState);
+    }
+    public Level ArmoryDungeon(IAbstractDungeonThemeFactory theme)
+    {
+        IDungeonStarter starter = new DungeonBuilder();
+        return starter.FullDungeon(51, 36)
             .AddCorridors()
-            .AddCoins(50)
-            .AddGold(25)
-            .AddWeapons(3)
-            .AddItems(10)
-            .AddEnemies(10)
+            .AddCenterRoom(17)
+            .AddCoins(10, 50)
+            .AddGold(4, 5)
+            .AddWeapons(theme.GetWeaponsList(), 30)
+            .AddItems(theme.GetItemsList(), 35)
+            .AddEnemies(theme.GetEnemiesList(), 45)
+            .AddArtifact(theme.GetArtifact())
+            .AddPrompt(theme.GetWelcomeMessage())
             .Build(gameState);
     }
-
-    public Level HallDungeon()
+    public Level TestDungeon(IAbstractDungeonThemeFactory theme)
     {
         IDungeonStarter starter = new DungeonBuilder();
-        return starter.EmptyDungeon()
-            .AddRooms(8)
-            .AddCorridors()
-            .AddGold(20)
-            .AddItems(10)
-            .AddWeapons(2)
-            .AddEnemies(8)
-            .Build(gameState);
-    }
-
-    public Level TestItems()
-    {
-        IDungeonStarter starter = new DungeonBuilder();
-        return starter.EmptyDungeon()
-            .AddEnemies(10)
-            .AddWeapons(200)
-            .Build(gameState);
-    }
-
-    public Level EmptyDungeon()
-    {
-        IDungeonStarter starter = new DungeonBuilder();
-        return starter.EmptyDungeon()
-            .Build(gameState);
-    }
-
-    public Level TestEnemies()
-    {
-        IDungeonStarter starter = new DungeonBuilder();
-        return starter.EmptyDungeon()
-            .AddEnemies(10)
+        return starter.EmptyDungeon(81, 36)
+            .AddCoins(10, 50)
+            .AddGold(4, 5)
+            .AddWeapons(theme.GetWeaponsList(), 2000)
+            .AddItems(theme.GetItemsList(), 35)
+            .AddEnemies(theme.GetEnemiesList(), 50)
+            .AddArtifact(theme.GetArtifact())
+            .AddPrompt(theme.GetWelcomeMessage())
             .Build(gameState);
     }
 }

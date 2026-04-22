@@ -12,7 +12,7 @@ public class Player
             starterWeapon.Equip(this, starterWeapon);
         }
         Position = (x, y);
-        Stats =  new CharacterStats(profession ?? new Hero());
+        Stats =  new CharacterStats(profession ?? new Warrior());
     }
     public Hands Hands = new Hands();
     public Wealth Wealth = new Wealth();
@@ -29,8 +29,8 @@ public class Player
     {
         int baseValue = Stats[stat].Value;
 
-        int leftBonus = Hands.Left?.GetStatBonus(stat) ?? 0;
-        int rightBonus = Hands.Right?.GetStatBonus(stat) ?? 0;
+        int leftBonus = Hands.Left?.GetStatBonus(stat, this) ?? 0;
+        int rightBonus = Hands.Right?.GetStatBonus(stat, this) ?? 0;
          
 
         if (Hands.Left != null && Hands.Left == Hands.Right)

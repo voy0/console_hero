@@ -14,8 +14,9 @@ public enum KeyActions
     ChangeFocus,
     EnterFight,
     EscapeFight,
+    ViewJournal
 }
-public class KeyBindings //TODO dodaj do mapowania od razu komende, bo czemu nie
+public class KeyBindings 
 {
     private Player _player;
     private Map _map;
@@ -45,6 +46,7 @@ public class KeyBindings //TODO dodaj do mapowania od razu komende, bo czemu nie
             { KeyActions.EnterFight, (ConsoleKey.Enter, new GenericInteractCommand(gameState), "enter fight / attack")},
             { KeyActions.EscapeFight, (ConsoleKey.Escape, new BailFightCommand(gameState), "bail fight")},
             { KeyActions.ChangeFocus, (ConsoleKey.Tab, new ChangeMenuFocusCommand(gameState), "change focus")},
+            { KeyActions.ViewJournal, (ConsoleKey.J, new ShowJournalCommand(gameState), "display journal")},
         };
         KeyToAction = Actions.ToDictionary(kvp => kvp.Value.Key, kvp => kvp.Key);
     }

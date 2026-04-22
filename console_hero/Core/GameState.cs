@@ -19,6 +19,7 @@
         public GameStatus Status;
         public CombatManager Combat;
         public MenusManager Menus;
+        public bool ForceRedraw { get; set; } = false;
 
         public GameState(Player? player = null)
         {

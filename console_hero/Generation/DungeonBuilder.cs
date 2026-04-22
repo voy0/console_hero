@@ -22,7 +22,7 @@ public record Room(int X, int Y, int Width, int Height)
 public class DungeonBuilder : IDungeonStarter, IDungeonBuilder
 {
     private Map? _map;
-    private List<Enemy> enemies = new List<Enemy>();
+    private List<Enemy> _enemies = new List<Enemy>();
     private int _roomsToBuild;
     private int _weaponsToAdd;
     private int _itemsToAdd;
@@ -32,13 +32,20 @@ public class DungeonBuilder : IDungeonStarter, IDungeonBuilder
     private int _goldDenomination;
     private int _centerRoomSize;
     private int _enemiesToAdd;
+    private int _addArtifact;
+    private string? _welcomeMessage = null;
 
-    private static (int w, int h) _defaultMapSize = (41, 21);
+    private static (int w, int h) _defaultMapSize = (81, 31);
 
     private bool _buildCorridors;
     private bool _buildCenterRoom;
     
     private readonly List<Room> _builtRooms = new List<Room>();
+
+    private List<Func<Enemy>> _enemiesList;
+    private List<Func<IItem>> _itemsList;
+    private List<Func<IWeapon>> _weaponsList;
+    private List<Func<IItem>>  _artifactList;
 
     private bool ValidateMap()
     {
@@ -122,8 +129,8 @@ public class DungeonBuilder : IDungeonStarter, IDungeonBuilder
         {
             int minw = 5;
             int minh = 5;
-            int maxw = _map.Width / 2;
-            int maxh = _map.Height / 2;
+            int maxw = _map.Width ;
+            int maxh = _map.Height / 3;
             maxw = Math.Max(minw, maxw);
             maxh = Math.Max(minh, maxh);
             
@@ -263,11 +270,22 @@ public class DungeonBuilder : IDungeonStarter, IDungeonBuilder
         Random random = new Random();
 
         int x, y;
+        int a = 0;
+        int maxattempts = 50;
         do
         {
             x = random.Next(_map.Width);
             y = random.Next(_map.Height);
-        } while (_map.Cells[x, y].IsWall || _map.Cells[x, y].IsOccupied);
+            if (_map.Cells[x, y].ItemsCount != 0)
+            {
+                a++;
+            }
+
+            if (a > maxattempts && !_map.Cells[x, y].IsWall)
+            {
+                break;
+            }
+        } while (_map.Cells[x, y].IsWall || _map.Cells[x, y].IsOccupied || _map.Cells[x, y].ItemsCount != 0);
 
         _map.Cells[x, y].PushItem(item);
     }
@@ -294,24 +312,24 @@ public class DungeonBuilder : IDungeonStarter, IDungeonBuilder
         _map.Cells[x, y].PushItem(item);
     }
     
-    private void PlaceWeapons(int weaponsToAdd)
+    private void PlaceWeapons(List<Func<IWeapon>> weapons, int weaponsToAdd)
     {
         Random random = new Random();
         for (int i = 0; i < weaponsToAdd; i++)
         {
             int r = Random.Shared.Next(100);
-            
+            var weapon = EntityGenerator.GenerateRandomDecoratedWeapon(weapons);
             if (r < 70)
-                PlaceItemInARoom(EntityGenerator.GenrateRandomDecoratedWeapon());
+                PlaceItemInARoom(weapon);
             else
-                PlaceItemWherever(EntityGenerator.GenerateRandomWeapon());
+                PlaceItemWherever(weapon);
         }
     }
-    private void PlaceItems(int itemsToAdd)
+    private void PlaceItems(List<Func<IItem>> items, int itemsToAdd)
     {
         for (int i = 0; i < itemsToAdd; i++)
         {
-            PlaceItemWherever(EntityGenerator.GenerateRandomItem());
+            PlaceItemWherever(EntityGenerator.GenerateRandomItem(items));
         }
     }
 
@@ -328,13 +346,13 @@ public class DungeonBuilder : IDungeonStarter, IDungeonBuilder
 
         _map.Cells[x, y].Occupant = enemy;
         enemy.Position = (x, y);
-        enemies.Add(enemy);
+        _enemies.Add(enemy);
     }
-    private void PlaceEnemies(int enemiesToGenerate)
+    private void PlaceEnemies(List<Func<Enemy>> enemies, int enemiesToGenerate)
     {
         for (int i = 0; i < enemiesToGenerate; i++)
         {
-            PlaceEnemyWherever(EntityGenerator.GenerateRandomEnemy());
+            PlaceEnemyWherever(EntityGenerator.GenerateRandomEnemy(enemies));
         }
     }
     private void PlaceGold(int goldToAdd, int abundance)
@@ -378,6 +396,7 @@ public class DungeonBuilder : IDungeonStarter, IDungeonBuilder
         instructionsList.Add(KeyActions.MoveDown);
         instructionsList.Add(KeyActions.MoveLeft);
         instructionsList.Add(KeyActions.MoveRight);
+        instructionsList.Add(KeyActions.ViewJournal);
 
         if (_itemsToAdd > 0)
         {
@@ -460,9 +479,10 @@ public class DungeonBuilder : IDungeonStarter, IDungeonBuilder
         return this;
     }
 
-    public IDungeonBuilder AddItems(int items)
+    public IDungeonBuilder AddItems(List<Func<IItem>> items, int n)
     {
-        _itemsToAdd += items;
+        _itemsList = items;
+        _itemsToAdd += n;
         return this;
     }
 
@@ -480,15 +500,29 @@ public class DungeonBuilder : IDungeonStarter, IDungeonBuilder
         return this;
     }
 
-    public IDungeonBuilder AddWeapons(int weapons)
+    public IDungeonBuilder AddWeapons(List<Func<IWeapon>> weapons, int n)
     {
-        _weaponsToAdd += weapons;
+        _weaponsList = weapons;
+        _weaponsToAdd += n;
+        return this;
+    }
+    public IDungeonBuilder AddArtifact(List<Func<IItem>> artifact)
+    { 
+        _artifactList = artifact;
+        _addArtifact = artifact.Count;
         return this;
     }
 
-    public IDungeonBuilder AddEnemies(int enemies)
+    public IDungeonBuilder AddEnemies(List<Func<Enemy>> enemiesList, int enemies)
     {
+        _enemiesList = enemiesList;
         _enemiesToAdd += enemies;
+        return this;
+    }
+
+    public IDungeonBuilder AddPrompt(string prompt)
+    {
+        _welcomeMessage = prompt;
         return this;
     }
 
@@ -504,16 +538,18 @@ public class DungeonBuilder : IDungeonStarter, IDungeonBuilder
             BuildCorridors();
             ConnectRooms();
         }
-
-        if(_weaponsToAdd > 0) PlaceWeapons(_weaponsToAdd);
-        if(_itemsToAdd > 0) PlaceItems(_itemsToAdd);
+        
+        if(_weaponsToAdd > 0) PlaceWeapons(_weaponsList, _weaponsToAdd);
+        if(_itemsToAdd > 0) PlaceItems(_itemsList, _itemsToAdd);
+        if(_addArtifact > 0) PlaceItems(_artifactList, _artifactList.Count);
         if(_goldToAdd > 0) PlaceGold(_goldToAdd, _goldDenomination);
         if (_coinsToAdd > 0) PlaceCoins(_coinsToAdd, _coinsDenomination);
-        if(_enemiesToAdd > 0) PlaceEnemies(_enemiesToAdd);
+        if(_enemiesToAdd > 0) PlaceEnemies(_enemiesList, _enemiesToAdd);
+        if(_welcomeMessage != null) gameState.Prompts.Add(_welcomeMessage);
         
         var keyBindings = gameState.KeyBindings;
         Level level =  new Level(_map, GenerateKeyActions(keyBindings));
-        level.Enemies = enemies;
+        level.Enemies = _enemies;
         _buildCenterRoom = false;
         _roomsToBuild = 0;
         _buildCorridors = false;

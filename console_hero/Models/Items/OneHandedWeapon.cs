@@ -30,7 +30,7 @@ public abstract class OneHandedWeapon(char symbol, string name, string color, in
     public abstract (int damage, int defense) Accept(ICombatVisitor visitor, Player player, IEquippable outerItem);
 }
 
-public class KnightsSword() : OneHandedWeapon('⸸', "Knight's Sword", Ansi.FgRgb(150, 150, 170), 9), IHeavyWeapon
+public class KnightsSword() : OneHandedWeapon('⸸', "Knight's Sword", Ansi.FgRgb(150, 150, 170), 4), IHeavyWeapon
 {
     public override (int damage, int defense) Accept(ICombatVisitor visitor, Player player, IEquippable outerItem)
     {
@@ -38,7 +38,7 @@ public class KnightsSword() : OneHandedWeapon('⸸', "Knight's Sword", Ansi.FgRg
     }
 }
 
-public class ShortSword() : OneHandedWeapon('☨', "Gladius", Ansi.FgRgb(150, 180, 170), 7), ILightWeapon
+public class ShortSword() : OneHandedWeapon('☨', "Gladius", Ansi.FgRgb(150, 180, 170), 3), ILightWeapon
 {
     public override (int damage, int defense) Accept(ICombatVisitor visitor, Player player, IEquippable outerItem)
     {
@@ -52,3 +52,12 @@ public class PocketKnife() : OneHandedWeapon('^', "Pocket Knife", Ansi.FgRgb(150
         return visitor.VisitLightWeapon(outerItem, player);
     }
 }
+
+public class SecretStiletto() : OneHandedWeapon('\\', "The Secret Stiletto", Ansi.FgRgb(220, 100, 180), 9), ILightWeapon
+{
+    public override (int damage, int defense) Accept(ICombatVisitor visitor, Player player, IEquippable outerItem)
+    {
+        return visitor.VisitLightWeapon(outerItem, player);
+    }
+}
+

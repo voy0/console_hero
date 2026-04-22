@@ -6,10 +6,13 @@ public interface IDungeonBuilder
     IDungeonBuilder AddCorridors();
     IDungeonBuilder AddRooms(int rooms);
     IDungeonBuilder AddCenterRoom(int size);
-    IDungeonBuilder AddItems(int items);
-    IDungeonBuilder AddWeapons(int weapons);
+    IDungeonBuilder AddItems(List<Func<IItem>> items, int n);
+    IDungeonBuilder AddWeapons(List<Func<IWeapon>> weapons, int n);
     IDungeonBuilder AddCoins(int coins, int denomination = 100);
     IDungeonBuilder AddGold(int gold, int denomination = 5);
-    IDungeonBuilder AddEnemies(int enemies);
+    IDungeonBuilder AddEnemies(List<Func<Enemy>> enemies, int n);
+    IDungeonBuilder AddArtifact(List<Func<IItem>> artifact);
+    IDungeonBuilder AddPrompt(string prompt);
+    
     Level Build(GameState gameState);
 }

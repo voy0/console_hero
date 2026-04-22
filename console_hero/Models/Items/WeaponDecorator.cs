@@ -15,7 +15,7 @@ public abstract class WeaponDecorator : IWeapon
     public virtual string ColoredName => _weapon.ColoredName;
 
     public virtual int BaseDamage => _weapon.BaseDamage;
-    public virtual int GetStatBonus(StatType stat) => _weapon.GetStatBonus(stat);
+    public virtual int GetStatBonus(StatType stat, Player player) => _weapon.GetStatBonus(stat, player);
 
     public virtual List<KeyActions> AvailableActions => _weapon.AvailableActions;
     public virtual bool Pickup(Player p)
@@ -55,8 +55,8 @@ public class GradeWeaponDecorator : WeaponDecorator
         { WeaponGrade.I, (Ansi.FgRgb(50, 150, 255), 2) },
         { WeaponGrade.II, (Ansi.FgRgb(0, 255, 225), 4) },
         { WeaponGrade.III, (Ansi.FgRgb(255, 220, 50), 7) },
-        { WeaponGrade.IV, (Ansi.FgRgb(255, 150, 50), 9) },
-        { WeaponGrade.V, (Ansi.FgRgb(255, 25, 125), 12) },
+        { WeaponGrade.IV, (Ansi.FgRgb(255, 150, 50), 13) },
+        { WeaponGrade.V, (Ansi.FgRgb(255, 25, 125), 21) },
     };
 
     public GradeWeaponDecorator(IWeapon weapon, WeaponGrade grade) : base(weapon)
@@ -81,13 +81,13 @@ public class LuckyWeaponDecorator : WeaponDecorator
     public override string ColoredName => $"{_weapon.ColoredName} {Color}(Lucky){Ansi.Reset}";
     public override string ColoredSymbol => $"{Color}{_weapon.Symbol}{Ansi.Reset}";
 
-    public override int GetStatBonus(StatType stat)
+    public override int GetStatBonus(StatType stat, Player player)
     {
-        int baseBonus = _weapon.GetStatBonus(stat);
+        int baseBonus = _weapon.GetStatBonus(stat, player);
 
         if (stat == StatType.Luck) 
         {
-            return baseBonus + 5;
+            return baseBonus + 7;
         }
 
         return baseBonus;

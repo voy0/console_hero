@@ -34,5 +34,9 @@ public class MovePlayerCommand : ICommand
         {
             _player.Move(dx, dy);
         }
+        else
+        {
+            GameLogger.Instance.Log("Attempted to walk into a wall...");
+        }
     }
 }

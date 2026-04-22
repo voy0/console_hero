@@ -25,9 +25,13 @@ public abstract class Enemy
         Damage = new CoreAttribute(damage);
     }
 }
+public class MutantRat() : Enemy('Q', "Mutant Rat", Ansi.FgRgb(220,170,150), 35, 0, 8);
+public class Ghoul() : Enemy('&', "Ghoul", Ansi.FgRgb(150,220,170), 75, 0, 19);
+public class Spirit() : Enemy('9', "Spirit", Ansi.FgRgb(170, 140, 220), 99, 9, 9);
 
-public class MutantRat() : Enemy('Q', "Mutant Rat", Ansi.FgRgb(230,230,255), 35, 0, 8);
-public class Ghoul() : Enemy('Ó', "Ghoul", Ansi.FgRgb(230,230,255), 75, 0, 27);
-public class Golem() : Enemy('8', "Golem", Ansi.FgRgb(255,255,230), 225, 5, 10);
-public class Orc() : Enemy('B', "Orc", Ansi.FgRgb(255,230,230), 180, 12, 12);
+public class DarkMage() : Enemy('7', "Dark Mage", Ansi.FgRgb(200, 140, 220), 177, 15, 4);
+public class Undead() : Enemy('U', "Undead", Ansi.FgRgb(100, 230, 205), 120, 0, 6);
+public class Orc() : Enemy('8', "Orc", Ansi.FgRgb(140,250,140), 180, 12, 12);
+public class Golem() : Enemy('@', "Golem", Ansi.FgRgb(255,255,100), 225, 12, 10);
+
 

@@ -2,7 +2,7 @@ namespace console_hero;
 
 public class ScreenBuffer
 {
-    private string[] _previousFrame;
+    private string[]? _previousFrame;
     private int _height;
 
     public ScreenBuffer(int height)
@@ -11,7 +11,13 @@ public class ScreenBuffer
         _previousFrame = new string[height];
         Array.Fill(_previousFrame, "");
     }
-    
+    public void ResetBuffer()
+    {
+        if (_previousFrame != null)
+        {
+            Array.Fill(_previousFrame, "");
+        }
+    }
     public void Draw(string[] newFrame)
     {
         for (int y = 0; y < _height; y++)

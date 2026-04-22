@@ -15,6 +15,17 @@ public class GameEngine
     }
     public void Run()
     {
+        GameConfig config = ConfigLoader.LoadConfig();
+
+
+        ILoggerStrategy loggerStrategy = new CompositeLogger(
+            new MemoryLogger(), 
+            new FileLogger(config.PlayerName, config.LogDirectory)
+        );
+        GameLogger.Instance.SetStrategy(loggerStrategy);
+
+        GameLogger.Instance.Log($"Game started, player name: {config.PlayerName}");
+        
         _gameState.Run();
         _gameRenderer.Render();
         

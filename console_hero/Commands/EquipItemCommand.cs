@@ -4,10 +4,13 @@ public class EquipItemCommand(Player player, Map map, InventoryMenu inventoryMen
 {
     public void Execute()
     {
-        if (player.Inventory.IsEmpty || !inventoryMenu.InFocus) return; // @TODO 
+        if (player.Inventory.IsEmpty || !inventoryMenu.InFocus) return; 
         
         var invItem = player.Inventory.Items[inventoryMenu.CurrentIndex];
-        invItem.UseFromInventory(player);
+        if (invItem.UseFromInventory(player))
+        {
+            GameLogger.Instance.Log($"Equipped {invItem.Name}");
+        }
         
         inventoryMenu.ValidateIndex();
     }

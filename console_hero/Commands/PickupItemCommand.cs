@@ -20,6 +20,9 @@ public class PickupItemCommand : ICommand
         
         var item = cell.PeekItem();
         if (item.Pickup(_player))
+        {
             cell.PopItem();
+            GameLogger.Instance.Log($"Picked up {item.Name}");
+        }
     }
 }

@@ -11,7 +11,7 @@ public class BareHands : IEquippable
     public List<KeyActions> AvailableActions => new();
     
     public bool Equip(Player player, IEquippable itemToEquip) => false;
-    public int GetStatBonus(StatType statType) => 0;
+    public int GetStatBonus(StatType statType, Player player) => 0;
     public bool Pickup(Player p) => false;
     public bool UseFromInventory(Player player) => false;
 

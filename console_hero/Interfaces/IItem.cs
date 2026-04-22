@@ -8,7 +8,7 @@ public interface IItem
     string ColoredSymbol { get; }
     string ColoredName { get; }
     List<KeyActions> AvailableActions { get; }
-    public int GetStatBonus(StatType statType);
+    public int GetStatBonus(StatType statType, Player player);
     
     bool Pickup(Player player);
     bool UseFromInventory(Player player);

@@ -1,5 +1,6 @@
 ﻿using console_hero;
 using console_hero.Rendering;
+
 Console.Clear();
 var gameState =  new GameState(null); 
 var gameRenderer = new ConsoleRenderer(gameState);

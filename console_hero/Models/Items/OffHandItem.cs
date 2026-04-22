@@ -1,6 +1,6 @@
 namespace console_hero.Models.Items;
 
-public abstract class OffHandItem(char symbol, string name, string color, int damage, int statModifier, StatType stat): Item(symbol, name, color), IEquippable
+public abstract class OffHandItem(char symbol, string name, string color, int damage, int statModifier, StatType stat, StatType corelatedStat): Item(symbol, name, color), IEquippable
 {
     public override List<KeyActions> AvailableActions => new List<KeyActions>() { KeyActions.DropItem, KeyActions.EquipItem };
     
@@ -30,11 +30,16 @@ public abstract class OffHandItem(char symbol, string name, string color, int da
         player.Inventory.AddItem(item);
         return true;
     }
-    public override int GetStatBonus(StatType statType)
+    public override int GetStatBonus(StatType statType, Player player)
     {
         if (statType == stat)
         {
-            return statModifier;
+        var coStat = (double)player.GetTotalStat(corelatedStat);
+            double requiredStat = 10.0; 
+
+            double efficiency = Math.Min(1.0, coStat / requiredStat);
+
+            return (int)(statModifier * efficiency);
         }
 
         return 0;
@@ -42,7 +47,14 @@ public abstract class OffHandItem(char symbol, string name, string color, int da
     public abstract (int damage, int defense) Accept(ICombatVisitor visitor, Player player, IEquippable outerItem);
 }
 
-public class TargeShield() : OffHandItem('O', "The Targe Shield", Ansi.FgRgb(50, 150, 100), 1, 8, StatType.Armor)
+public class TargeShield() : OffHandItem('O', "The Targe Shield", Ansi.FgRgb(50, 150, 100), 1, 6, StatType.Armor, StatType.Dexterity)
+{
+    public override (int damage, int defense) Accept(ICombatVisitor visitor, Player player, IEquippable outerItem)
+    {
+        return visitor.VisitNonWeapon(outerItem, player);
+    }
+}
+public class TuscanShield() : OffHandItem('0', "The Tuscan Shield", Ansi.FgRgb(50, 190, 100), 1, 9, StatType.Armor, StatType.Dexterity)
 {
     public override (int damage, int defense) Accept(ICombatVisitor visitor, Player player, IEquippable outerItem)
     {

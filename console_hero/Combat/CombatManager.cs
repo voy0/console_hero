@@ -44,10 +44,12 @@ public class CombatManager(GameState gameState, CombatAttackMenu menu)
     
         Enemy.Health.Decrease(damageToEnemy);
         _gameState.Prompts.Add($"You did {damageToEnemy} DMG");
-
+        GameLogger.Instance.Log($"Did {damageToEnemy} DMG to {Enemy.Name}");
         if (Enemy.Health.IsEmpty)
         {
             _gameState.Prompts.Add($"{Enemy.Name} dies");
+            GameLogger.Instance.Log($"Slayed {Enemy.Name}");
+            
             _gameState.Level.RemoveEnemy(Enemy);
             Bail();
             return;
@@ -60,6 +62,8 @@ public class CombatManager(GameState gameState, CombatAttackMenu menu)
     
         player.Stats.Health.Decrease(damageToPlayer);
         _gameState.Prompts.Add($"{Enemy.Name} hits you for {damageToPlayer} DMG");
+        GameLogger.Instance.Log($"{Enemy.Name} hit player for {damageToPlayer} DMG");
+        
 
         if (player.Stats.Health.IsEmpty)
         {

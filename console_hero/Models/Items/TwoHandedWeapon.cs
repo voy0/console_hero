@@ -36,7 +36,7 @@ public abstract class TwoHandedWeapon(char symbol, string name, string color, in
     public abstract (int damage, int defense) Accept(ICombatVisitor visitor, Player player, IEquippable outerItem);
 }
 
-public class GreatSword() : TwoHandedWeapon('†', "The Great Sword", Ansi.FgRgb(200, 170, 170), 12), IHeavyWeapon
+public class GreatSword() : TwoHandedWeapon('†', "The Great Sword", Ansi.FgRgb(200, 170, 170), 7), IHeavyWeapon
 {
     public override (int damage, int defense) Accept(ICombatVisitor visitor, Player player, IEquippable outerItem)
     {
@@ -44,7 +44,7 @@ public class GreatSword() : TwoHandedWeapon('†', "The Great Sword", Ansi.FgRgb
     }
 }
 
-public class TwinDaggers() : TwoHandedWeapon('‡', "Twin Daggers", Ansi.FgRgb(230, 200, 200), 6), ILightWeapon
+public class TwinDaggers() : TwoHandedWeapon('‡', "Twin Daggers", Ansi.FgRgb(230, 200, 200), 5), ILightWeapon
 {
     public override (int damage, int defense) Accept(ICombatVisitor visitor, Player player, IEquippable outerItem)
     {

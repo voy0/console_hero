@@ -10,14 +10,14 @@ public class Hero : IProfession
         { StatType.Mana, 100 },
         { StatType.Stamina, 100 },
         
-        { StatType.Armor, 10 },
-        { StatType.Strength, 10 },
-        { StatType.Agility, 10 },
-        { StatType.Dexterity, 10 },
+        { StatType.Armor, 2 },
+        { StatType.Strength, 2 },
+        { StatType.Agility, 2 },
+        { StatType.Dexterity, 2 },
         
-        { StatType.Intellect, 10 },
-        { StatType.Luck, 10 },
-        { StatType.Magic, 10 }
+        { StatType.Intellect, 2 },
+        { StatType.Luck, 2 },
+        { StatType.Magic, 2 }
     };
 }
 public class Mage : IProfession
@@ -31,13 +31,13 @@ public class Mage : IProfession
         { StatType.Stamina, 20 },
         
         { StatType.Armor, 0 },
-        { StatType.Strength, 2 },
-        { StatType.Agility, 5 },
-        { StatType.Dexterity, 7 },
+        { StatType.Strength, 0 },
+        { StatType.Agility, 1 },
+        { StatType.Dexterity, 1 },
         
-        { StatType.Intellect, 10 },
-        { StatType.Luck, 7 },
-        { StatType.Magic, 12 }
+        { StatType.Intellect, 5 },
+        { StatType.Luck, 2 },
+        { StatType.Magic, 6 }
     };
 }
 public class Thief : IProfession
@@ -50,14 +50,14 @@ public class Thief : IProfession
         { StatType.Mana, 30 },
         { StatType.Stamina, 100 },
         
-        { StatType.Armor, 3 },
-        { StatType.Strength, 4 },
-        { StatType.Agility, 12 },
-        { StatType.Dexterity, 9 },
+        { StatType.Armor, 1 },
+        { StatType.Strength, 3 },
+        { StatType.Agility, 4 },
+        { StatType.Dexterity, 3 },
         
-        { StatType.Intellect, 7 },
-        { StatType.Luck, 5 },
-        { StatType.Magic, 2 }
+        { StatType.Intellect, 1 },
+        { StatType.Luck, 2 },
+        { StatType.Magic, 1 }
     };
 }
 public class Warrior : IProfession
@@ -70,14 +70,14 @@ public class Warrior : IProfession
         { StatType.Mana, 20 },
         { StatType.Stamina, 60 },
         
-        { StatType.Armor, 9 },
-        { StatType.Strength, 14 },
-        { StatType.Agility, 6 },
-        { StatType.Dexterity, 8 },
+        { StatType.Armor, 5 },
+        { StatType.Strength, 7 },
+        { StatType.Agility, 1},
+        { StatType.Dexterity, 2 },
         
-        { StatType.Intellect, 1 },
-        { StatType.Luck, 2 },
-        { StatType.Magic, 1 }
+        { StatType.Intellect, 0 },
+        { StatType.Luck, 0 },
+        { StatType.Magic, 0 }
     };
 }
 public class LuckyGuy : IProfession
