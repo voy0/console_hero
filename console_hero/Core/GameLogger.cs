@@ -54,14 +54,18 @@ public class CompositeLogger : ILoggerStrategy
         foreach(var logger in _loggers)
             if (logger is FileLogger fl) return fl.GetCurrentLogFilePath();
         return "File does not exist";
+        
     }
+    
 }
 
 public class GameLogger
 {
     private static GameLogger? _instance;
-    public static GameLogger Instance => _instance ??= new GameLogger();
 
+    private GameLogger(){ }
+    public static GameLogger Instance => _instance ??= new GameLogger();
+    
     private ILoggerStrategy _strategy = new MemoryLogger(); 
 
     public void SetStrategy(ILoggerStrategy strategy) => _strategy = strategy;

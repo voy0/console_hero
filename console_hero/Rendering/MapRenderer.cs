@@ -6,15 +6,17 @@ public class MapRenderer : IModuleRenderer
 {
     private Map _map;
     private Player _player;
+    private MapSymbols _mapSymbols;
     
     private List<string> _mapLines = new List<string>();
     
     public int Height { get; set; }
-    public MapRenderer(Map map,  Player player)
+    public MapRenderer(Map map,  Player player, MapSymbols mapSymbols)
     {
         Height = map.Height;
         _map = map;
         _player = player;
+        _mapSymbols = mapSymbols;
     }
 
     public void Render()
