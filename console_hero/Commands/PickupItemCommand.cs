@@ -1,3 +1,5 @@
+using console_hero.Events;
+
 namespace console_hero;
 
 public class PickupItemCommand : ICommand
@@ -23,6 +25,18 @@ public class PickupItemCommand : ICommand
         {
             cell.PopItem();
             GameLogger.Instance.Log($"Picked up {item.Name}");
+            int noiseIntensity = item switch
+            {
+                IHeavyWeapon => 15,   
+                ILightWeapon => 5,     
+                IMagicalWeapon => 10,      
+                _ => 2                
+            };
+
+            if (noiseIntensity > 0)
+            {
+                GameEventManager.Instance.Notify(new GameEvent(EventType.Noise, _map, (x, y), noiseIntensity));
+            }
         }
     }
 }

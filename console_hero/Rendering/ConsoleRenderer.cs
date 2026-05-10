@@ -29,7 +29,7 @@ public class ConsoleRenderer: IRenderer
         _player = gameState.Player;
         _inventoryMenu = gameState.InventoryMenu;
         _playerStatusRenderer = new PlayerStatusRenderer(gameState.Player);
-        _mapRenderer = new MapRenderer(gameState.Level.Map,  gameState.Player);
+        _mapRenderer = new MapRenderer(gameState.Level.Map,  gameState.Player, new MapSymbols());
         _inventoryRenderer = new InventoryRenderer(gameState.Player, gameState.InventoryMenu);
         _promptRenderer = new PromptRenderer(gameState.Player, gameState.Level.Map, gameState);
         _levelInstructionRenderer = new LevelInstructionsRenderer(gameState.Level, gameState.KeyBindings);

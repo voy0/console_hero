@@ -86,8 +86,8 @@ public static class EntityGenerator
     {
         foreach (var enemy in enemies)
         {
-            int r = Random.Shared.Next(2);
-            if (r == 1) return enemy();
+            int r = Random.Shared.Next(3);
+            if (r == 0) return enemy();
         }
         return enemies[0]();
     }

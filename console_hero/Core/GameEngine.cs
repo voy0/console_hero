@@ -1,5 +1,5 @@
 namespace console_hero;
-
+using System.Diagnostics;
 public class GameEngine
 {
     private GameState _gameState;
@@ -29,10 +29,31 @@ public class GameEngine
         _gameState.Run();
         _gameRenderer.Render();
         
+        
+        Stopwatch enemyTimer = new Stopwatch();
+        enemyTimer.Start();
+        int enemyMoveIntervalMs = 500;
+        
         while (_gameState.IsRunning)
         {
-            _inputHandler.HandleInput();
-            _gameRenderer.Render();
+            bool needsRedraw = false;
+            if (Console.KeyAvailable)
+            {
+                _inputHandler.HandleInput();
+                needsRedraw = true;
+            }
+
+            if (enemyTimer.ElapsedMilliseconds >= enemyMoveIntervalMs)
+            {
+                _gameState.EnemyMovementManager.MoveAllRandomly();
+                enemyTimer.Restart();
+                needsRedraw = true;
+            }
+            if (needsRedraw)
+            { 
+                _gameRenderer.Render();
+            }
+            Thread.Sleep(16);
         }
     }
 }

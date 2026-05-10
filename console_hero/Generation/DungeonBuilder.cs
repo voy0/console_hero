@@ -526,6 +526,30 @@ public class DungeonBuilder : IDungeonStarter, IDungeonBuilder
         return this;
     }
 
+    private void AssignGuilds()
+    {
+        int supernaturalCount = _enemies.Count(e => e.GuildType == Guild.Necropolis);
+        int goblinsCount = _enemies.Count(e => e.GuildType == Guild.Horde);
+        int elvesCount = _enemies.Count(e => e.GuildType == Guild.Fey);
+        int wolvesCount = _enemies.Count(e => e.GuildType == Guild.Beasts);
+
+        IGuild? supernaturalGuild = supernaturalCount > 0 ? new Necropolis(supernaturalCount) : null;
+        IGuild? goblinsGuild = goblinsCount > 0 ? new Horde(goblinsCount) : null;
+        IGuild? elvesGuild = elvesCount > 0 ? new Fey(elvesCount) : null;
+        IGuild? wolvesGuild = wolvesCount > 0 ? new Wolves(wolvesCount) : null;
+
+        foreach (var enemy in _enemies)
+        {
+            switch (enemy.GuildType)
+            {
+                case Guild.Necropolis: enemy.GuildObject = supernaturalGuild; break;
+                case Guild.Horde: enemy.GuildObject = goblinsGuild; break;
+                case Guild.Fey: enemy.GuildObject = elvesGuild; break;
+                case Guild.Beasts: enemy.GuildObject = wolvesGuild; break;
+                case Guild.None: enemy.GuildObject = null; break; 
+            }
+        }
+    }
     public Level Build(GameState gameState)
     {
         ValidateMap();
@@ -544,7 +568,11 @@ public class DungeonBuilder : IDungeonStarter, IDungeonBuilder
         if(_addArtifact > 0) PlaceItems(_artifactList, _artifactList.Count);
         if(_goldToAdd > 0) PlaceGold(_goldToAdd, _goldDenomination);
         if (_coinsToAdd > 0) PlaceCoins(_coinsToAdd, _coinsDenomination);
-        if(_enemiesToAdd > 0) PlaceEnemies(_enemiesList, _enemiesToAdd);
+        if(_enemiesToAdd > 0) 
+        {
+            PlaceEnemies(_enemiesList, _enemiesToAdd);
+            AssignGuilds();
+        }
         if(_welcomeMessage != null) gameState.Prompts.Add(_welcomeMessage);
         
         var keyBindings = gameState.KeyBindings;

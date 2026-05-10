@@ -19,7 +19,7 @@ public class CombatRenderer(GameState gameState) : IModuleRenderer
         Enemy enemy = gameState.Combat.Enemy;
         _combatLines.Clear();
         _combatLines.Add($"{Ansi.FgRed}Fighting: {enemy.ColoredName}{Ansi.Reset}");
-        _combatLines.Add($"{Ansi.FgRed}HP: {enemy.Health.Value}/{enemy.Health.MaxValue}  DMG: {enemy.Damage.Value} ARMOR: {enemy.Armor.Value}{Ansi.Reset}");
+        _combatLines.Add($"{Ansi.FgRed}HP: {enemy.Health.Value}/{enemy.Health.MaxValue}  DMG: {enemy.GetEffectiveDamage()} ARMOR: {enemy.GetEffectiveArmor()}{Ansi.Reset}");
         for (int i = 0; i < _manager.Menu.Attacks.Count; i++)
         {
             string? arrow = null;

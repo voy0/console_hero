@@ -19,6 +19,7 @@
         public GameStatus Status;
         public CombatManager Combat;
         public MenusManager Menus;
+        public EnemyMovementManager EnemyMovementManager;
         public bool ForceRedraw { get; set; } = false;
 
         public GameState(Player? player = null)
@@ -34,11 +35,12 @@
             
             Combat = new CombatManager(this, new CombatAttackMenu(this));
             Menus.RegisterMenu(Combat.Menu);
-            
-            
+
             var levelGenerator = new LevelGenerator(this);
             Level = levelGenerator.Generate();
+
             KeyBindings = new KeyBindings(this);
+            EnemyMovementManager = new EnemyMovementManager(this);
         }
         
         public void Run()

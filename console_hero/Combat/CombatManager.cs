@@ -1,3 +1,5 @@
+using console_hero.Events;
+
 namespace console_hero.Actions;
 
 public class CombatManager(GameState gameState, CombatAttackMenu menu)
@@ -9,6 +11,7 @@ public class CombatManager(GameState gameState, CombatAttackMenu menu)
     {
         Enemy = enemy;
         Menu.IsEnabled = true;
+        enemy.InFight = true;
         gameState.Status = GameStatus.Combat;
         gameState.Menus.ForceFocus(Menu);
     }
@@ -35,30 +38,49 @@ public class CombatManager(GameState gameState, CombatAttackMenu menu)
         var (playerDamage, playerDefense) = weapon.Accept(chosenAttackVisitor, player, weapon);
 
        
-        double scaleConstant = 50.0; 
+        double scaleVariable = Random.Shared.NextDouble()%15; 
     
-        int safeEnemyArmor = Math.Max(0, Enemy.Armor.Value);
-        double enemyDamageReduction = scaleConstant / (scaleConstant + safeEnemyArmor);
+        int safeEnemyArmor = Math.Max(0, Enemy.GetEffectiveArmor());
+        double enemyDamageReduction = scaleVariable / (scaleVariable + safeEnemyArmor);
     
         int damageToEnemy = (int)Math.Max(1, Math.Round(playerDamage * enemyDamageReduction));
-    
+        damageToEnemy += Random.Shared.Next() % damageToEnemy/3;
+        if (Random.Shared.Next(100) < 20)
+        {
+            damageToEnemy *= 3;
+            _gameState.Prompts.Add($"You did {damageToEnemy} DMG (CRIT)");
+            GameLogger.Instance.Log($"Did {damageToEnemy} DMG (CRIT) to {Enemy.Name}");
+        }
+        else
+        {
+            _gameState.Prompts.Add($"You did {damageToEnemy} DMG");
+            GameLogger.Instance.Log($"Did {damageToEnemy} DMG to {Enemy.Name}");
+        }
+        
         Enemy.Health.Decrease(damageToEnemy);
-        _gameState.Prompts.Add($"You did {damageToEnemy} DMG");
-        GameLogger.Instance.Log($"Did {damageToEnemy} DMG to {Enemy.Name}");
+        
         if (Enemy.Health.IsEmpty)
         {
             _gameState.Prompts.Add($"{Enemy.Name} dies");
             GameLogger.Instance.Log($"Slayed {Enemy.Name}");
-            
+            if (Enemy.GuildObject != null)
+            {
+                Enemy.GuildObject.Population--;
+            }
+            GameEventManager.Instance.Notify(new GameEvent(EventType.EnemyDied, Enemy.GuildType));
+            Enemy.UnsubscribeFromEvents();
             _gameState.Level.RemoveEnemy(Enemy);
             Bail();
             return;
         }
 
+        scaleVariable = Random.Shared.NextDouble()%10; 
         int safePlayerDefense = Math.Max(0, playerDefense);
-        double playerDamageReduction = scaleConstant / (scaleConstant + safePlayerDefense);
-    
-        int damageToPlayer = (int)Math.Max(1, Math.Round(Enemy.Damage.Value * playerDamageReduction));
+        safePlayerDefense = Random.Shared.Next() % safePlayerDefense;
+        double playerDamageReduction = scaleVariable / (scaleVariable + safePlayerDefense);
+        
+        double effectiveDamageToPlayer = Enemy.GetEffectiveDamage(); 
+        int damageToPlayer = (int)Math.Max(1, Math.Round(effectiveDamageToPlayer * playerDamageReduction));
     
         player.Stats.Health.Decrease(damageToPlayer);
         _gameState.Prompts.Add($"{Enemy.Name} hits you for {damageToPlayer} DMG");
@@ -76,6 +98,7 @@ public class CombatManager(GameState gameState, CombatAttackMenu menu)
     {
         menu.InFocus = false;
         menu.IsEnabled = false;
+        Enemy.InFight = false; 
         gameState.Status = GameStatus.Exploration; 
     }
 }

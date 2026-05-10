@@ -35,7 +35,7 @@ public abstract class OffHandItem(char symbol, string name, string color, int da
         if (statType == stat)
         {
         var coStat = (double)player.GetTotalStat(corelatedStat);
-            double requiredStat = 10.0; 
+            double requiredStat = 5.0; 
 
             double efficiency = Math.Min(1.0, coStat / requiredStat);
 
@@ -47,14 +47,14 @@ public abstract class OffHandItem(char symbol, string name, string color, int da
     public abstract (int damage, int defense) Accept(ICombatVisitor visitor, Player player, IEquippable outerItem);
 }
 
-public class TargeShield() : OffHandItem('O', "The Targe Shield", Ansi.FgRgb(50, 150, 100), 1, 6, StatType.Armor, StatType.Dexterity)
+public class TargeShield() : OffHandItem('O', "The Targe Shield", Ansi.FgRgb(50, 150, 100), 1, 9, StatType.Armor, StatType.Dexterity)
 {
     public override (int damage, int defense) Accept(ICombatVisitor visitor, Player player, IEquippable outerItem)
     {
         return visitor.VisitNonWeapon(outerItem, player);
     }
 }
-public class TuscanShield() : OffHandItem('0', "The Tuscan Shield", Ansi.FgRgb(50, 190, 100), 1, 9, StatType.Armor, StatType.Dexterity)
+public class TuscanShield() : OffHandItem('0', "The Tuscan Shield", Ansi.FgRgb(50, 190, 100), 1, 15, StatType.Armor, StatType.Dexterity)
 {
     public override (int damage, int defense) Accept(ICombatVisitor visitor, Player player, IEquippable outerItem)
     {

@@ -9,7 +9,7 @@ public class LevelGenerator(GameState gameState)
     {
         if (themeFactory == null)
         {
-            themeFactory = new ArmoryDungeonThemeFactory();
+            themeFactory = new TestDungeonFactory();
         }
         DungeonDirector director = new DungeonDirector(gameState);
         return themeFactory.GenerateLayout(director);

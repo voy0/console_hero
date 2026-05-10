@@ -12,8 +12,18 @@ public class ResourceAttribute : IResourceAttribute
 
     public bool IsEmpty => Value == MinValue;
     public int MinValue { get; }
-    public int MaxValue { get; }
+    public int BaseMaxValue { get; }
+    public int MaxValue { get; private set; }
+    public void Scale(double multiplier)
+    {
+        if (MaxValue == 0) return; 
 
+        double healthPercentage = (double)Value / MaxValue;
+
+        MaxValue = Math.Max(1, (int)(BaseMaxValue * multiplier));
+
+        _value = Math.Clamp((int)(MaxValue * healthPercentage), MinValue, MaxValue);
+    }
     public void Increase(int dValue)
     {
         if (dValue < 0) 
@@ -30,7 +40,8 @@ public class ResourceAttribute : IResourceAttribute
     public ResourceAttribute(int value, int? maxValue = null, int? minValue = null)
     {
         MinValue = minValue ?? 0;
-        MaxValue = maxValue ?? value;
+        BaseMaxValue = maxValue ?? value;
+        MaxValue = BaseMaxValue;
         Value = value;
     }
 }

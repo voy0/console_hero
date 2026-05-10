@@ -18,4 +18,15 @@ public class Map
             }
         }
     }
+    
+    public bool MoveEnemy(int x, int y, int nx, int ny)
+    {
+        if (Cells[x, y].Occupant == null) return false;
+        if (!Cells[nx, ny].IsFree) return false;
+        
+        Cells[nx, ny].Occupant = Cells[x, y].Occupant;
+        Cells[x, y].Occupant = null;
+        Cells[nx, ny].Occupant.Position = (nx, ny);
+        return true;
+    }
 }

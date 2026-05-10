@@ -61,10 +61,11 @@ public class CatacombsDungeonThemeFactory : IAbstractDungeonThemeFactory
 
     public List<Func<Enemy>> GetEnemiesList() => new List<Func<Enemy>>()
     {
-        () => new MutantRat(),
         () => new Undead(),
         () => new Spirit(),
         () => new Ghoul(),
+        () => new Golem(),
+        () => new DarkMage(),
     };
 
     public List<Func<IItem>> GetArtifact() => new List<Func<IItem>>()
@@ -100,8 +101,9 @@ public class ArmoryDungeonThemeFactory : IAbstractDungeonThemeFactory
     public List<Func<Enemy>> GetEnemiesList() => new List<Func<Enemy>>()
     {
         () => new MutantRat(),
-        () => new Spirit(),
-        () => new DarkMage(),
+        () => new Goblin(),
+        () => new Werewolf(),
+        () => new Orc(),
     };
 
     public List<Func<IItem>> GetArtifact() => new List<Func<IItem>>()
@@ -136,10 +138,7 @@ public class TestDungeonFactory : IAbstractDungeonThemeFactory
         () => new GreatSword(),
     };
 
-    public List<Func<Enemy>> GetEnemiesList() => new List<Func<Enemy>>()
-    {
-        () => new MutantRat(),
-    };
+    public List<Func<Enemy>> GetEnemiesList() => EnemiesLists.Necropolis;
 
     public List<Func<IItem>> GetArtifact() => new List<Func<IItem>>()
     {

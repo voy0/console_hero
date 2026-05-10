@@ -2,6 +2,8 @@ namespace console_hero;
 
 public class Cell
 {
+   public bool IsFree => !(IsWall || IsOccupied || HasPlayer);
+   public bool HasPlayer { get; set; }
    public bool IsWall { get; set; }
    public Enemy? Occupant { get; set; }
    public bool IsOccupied => Occupant != null;
@@ -28,4 +30,5 @@ public class Cell
         
       return items.Peek();
    }
+   
 }
