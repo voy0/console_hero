@@ -14,10 +14,23 @@ public abstract class Enemy : IObserver
     public IAttribute Damage { get; }
     public Guild GuildType { get; }
     public int MovementSpeed { get; } = 10;
-    public int GetEffectiveMovementSpeed() => (int)(MovementSpeed * (1 + (GuildObject?.HealthBonus() ?? 0)));
+    public int GetEffectiveMovementSpeed() => (int)(MovementSpeed * (1 + (GuildObject?.MovementBonus() ?? 0)));
     public int GetEffectiveDamage() => (int)(Damage.Value * (GuildObject?.DamageBonus() ?? 1));
     public int GetEffectiveArmor() => (int)(Armor.Value * (GuildObject?.ArmorBonus() ?? 1));
-    public IGuild? GuildObject { get; set; }
+    private IGuild? _guildObject;
+    public IGuild? GuildObject{
+        get => _guildObject;
+        set
+        {
+            _guildObject = value;
+            
+            if (_guildObject != null)
+            {
+                double initialHealthMultiplier = _guildObject.HealthBonus();
+                Health.Scale(initialHealthMultiplier);
+            }
+        }
+    }
     public bool IsDead => Health.IsEmpty;
     public (int x, int y) Position;
     public bool InFight = false;
@@ -48,7 +61,7 @@ public abstract class Enemy : IObserver
             {
                 GameLogger.Instance.Log($"{Name} senses the slaughter of their kin (Population of {GuildObject.Guild}: {GuildObject.Population})");
                 double newHealthMultiplier = GuildObject.HealthBonus();
-                Health.Scale(newHealthMultiplier);                
+                Health.Scale(newHealthMultiplier); 
             }
         }
 
@@ -87,15 +100,16 @@ public class GoblinGiant( ) : Enemy(Guild.Horde,'B', "Goblin Giant", Ansi.FgRgb(
 
 // fey: 2-1 *damage- movement- 2-1 *health-
 public class Elf( ) : Enemy(Guild.Fey,'f', "Elf", Ansi.FgRgb(160, 250, 50), 30, 0, 6);
-public class WarriorElf() : Enemy(Guild.Fey,'f', "Elf", Ansi.FgRgb(160, 250, 50), 55, 0, 8);
+public class WarriorElf() : Enemy(Guild.Fey,'F', "Warrior Elf", Ansi.FgRgb(160, 200, 50), 55, 0, 17);
 
 
 // Beasts damage+ movement+
-public class MutantRat() : Enemy(Guild.Beasts, 'q', "Mutant Rat", Ansi.FgRgb(150,150,180), 45, 0,15);
+public class MutantRat() : Enemy(Guild.Beasts, 'Q', "Mutant Rat", Ansi.FgRgb(150,150,180), 45, 0,15);
 public class Werewolf( ): Enemy(Guild.Beasts,'M', "Werewolf",  Ansi.FgRgb(180,180,180), 125, 0, 26);
 public class Chimera( ) : Enemy(Guild.Beasts,'H', "Chimera", Ansi.FgRgb(150, 180, 150), 280, 0, 36);
 
 // unaffiliated
+
 public class Golem() : Enemy(Guild.None,'@', "Golem", Ansi.FgRgb(255,255,100), 225, 25, 25);
 public class Behemoth() : Enemy(Guild.None,'B', "Behemoth", Ansi.FgRgb(255, 255, 100), 666, 13, 99);
 
@@ -131,6 +145,9 @@ public static class EnemiesLists
 
     public static List<Func<Enemy>> Unaffiliated => new()
     {
+        () => new Golem(),
+        () => new Golem(),
+        () => new Golem(),
         () => new Golem(),
         () => new Behemoth()
     };

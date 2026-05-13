@@ -10,7 +10,7 @@ public interface IDungeonBuilder
     IDungeonBuilder AddWeapons(List<Func<IWeapon>> weapons, int n);
     IDungeonBuilder AddCoins(int coins, int denomination = 100);
     IDungeonBuilder AddGold(int gold, int denomination = 5);
-    IDungeonBuilder AddEnemies(List<Func<Enemy>> enemies, int n);
+    IDungeonBuilder AddEnemies(List<List<Func<Enemy>>> enemies, int n);
     IDungeonBuilder AddArtifact(List<Func<IItem>> artifact);
     IDungeonBuilder AddPrompt(string prompt);
     

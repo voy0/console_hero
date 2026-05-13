@@ -53,7 +53,7 @@ public class GameEngine
             { 
                 _gameRenderer.Render();
             }
-            Thread.Sleep(16);
+            Thread.Sleep(1);
         }
     }
 }

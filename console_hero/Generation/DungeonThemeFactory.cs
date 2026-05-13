@@ -21,11 +21,9 @@ public class LibraryDungeonThemeFactory : IAbstractDungeonThemeFactory
         () => new GrandStaff()
     };
 
-    public List<Func<Enemy>> GetEnemiesList() => new List<Func<Enemy>>()
+    public List<List<Func<Enemy>>> GetEnemiesLists() => new()
     {
-        () => new MutantRat(),
-        () => new Spirit(),
-        () => new DarkMage(),
+        EnemiesLists.Fey,
     };
 
     public List<Func<IItem>> GetArtifact() => new List<Func<IItem>>()
@@ -59,13 +57,9 @@ public class CatacombsDungeonThemeFactory : IAbstractDungeonThemeFactory
         () => new TwinDaggers(),
     };
 
-    public List<Func<Enemy>> GetEnemiesList() => new List<Func<Enemy>>()
+    public List<List<Func<Enemy>>> GetEnemiesLists() => new()
     {
-        () => new Undead(),
-        () => new Spirit(),
-        () => new Ghoul(),
-        () => new Golem(),
-        () => new DarkMage(),
+        EnemiesLists.Necropolis
     };
 
     public List<Func<IItem>> GetArtifact() => new List<Func<IItem>>()
@@ -98,12 +92,10 @@ public class ArmoryDungeonThemeFactory : IAbstractDungeonThemeFactory
         () => new GreatSword(),
     };
 
-    public List<Func<Enemy>> GetEnemiesList() => new List<Func<Enemy>>()
+    public List<List<Func<Enemy>>> GetEnemiesLists() => new()
     {
-        () => new MutantRat(),
-        () => new Goblin(),
-        () => new Werewolf(),
-        () => new Orc(),
+        EnemiesLists.Horde,
+        EnemiesLists.Beasts,
     };
 
     public List<Func<IItem>> GetArtifact() => new List<Func<IItem>>()
@@ -138,7 +130,14 @@ public class TestDungeonFactory : IAbstractDungeonThemeFactory
         () => new GreatSword(),
     };
 
-    public List<Func<Enemy>> GetEnemiesList() => EnemiesLists.Necropolis;
+    public List<List<Func<Enemy>>> GetEnemiesLists() => new()
+    {
+        EnemiesLists.Necropolis,
+        EnemiesLists.Horde,
+        EnemiesLists.Fey,
+        EnemiesLists.Beasts,
+        EnemiesLists.Unaffiliated
+    };
 
     public List<Func<IItem>> GetArtifact() => new List<Func<IItem>>()
     {

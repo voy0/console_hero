@@ -7,7 +7,7 @@ public interface IAbstractDungeonThemeFactory
     
     List<Func<IItem>> GetItemsList();
     List<Func<IWeapon>> GetWeaponsList();
-    List<Func<Enemy>> GetEnemiesList();
+    List<List<Func<Enemy>>> GetEnemiesLists();
 
     Level GenerateLayout(DungeonDirector director);
 }       

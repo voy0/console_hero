@@ -42,7 +42,7 @@ public class DungeonBuilder : IDungeonStarter, IDungeonBuilder
     
     private readonly List<Room> _builtRooms = new List<Room>();
 
-    private List<Func<Enemy>> _enemiesList;
+    private List<List<Func<Enemy>>> _enemiesLists;
     private List<Func<IItem>> _itemsList;
     private List<Func<IWeapon>> _weaponsList;
     private List<Func<IItem>>  _artifactList;
@@ -348,11 +348,16 @@ public class DungeonBuilder : IDungeonStarter, IDungeonBuilder
         enemy.Position = (x, y);
         _enemies.Add(enemy);
     }
-    private void PlaceEnemies(List<Func<Enemy>> enemies, int enemiesToGenerate)
+    private void PlaceEnemies(List<List<Func<Enemy>>> enemies, int enemiesToGenerate)
     {
         for (int i = 0; i < enemiesToGenerate; i++)
         {
-            PlaceEnemyWherever(EntityGenerator.GenerateRandomEnemy(enemies));
+            for (int j = 0; j < enemies.Count; j++)
+            {
+                PlaceEnemyWherever(EntityGenerator.GenerateRandomEnemy(enemies[j]));
+            }
+
+            i += enemies.Count-1;
         }
     }
     private void PlaceGold(int goldToAdd, int abundance)
@@ -499,6 +504,7 @@ public class DungeonBuilder : IDungeonStarter, IDungeonBuilder
         _goldDenomination += denomination;
         return this;
     }
+    
 
     public IDungeonBuilder AddWeapons(List<Func<IWeapon>> weapons, int n)
     {
@@ -513,9 +519,9 @@ public class DungeonBuilder : IDungeonStarter, IDungeonBuilder
         return this;
     }
 
-    public IDungeonBuilder AddEnemies(List<Func<Enemy>> enemiesList, int enemies)
+    public IDungeonBuilder AddEnemies(List<List<Func<Enemy>>> enemiesLists, int enemies)
     {
-        _enemiesList = enemiesList;
+        _enemiesLists = enemiesLists;
         _enemiesToAdd += enemies;
         return this;
     }
@@ -536,7 +542,7 @@ public class DungeonBuilder : IDungeonStarter, IDungeonBuilder
         IGuild? supernaturalGuild = supernaturalCount > 0 ? new Necropolis(supernaturalCount) : null;
         IGuild? goblinsGuild = goblinsCount > 0 ? new Horde(goblinsCount) : null;
         IGuild? elvesGuild = elvesCount > 0 ? new Fey(elvesCount) : null;
-        IGuild? wolvesGuild = wolvesCount > 0 ? new Wolves(wolvesCount) : null;
+        IGuild? wolvesGuild = wolvesCount > 0 ? new Beasts(wolvesCount) : null;
 
         foreach (var enemy in _enemies)
         {
@@ -570,7 +576,7 @@ public class DungeonBuilder : IDungeonStarter, IDungeonBuilder
         if (_coinsToAdd > 0) PlaceCoins(_coinsToAdd, _coinsDenomination);
         if(_enemiesToAdd > 0) 
         {
-            PlaceEnemies(_enemiesList, _enemiesToAdd);
+            PlaceEnemies(_enemiesLists, _enemiesToAdd);
             AssignGuilds();
         }
         if(_welcomeMessage != null) gameState.Prompts.Add(_welcomeMessage);

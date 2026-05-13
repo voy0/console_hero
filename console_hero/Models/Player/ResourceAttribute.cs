@@ -16,7 +16,7 @@ public class ResourceAttribute : IResourceAttribute
     public int MaxValue { get; private set; }
     public void Scale(double multiplier)
     {
-        if (MaxValue == 0) return; 
+        if (MaxValue == 0 || multiplier == 0) return; 
 
         double healthPercentage = (double)Value / MaxValue;
 

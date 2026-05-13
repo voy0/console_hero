@@ -64,7 +64,7 @@ public class Horde : IGuild
     }
     public double DamageBonus()
     {
-        return 0;
+        return 1;
     }
 
     public double MovementBonus()
@@ -74,7 +74,7 @@ public class Horde : IGuild
     }
     public double ArmorBonus()
     {
-        return 0;
+        return 1;
     }
     public double HealthBonus()
     {
@@ -92,34 +92,34 @@ public class Fey : IGuild
         OriginalPopulation = initialPopulation;
         Population = initialPopulation;
     }
+    private double SurvivalRatio => OriginalPopulation == 0 ? 0 : (double)Population / OriginalPopulation;
+    private double ArmyScale => Math.Sqrt(OriginalPopulation);
+    private double SynergyFactor => ArmyScale * SurvivalRatio;
     public double DamageBonus()
     {
-        if (Population == 0) return 0;
-        return (double)(Population + OriginalPopulation) / OriginalPopulation;
+        return SynergyFactor;
     }
 
     public double MovementBonus()
     {
-        if (Population == 0) return 0;
-        return (double) Population / OriginalPopulation ;
+        return SynergyFactor;
     }
     public double ArmorBonus()
     {
-        return 0;
+        return SynergyFactor;
     }
 
     public double HealthBonus()
     {
-        if (Population == 0) return 0;
-        return (double)  (Population + OriginalPopulation) / OriginalPopulation;
+        return 1.2*SynergyFactor;
     }
 }
-public class Wolves : IGuild
+public class Beasts : IGuild
 {
     public int OriginalPopulation { get; }
     public int Population { get; set; }
     public Guild Guild => Guild.Beasts;
-    public Wolves(int initialPopulation)
+    public Beasts(int initialPopulation)
     {
         OriginalPopulation = initialPopulation;
         Population = initialPopulation;
@@ -137,11 +137,11 @@ public class Wolves : IGuild
     }
     public double ArmorBonus()
     {
-        return 0;
+        return 1;
     }
 
     public double HealthBonus()
     {
-        return 0;
+        return 1;
     }
 }
